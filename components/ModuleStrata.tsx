@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ModuleData, ModuleType } from '../types';
-import { COLORS, RECRUIT_CARDS, CONTENT_MODULES } from '../constants';
+import { COLORS, RECRUIT_CARDS } from '../constants';
 import { ChevronDown, ExternalLink, ShieldAlert, Fingerprint, Link as LinkIcon, Check } from 'lucide-react';
 
 const Simulator = React.lazy(() => import('./Simulator').then(module => ({ default: module.Simulator }))); // Lazy load
@@ -12,11 +12,29 @@ interface ModuleStrataProps {
   onInquiryRequest: (context: string) => void;
 }
 
+const CollapsibleDrawer: React.FC<{ title: string; children: React.ReactNode; defaultOpen?: boolean; icon?: React.ReactNode }> = ({ title, children, defaultOpen = false, icon }) => {
+    const [isOpen, setIsOpen] = useState(defaultOpen);
+    return (
+        <div className="border-b border-current/20 pb-4">
+            <button 
+                onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
+                className="flex items-center gap-3 w-full text-left font-mono text-xs uppercase tracking-widest font-bold opacity-80 hover:opacity-100 transition-opacitygroup/drawer"
+            >
+                {icon}
+                <span className="group-hover/drawer:underline underline-offset-4">{title}</span>
+                <span className="ml-auto opacity-50">{isOpen ? '[-]' : '[+]'}</span>
+            </button>
+            <div className={`transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden ${isOpen ? 'max-h-[2000px] opacity-100 mt-4' : 'max-h-0 opacity-0'}`}>
+                {children}
+            </div>
+        </div>
+    );
+};
+
 export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onToggle, onInquiryRequest }) => {
   const themeClass = COLORS[module.themeColor];
   const containerRef = useRef<HTMLElement>(null);
   const [linkCopied, setLinkCopied] = useState(false);
-  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const panelId = `module-panel-${module.index}`;
   const linkStatusId = `module-link-status-${module.index}`;
 
@@ -57,13 +75,6 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     }
   };
 
-  // Reset details view when module closes
-  useEffect(() => {
-    if (!isOpen) {
-      setIsDetailsOpen(false);
-    }
-  }, [isOpen]);
-
   // Snap to view when opened
   useEffect(() => {
     if (isOpen && containerRef.current) {
@@ -82,18 +93,9 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
       setTimeout(() => setLinkCopied(false), 2000);
     }
   };
-  
-  const scrollToModule = (index: string) => {
-    const el = document.getElementById(`module-${index}`);
-    if (el) {
-      safeScrollIntoView(el);
-      window.location.hash = `module-${index}`;
-    }
-  };
 
-  // renderManifest removed as it is now an overlay
   const renderArtifacts = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 mb-8">
       {module.evidence?.map((ev, i) => {
         const isExternal = /^https?:\/\//i.test(ev.link);
         return (
@@ -129,7 +131,6 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
       aria-label={`Toggle ${module.title}`}
       className={`relative w-full border-b border-black/10 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${themeClass} ${isOpen ? 'py-12 md:py-24' : 'py-8 md:py-12'} cursor-pointer group`}
       onClick={(e) => {
-        // Use standard Element casting for robustness with SVGs
         const target = e.target as Element;
         if (target.closest('a') || target.closest('button')) return;
         onToggle();
@@ -211,7 +212,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
               </div>
 
               {/* Response Block */}
-              <div className="mb-8">
+              <div className="mb-12">
                  <span className="font-mono text-[10px] uppercase tracking-widest opacity-60 block mb-2">
                   Response
                 </span>
@@ -220,66 +221,65 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 </div>
               </div>
 
-              {/* Unfold / Drawers Toggle REMOVED per PRD (Fat Trim) */}
-              
-              {/* Deep Content / Drawers (Always rendered but collapsed/expandable via internal toggles could be future work, for now keeping them visible if module is open per 'collapsed' requirement - wait, plan said collapsible) */}
-              {/* Refinement: PRD says "Drawers (collapsed)". I'll make sections collapsible headers. */}
-              
-              {/* Deep Content / Drawers (Collapsible) */}
-              <div className={`transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden ${isDetailsOpen || module.id === ModuleType.MANIFEST ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'}`}>
+              {/* Collapsible Drawers Stack */}
+              <div className="space-y-6 mb-12">
                 
-                {/* Specialized Component Renders */}
-                {module.id === ModuleType.MANIFEST && renderManifest()}
-                
+                {/* 1. Recruits Cards (Module 02 Specific) */}
                 {module.id === ModuleType.RECRUITS && (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 mb-12">
-                    {RECRUIT_CARDS.map((card, idx) => (
-                      <div key={idx} className={`p-6 border border-current opacity-90 hover:opacity-100 transition-opacity`}>
-                        <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">{card.role}</div>
-                        <h4 className="font-serif text-2xl mb-4 italic">{card.name}</h4>
-                        <p className="font-sans text-sm font-bold mb-2">{card.capability}</p>
-                        <p className="font-sans text-xs opacity-80 leading-relaxed mb-4">{card.desc}</p>
-                        <div className="pt-4 border-t border-current/20 flex items-center gap-2">
-                          <ShieldAlert className="w-4 h-4" />
-                          <span className="font-mono text-[10px] uppercase">Prevents: {card.prevents}</span>
-                        </div>
+                   <CollapsibleDrawer title={`UNFOLD CARDS (+${RECRUIT_CARDS.length})`} defaultOpen={false}>
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                        {RECRUIT_CARDS.map((card, idx) => (
+                          <div key={idx} className={`p-6 border border-current opacity-90 hover:opacity-100 transition-opacity`}>
+                            <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">{card.role}</div>
+                            <h4 className="font-serif text-2xl mb-4 italic">{card.name}</h4>
+                            <p className="font-sans text-sm font-bold mb-2">{card.capability}</p>
+                            <p className="font-sans text-xs opacity-80 leading-relaxed mb-4">{card.desc}</p>
+                            <div className="pt-4 border-t border-current/20 flex items-center gap-2">
+                              <ShieldAlert className="w-4 h-4" />
+                              <span className="font-mono text-[10px] uppercase">Prevents: {card.prevents}</span>
+                            </div>
+                          </div>
+                        ))}
                       </div>
-                    ))}
-                  </div>
+                   </CollapsibleDrawer>
                 )}
 
+                {/* 2. Simulator (Module 05) */}
                 {module.id === ModuleType.SIMULATOR && (
-                  <div className="mt-4 mb-12" onClick={(e) => e.stopPropagation()}>
+                  <div className="mt-4 mb-2" onClick={(e) => e.stopPropagation()}>
                     <React.Suspense fallback={<div className="font-mono text-xs animate-pulse">LOADING SIMULATOR...</div>}>
                          <Simulator onInquiryRequest={onInquiryRequest} />
                     </React.Suspense>
                   </div>
                 )}
 
-                {module.id === ModuleType.ARTIFACTS && renderArtifacts()}
+                 {/* 3. Artifacts (Module 06) */}
+                 {module.id === ModuleType.ARTIFACTS && (
+                    <CollapsibleDrawer title={`BROWSE ARTIFACTS (+${module.evidence?.length || 0})`} defaultOpen={true}>
+                       {renderArtifacts()}
+                    </CollapsibleDrawer>
+                 )}
 
-                {/* Implications Drawer (Generic) */}
+                {/* 4. Implications (Generic) */}
                 {module.implications && (
-                  <div className="mb-12">
-                     <h3 className="font-mono text-xs uppercase tracking-widest mb-6 flex items-center gap-2">
-                      <Fingerprint className="w-4 h-4"/> {module.implications.title}
-                     </h3>
-                     <ul className="space-y-4">
+                   <CollapsibleDrawer title={`${module.implications.title}`} icon={<Fingerprint className="w-4 h-4"/>}>
+                       <ul className="space-y-4 mt-4">
                         {module.implications.content.map((item, i) => (
                           <li key={i} className="flex gap-4 items-start pl-4 border-l-2 border-current/30">
                             <span className="font-mono text-xs pt-1 opacity-50">{(i + 1).toString().padStart(2, '0')}</span>
                             <span className="font-sans text-lg">{item}</span>
                           </li>
                         ))}
-                     </ul>
-                  </div>
+                       </ul>
+                   </CollapsibleDrawer>
                 )}
+
               </div>
             </div>
 
             {/* Column B: Evidence & Actions (Visible when Details Open OR Manifest Hidden) */}
             {module.id !== ModuleType.MANIFEST && (
-              <div className={`md:col-span-12 lg:col-span-4 flex flex-col gap-12 transition-all duration-700 delay-100 ${isDetailsOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
+              <div className={`md:col-span-12 lg:col-span-4 flex flex-col gap-12 transition-all duration-700 delay-100 ${isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
                 
                 {/* Stress Test */}
                 {module.stressTest && (
@@ -302,13 +302,11 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                   <div>
                      <h3 className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">Artifacts</h3>
                      <div className="space-y-4">
-                        {module.evidence.map((ev, i) => {
-                          const isExternal = /^https?:\/\//i.test(ev.link);
-                          return (
+                        {module.evidence.map((ev, i) => (
                           <a
                             key={i}
                             href={ev.link}
-                            {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                            {...( /^https?:\/\//i.test(ev.link) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
                             className="block group/link"
                           >
                             <div className="flex justify-between items-baseline border-b border-current/20 pb-2 mb-1">
@@ -319,13 +317,10 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                               {ev.description}
                             </div>
                           </a>
-                        );
-                        })}
+                        ))}
                      </div>
                   </div>
                 )}
-
-                {/* Action removed (Inspect moved to header) */}
               </div>
             )}
           </div>
