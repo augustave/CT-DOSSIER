@@ -190,7 +190,6 @@ If helpful, I’m open to a short call.
         onKeyDown={handleKeyDown}
       >
         
-        {/* Header */}
         <div className="p-8 border-b border-black/10 flex justify-between items-start bg-strata-cream sticky top-0 z-10">
           <div>
             <h2 id="inquiry-title" className="font-sans text-3xl font-bold uppercase tracking-tightest">Inquiry</h2>
@@ -206,7 +205,7 @@ If helpful, I’m open to a short call.
             ref={closeButtonRef}
             onClick={onClose}
             aria-label="Close inquiry panel"
-            className="p-2 hover:bg-black/5 rounded-full transition-colors"
+            className="p-2 hover:bg-black text-black hover:text-white transition-colors border border-transparent hover:border-black"
           >
             <X className="w-6 h-6" />
           </button>
@@ -267,7 +266,7 @@ If helpful, I’m open to a short call.
               03. Specific Context
              </h3>
              <textarea 
-               className="w-full h-32 p-4 font-mono text-sm bg-gray-50 border border-gray-200 focus:border-black focus:outline-none resize-none placeholder-gray-400"
+               className="w-full h-32 p-4 font-mono text-sm bg-white border border-black/20 focus:border-black focus:outline-none resize-none placeholder-gray-400"
                placeholder="Enter any specific context here (this appends to the message)..."
                value={state.note}
                onChange={(e) => setState({...state, note: e.target.value})}
@@ -275,7 +274,7 @@ If helpful, I’m open to a short call.
           </div>
 
           {/* Preview (Optional visual aid) */}
-          <div className="bg-gray-100 p-4 border border-black/10 font-mono text-xs text-gray-500">
+          <div className="bg-black/5 p-4 border border-black/10 font-mono text-xs text-gray-600">
              <div className="flex items-center gap-2 mb-2">
                <AlertCircle className="w-3 h-3" />
                <span className="uppercase tracking-wider">Preview Generated Questions</span>

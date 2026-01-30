@@ -114,7 +114,10 @@ const App: React.FC = () => {
 
       <main className="w-full">
         {/* Render all modules EXCEPT Manifest (Module 00) */}
-        {CONTENT_MODULES.filter(m => m.id !== ModuleType.MANIFEST).map((module) => (
+        {CONTENT_MODULES
+          .filter(m => m.id !== ModuleType.MANIFEST)
+          .sort((a, b) => a.index.localeCompare(b.index))
+          .map((module) => (
           <ModuleStrata 
             key={module.id} 
             module={module} 
