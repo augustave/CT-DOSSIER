@@ -1,6 +1,9 @@
 import React from 'react';
 import { ModuleData, ModuleType } from './types';
 
+import { FOUNDER_COPY_V110 } from './copy.v1_1';
+const COPY = FOUNDER_COPY_V110;
+
 export const COLORS = {
   blue: 'bg-strata-blue text-white border-white/20 theme-blue',
   cream: 'bg-strata-cream text-strata-black border-strata-black/20',
@@ -46,162 +49,125 @@ export const CONTENT_MODULES: ModuleData[] = [
   {
     id: ModuleType.THESIS,
     index: "01",
-    title: "FOUNDER",
-    promptText: "CORE THESIS",
+    title: COPY.modules["01"].title,
+    promptText: COPY.modules["01"].prompt,
     themeColor: 'blue',
-    responseText: "I build systems that survive contact with reality. Not apps. Not decks. Control stacks: sensing → interpretation → decision → action → proof. My advantage is not a single idea—it’s a repeatable method: organize chaos into legible choices, ship the smallest closed loop, then harden it until it can be trusted.",
+    responseText: COPY.modules["01"].hero,
     responseDisplay: (
       <div className="space-y-8">
         <div className="font-mono text-sm leading-relaxed opacity-80 border-l-2 border-white/30 pl-4">
-          FILE: FOUNDER_MODEL v1.0<br/>
-          MODE: COHERENCE / TEMPO / PROOF<br/>
+          FILE: {COPY.meta.version}<br/>
+          MODE: {COPY.modules["01"].noteLines[0]} / {COPY.modules["01"].noteLines[1]}<br/>
           NO API. NO PERFORMANCE THEATER.
         </div>
         <div className="font-serif text-2xl md:text-4xl leading-relaxed">
-          I build systems that survive contact with reality.<br/>
-          Not apps. Not decks. <strong>Control stacks</strong>: sensing → interpretation → decision → action → proof.
+          {COPY.modules["01"].hero}
         </div>
-        <div className="font-sans text-lg md:text-xl max-w-2xl opacity-90">
-          My advantage is not a single idea—it’s a repeatable method: <strong>organize chaos into legible choices</strong>, ship the smallest closed loop, then harden it until it can be trusted.
+        <div className="font-sans text-lg md:text-xl max-w-2xl opacity-90 whitespace-pre-wrap">
+          {COPY.modules["01"].body}
         </div>
       </div>
     ),
-    implications: {
-      title: "INDEX",
-      content: [
-        "01 COHERENCE — parts become a whole",
-        "02 TEMPO — speed beats drift",
-        "03 PROOF — audit trails over vibes"
-      ]
-    },
     stressTest: {
-      title: "NOTE",
-      content: [
-        "Default output is deterministic.",
-        "Interpretation is rules-based.",
-        "If you want magic, try the circus."
-      ]
+      title: COPY.modules["01"].noteTitle,
+      content: COPY.modules["01"].noteLines
     }
   },
   {
     id: ModuleType.RECRUITS,
     index: "02",
-    title: "THE RECRUITMENT TRIAD",
-    promptText: "SPC PROMPT — WHO ARE THREE PEOPLE YOU WOULD RECRUIT REGARDLESS OF WHAT YOU DO? WHAT MAKES THEM SPECIAL?",
+    title: COPY.modules["02"].title,
+    promptText: COPY.modules["02"].prompt,
     themeColor: 'cream',
-    responseText: "Michael Levin, Chase Hughes, Kelly Johnson. Together they cover the three universal failure modes.",
+    responseText: COPY.modules["02"].oneLine,
     responseDisplay: (
       <div className="space-y-8">
-        <ul className="space-y-4">
-          <li className="font-sans text-lg md:text-xl leading-relaxed">
-            <strong>Michael Levin</strong> — programs coherence in living systems; finds control layers for self-organization and repair.
-          </li>
-          <li className="font-sans text-lg md:text-xl leading-relaxed">
-            <strong>Chase Hughes</strong> — operationalizes human behavior under uncertainty; turns messy human dynamics into protocols.
-          </li>
-          <li className="font-sans text-lg md:text-xl leading-relaxed">
-            <strong>Kelly Johnson</strong> — ships the impossible under constraint; simplicity, tempo, feedback loops.
-          </li>
+        <div className="font-serif text-xl md:text-2xl leading-relaxed opacity-90 whitespace-pre-wrap mb-6">
+            {COPY.modules["02"].lead}
+        </div>
+        <ul className="space-y-6">
+          {COPY.modules["02"].people.map((p, i) => (
+             <li key={i}>
+                <strong className="font-serif text-lg md:text-xl block mb-1">{p.name}</strong>
+                <p className="font-sans text-base md:text-lg opacity-80 leading-relaxed whitespace-pre-wrap">{p.body}</p>
+             </li>
+          ))}
         </ul>
-        <p className="font-serif text-xl md:text-2xl leading-relaxed opacity-90">
-          I recruit this triad because together they cover the three universal failure modes:
-          systems that won’t cohere, humans that won’t align, projects that won’t ship.
+        <p className="font-mono text-sm opacity-60 mt-4 whitespace-pre-wrap border-t border-black/10 pt-4">
+          {COPY.modules["02"].together}
         </p>
       </div>
     ),
-    // Implications removed as they are now integrated into the response
   },
   {
     id: ModuleType.MODEL,
     index: "03",
-    title: "FOUNDER MODEL",
-    promptText: "FOUNDER TYPE — RESULT",
+    title: COPY.modules["03"].title,
+    promptText: COPY.modules["03"].prompt,
     themeColor: 'black',
-    responseText: "My founder archetype is the Wartime General. I optimize for tempo in low-information environments.",
+    responseText: COPY.modules["03"].hero,
     responseDisplay: (
       <div className="space-y-8">
         <div>
            <div className="font-serif text-2xl md:text-4xl leading-relaxed mb-4">
-             My founder archetype is the <strong>Wartime General</strong>.
+             {COPY.modules["03"].hero}
            </div>
-           <p className="font-sans text-lg md:text-xl opacity-90 leading-relaxed">
-             I optimize for tempo in low-information environments.<br/>
-             I ship imperfect systems to buy signal, then harden them into something people can trust.
+           <p className="font-sans text-lg md:text-xl opacity-90 leading-relaxed whitespace-pre-wrap">
+             {COPY.modules["03"].body}
            </p>
         </div>
 
         <div className="space-y-2">
-           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60">My default operating bias:</h4>
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60">{COPY.modules["03"].bulletsTitle}</h4>
            <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
-             <li>Systems are control problems (feedback loops, incentives, constraints).</li>
-             <li>Reality is layered (a stack of interacting subsystems).</li>
-             <li>Execution is a design material, not a project-management chore.</li>
+             {COPY.modules["03"].bullets.map((b, i) => <li key={i}>{b}</li>)}
            </ul>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/20">
            <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">Primary failure mode:</h4>
-              <p className="font-sans font-bold">Technical debt accumulation</p>
-              <p className="font-sans text-sm opacity-70">(tempo outruns cleanup)</p>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">{COPY.modules["03"].grid.leftTitle}:</h4>
+              <p className="font-sans font-bold">{COPY.modules["03"].grid.leftBody}</p>
            </div>
            <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">Mitigation:</h4>
-              <p className="font-sans font-bold">Scheduled refactor sprints enforced as policy.</p>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">{COPY.modules["03"].grid.rightTitle}:</h4>
+              <p className="font-sans font-bold">{COPY.modules["03"].grid.rightBody}</p>
            </div>
         </div>
+        <p className="font-serif italic opacity-70 border-t border-white/10 pt-4 mt-4">{COPY.modules["03"].close}</p>
       </div>
     ),
-    // Implications/Stress Test removed as they are integrated into response
   },
   {
     id: ModuleType.COMPANIES,
     index: "04",
-    title: "COMPANIES I'D BUILD",
-    promptText: "ARCHETYPES & WEDGES",
+    title: COPY.modules["04"].title,
+    promptText: COPY.modules["04"].prompt,
     themeColor: 'clay',
-    responseText: "I’m interested in Truth Infrastructure — tools that verify reality in low-trust environments.",
+    responseText: COPY.modules["04"].hero,
     responseDisplay: (
       <div className="space-y-8">
         <p className="font-serif text-xl md:text-3xl leading-relaxed">
-          I’m interested in <strong>Truth Infrastructure</strong> — tools that verify reality in low-trust environments.<br/>
-          <span className="text-lg md:text-2xl opacity-80 block mt-2">Think supply chain verification, automated compliance, or synthetic media detection.</span>
+          {COPY.modules["04"].hero}
         </p>
+        <div className="font-sans text-lg opacity-80 whitespace-pre-wrap">
+           {COPY.modules["04"].body}
+        </div>
 
         <div className="bg-black/5 p-6 border border-black/10">
-           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-4">THE WEDGE</h4>
-           <ul className="space-y-2 font-mono text-sm">
-             <li>01 Target: Mid-market regulated industries (FinTech, BioTech).</li>
-             <li>02 Offer: Automated audit preparedness.</li>
-             <li>03 First 30 Days: Deploy a read-only probe that surfaces compliance gaps instantly.</li>
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-4">{COPY.modules["04"].wedgesTitle}</h4>
+           <ul className="space-y-2 font-mono text-sm list-disc pl-4">
+             {/* Note: Original copy used numbers 01,02,03 in text, but array is Strings in new copy. */}
+             {COPY.modules["04"].wedges.map((w,i) => <li key={i}>{w}</li>)}
            </ul>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-           <div>
-             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">The company form:</h4>
-             <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
-               <li>Start with a services wedge to learn the terrain, then productize into SaaS.</li>
-               <li>Field demos over decks.</li>
-               <li>Auditability over hype.</li>
-               <li>Small elite teams with hard opinions about execution.</li>
-             </ul>
-           </div>
-           <div>
-             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">Real-world analogs (signal match):</h4>
-             <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
-               <li>Palantir (decision infrastructure)</li>
-               <li>Anduril (field deployment under constraint)</li>
-               <li>Axon (evidence infrastructure)</li>
-               <li>Samsara (physical operations telemetry)</li>
-               <li>Verkada (sensor + cloud platform)</li>
-               <li>Vanta (trust/compliance automation)</li>
-             </ul>
-           </div>
+        <div>
+             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">{COPY.modules["04"].first30Title}</h4>
+             <p className="font-sans opacity-90 whitespace-pre-wrap">{COPY.modules["04"].first30}</p>
         </div>
       </div>
     ),
-    // Implications removed
   },
   {
     id: ModuleType.SIMULATOR,
