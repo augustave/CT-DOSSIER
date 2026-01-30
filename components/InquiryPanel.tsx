@@ -19,6 +19,8 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const copyStatusId = 'inquiry-copy-status';
+  const dialogDescId = 'inquiry-dialog-description';
 
   // Add context to note if provided
   useEffect(() => {
@@ -183,6 +185,7 @@ If helpful, I’m open to a short call.
         role="dialog"
         aria-modal="true"
         aria-labelledby="inquiry-title"
+        aria-describedby={dialogDescId}
         className="w-full md:w-[600px] h-full bg-white text-black border-l border-black shadow-none flex flex-col overflow-y-auto transform transition-transform duration-300 translate-x-0"
         onKeyDown={handleKeyDown}
       >
@@ -191,6 +194,9 @@ If helpful, I’m open to a short call.
         <div className="p-8 border-b border-black/10 flex justify-between items-start bg-strata-cream sticky top-0 z-10">
           <div>
             <h2 id="inquiry-title" className="font-sans text-3xl font-bold uppercase tracking-tightest">Inquiry</h2>
+            <p id={dialogDescId} className="sr-only">
+              Client-side inquiry composer. Press Escape to close this panel.
+            </p>
             <div className="font-mono text-xs opacity-60 mt-2 space-y-1">
               <p>NO API. CLIENT-SIDE GENERATION ONLY.</p>
               <p>THIS DOES NOT SEND. IT COMPOSES.</p>
@@ -290,11 +296,15 @@ If helpful, I’m open to a short call.
           <div className="flex flex-col gap-3">
             <button 
               onClick={handleCopy}
+              aria-describedby={copyStatusId}
               className="w-full flex items-center justify-center gap-2 bg-black text-white p-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors"
             >
               {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
               {copied ? 'COPIED TO CLIPBOARD' : 'COPY MESSAGE'}
             </button>
+            <span id={copyStatusId} className="sr-only" role="status" aria-live="polite">
+              {copied ? 'Inquiry message copied to clipboard.' : ''}
+            </span>
             <div className="grid grid-cols-2 gap-3">
                <button 
                 onClick={handleMailto}

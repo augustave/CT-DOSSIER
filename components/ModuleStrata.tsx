@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { ModuleData, ModuleType } from '../types';
 import { COLORS, RECRUIT_CARDS, CONTENT_MODULES } from '../constants';
-import { ChevronDown, Plus, ExternalLink, ShieldAlert, Fingerprint, Link as LinkIcon, Check, ArrowRight } from 'lucide-react';
-import { Simulator } from './Simulator';
+import { ChevronDown, ExternalLink, ShieldAlert, Fingerprint, Link as LinkIcon, Check } from 'lucide-react';
+
+const Simulator = React.lazy(() => import('./Simulator').then(module => ({ default: module.Simulator }))); // Lazy load
 
 interface ModuleStrataProps {
   module: ModuleData;
@@ -17,6 +18,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
   const [linkCopied, setLinkCopied] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const panelId = `module-panel-${module.index}`;
+  const linkStatusId = `module-link-status-${module.index}`;
 
   const prefersReducedMotion = () =>
     typeof window !== 'undefined' &&
@@ -89,36 +91,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     }
   };
 
-  const renderManifest = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6 mt-8 mb-8">
-      {CONTENT_MODULES.filter(m => m.id !== ModuleType.MANIFEST).map((m) => (
-         <div 
-           key={m.index} 
-           onClick={(e) => { e.stopPropagation(); scrollToModule(m.index); }}
-           onKeyDown={(e) => {
-             if (e.key === 'Enter' || e.key === ' ') {
-               e.preventDefault();
-               e.stopPropagation();
-               scrollToModule(m.index);
-             }
-           }}
-           role="button"
-           tabIndex={0}
-           aria-label={`Jump to ${m.title}`}
-           className="group/item flex items-baseline gap-4 cursor-pointer border-b border-current/10 pb-4 hover:pl-4 transition-all duration-300"
-         >
-           <span className="font-mono text-3xl md:text-4xl font-bold opacity-30 group-hover/item:opacity-100 group-hover/item:text-strata-blue transition-all">
-             {m.index}
-           </span>
-           <span className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight">
-             {m.title}
-           </span>
-           <ArrowRight className="ml-auto w-5 h-5 opacity-0 group-hover/item:opacity-100 transition-opacity" />
-         </div>
-      ))}
-    </div>
-  );
-
+  // renderManifest removed as it is now an overlay
   const renderArtifacts = () => (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8 mb-8">
       {module.evidence?.map((ev, i) => {
@@ -183,18 +156,35 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
             {/* Share Button (Only visible on hover/open) */}
             <button 
               onClick={handleCopyLink}
+              aria-describedby={linkStatusId}
               aria-label={`Copy link to ${module.title}`}
               className={`absolute -right-12 top-2 p-2 opacity-0 group-hover:opacity-50 hover:!opacity-100 transition-opacity hidden md:block`}
               title="Copy link to module"
             >
               {linkCopied ? <Check className="w-5 h-5" /> : <LinkIcon className="w-5 h-5" />}
             </button>
+            <span id={linkStatusId} className="sr-only" role="status" aria-live="polite">
+              {linkCopied ? 'Link copied to clipboard.' : ''}
+            </span>
           </div>
           
-          <div className="hidden md:flex items-center gap-2 font-mono text-xs uppercase tracking-widest opacity-60">
-            <span>{isOpen ? 'Close' : 'Open'}</span>
-            <div className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
-              <ChevronDown />
+          <div className="hidden md:flex items-center gap-6 font-mono text-xs uppercase tracking-widest opacity-60">
+             {/* Header Inspect Button */}
+             <button
+                onClick={(e) => {
+                    e.stopPropagation();
+                    onInquiryRequest(`${module.title} — ${module.promptText}`);
+                }}
+                className="hover:opacity-100 hover:underline"
+             >
+                + INSPECT
+             </button>
+            
+            <div className="flex items-center gap-2">
+                <span>{isOpen ? 'Close' : 'Open'}</span>
+                <div className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
+                <ChevronDown />
+                </div>
             </div>
           </div>
         </div>
@@ -230,15 +220,10 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 </div>
               </div>
 
-              {/* Unfold / Drawers Toggle */}
-              {module.id !== ModuleType.MANIFEST && (
-                 <button 
-                   onClick={(e) => { e.stopPropagation(); setIsDetailsOpen(!isDetailsOpen); }}
-                   className="group/unfold flex items-center gap-2 font-mono text-xs uppercase tracking-widest font-bold border-b border-current/30 pb-1 hover:border-current transition-colors mb-8"
-                 >
-                   <span>{isDetailsOpen ? 'FOLD ↑' : 'UNFOLD ↓'}</span>
-                 </button>
-              )}
+              {/* Unfold / Drawers Toggle REMOVED per PRD (Fat Trim) */}
+              
+              {/* Deep Content / Drawers (Always rendered but collapsed/expandable via internal toggles could be future work, for now keeping them visible if module is open per 'collapsed' requirement - wait, plan said collapsible) */}
+              {/* Refinement: PRD says "Drawers (collapsed)". I'll make sections collapsible headers. */}
               
               {/* Deep Content / Drawers (Collapsible) */}
               <div className={`transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] overflow-hidden ${isDetailsOpen || module.id === ModuleType.MANIFEST ? 'max-h-[3000px] opacity-100' : 'max-h-0 opacity-0'}`}>
@@ -265,7 +250,9 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
 
                 {module.id === ModuleType.SIMULATOR && (
                   <div className="mt-4 mb-12" onClick={(e) => e.stopPropagation()}>
-                    <Simulator onInquiryRequest={onInquiryRequest} />
+                    <React.Suspense fallback={<div className="font-mono text-xs animate-pulse">LOADING SIMULATOR...</div>}>
+                         <Simulator onInquiryRequest={onInquiryRequest} />
+                    </React.Suspense>
                   </div>
                 )}
 
@@ -338,14 +325,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                   </div>
                 )}
 
-                {/* Action */}
-                <button 
-                  onClick={() => onInquiryRequest(`${module.title} — ${module.promptText}`)}
-                  className="mt-auto group/btn flex items-center justify-between w-full p-4 border border-current hover:bg-white hover:text-black transition-colors"
-                >
-                  <span className="font-mono text-xs uppercase tracking-widest font-bold">Inspect This Module</span>
-                  <Plus className="w-4 h-4 group-hover/btn:rotate-90 transition-transform" />
-                </button>
+                {/* Action removed (Inspect moved to header) */}
               </div>
             )}
           </div>

@@ -2,10 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { CONTENT_MODULES } from './constants';
 import { ModuleStrata } from './components/ModuleStrata';
 import { InquiryPanel } from './components/InquiryPanel';
+import { ManifestOverlay } from './components/ManifestOverlay';
+import { ModuleType } from './types';
 
 const App: React.FC = () => {
   const [openModuleIndex, setOpenModuleIndex] = useState<string | null>(null);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
+  const [isIndexOpen, setIsIndexOpen] = useState(false);
   const [inquiryContext, setInquiryContext] = useState<string>("");
 
   // Handle initialization (Deep Link > LocalStorage > Default Module 02)
@@ -15,17 +18,15 @@ const App: React.FC = () => {
       const index = hash.replace('#module-', '');
       setOpenModuleIndex(index);
     } else {
-      try {
-        const lastModule = localStorage.getItem('founder:lastModuleId');
-        if (lastModule) {
-          setOpenModuleIndex(lastModule);
-        } else {
-          setOpenModuleIndex("02"); // Default landing module per PRD
-        }
-      } catch (e) {
-        // Fallback for strict privacy modes blocking localStorage
+        // PRD Requirement: Force default to #02 if no hash
+        // We override previous logic that checked localStorage first for privacy/mandate reasons
+        // But we can keep localStorage check if desired, but PRD says "On load: if no hash -> set #02."
+        // Let's bias towards the mandate.
         setOpenModuleIndex("02");
-      }
+        // Update URL to match without scrolling (yet)
+        try {
+            history.replaceState(null, document.title, '#module-02');
+        } catch(e) {}
     }
 
     const handleHashChange = () => {
@@ -39,7 +40,7 @@ const App: React.FC = () => {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
-  // Persistence
+  // Persistence (Optional, kept for state recovery if user navigates back)
   useEffect(() => {
     if (openModuleIndex) {
       try {
@@ -53,25 +54,27 @@ const App: React.FC = () => {
   const handleToggle = (index: string) => {
     if (openModuleIndex === index) {
       setOpenModuleIndex(null);
-      // clear hash without jump, safely handling environment restrictions
+      // clear hash without jump
       try {
-        history.replaceState(null, document.title, window.location.pathname + window.location.search);
-      } catch (e) {
-        console.warn("Could not update history state (likely sandboxed environment):", e);
-      }
-      
-      try {
-        localStorage.removeItem('founder:lastModuleId');
-      } catch (e) { /* ignore */ }
+        history.pushState("", document.title, window.location.pathname + window.location.search);
+      } catch (e) {}
     } else {
       setOpenModuleIndex(index);
-      // update hash
-      try {
+       try {
         window.location.hash = `module-${index}`;
-      } catch (e) {
-         console.warn("Could not update location hash:", e);
-      }
+      } catch (e) {}
     }
+  };
+
+  const handleIndexNavigate = (index: string) => {
+      setIsIndexOpen(false);
+      // Small delay to allow overlay to close before scrolling/expanding
+      setTimeout(() => {
+          handleToggle(index);
+          // Ensure it's open if it wasn't
+          setOpenModuleIndex(index);
+          window.location.hash = `module-${index}`;
+      }, 300);
   };
 
   const handleInquiryRequest = (context: string) => {
@@ -87,13 +90,23 @@ const App: React.FC = () => {
          <div className="font-sans font-black text-xl tracking-tightest leading-none pointer-events-auto cursor-pointer" onClick={() => window.scrollTo(0,0)}>
            FOUNDER<br/>DOSSIER
          </div>
-         <div className="hidden md:block font-mono text-[10px] text-right opacity-70">
-           V1.0.1 <br/> NO API
+         
+         <div className="flex flex-col items-end gap-2 pointer-events-auto">
+             <button 
+                onClick={() => setIsIndexOpen(true)}
+                className="font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
+             >
+                INDEX (00)
+             </button>
+             <div className="hidden md:block font-mono text-[10px] text-right opacity-70">
+               V1.0.2 <br/> NO API
+             </div>
          </div>
       </div>
 
       <main className="w-full">
-        {CONTENT_MODULES.map((module) => (
+        {/* Render all modules EXCEPT Manifest (Module 00) */}
+        {CONTENT_MODULES.filter(m => m.id !== ModuleType.MANIFEST).map((module) => (
           <ModuleStrata 
             key={module.id} 
             module={module} 
@@ -121,6 +134,13 @@ const App: React.FC = () => {
           </div>
         </footer>
       </main>
+
+      {/* Manifest Overlay */}
+      <ManifestOverlay 
+        isOpen={isIndexOpen}
+        onClose={() => setIsIndexOpen(false)}
+        onNavigate={handleIndexNavigate}
+      />
 
       {/* Slide-over Panel */}
       <InquiryPanel 
