@@ -94,31 +94,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     }
   };
 
-  const renderArtifacts = () => (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4 mb-8">
-      {module.evidence?.map((ev, i) => {
-        const isExternal = /^https?:\/\//i.test(ev.link);
-        return (
-         <a 
-           key={i} 
-           href={ev.link} 
-           {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-           className="group/card block p-6 border border-white/20 bg-white/5 hover:bg-white/10 transition-colors"
-         >
-           <div className="flex justify-between items-start mb-4">
-             <h4 className="font-sans text-xl font-bold text-white group-hover/card:underline underline-offset-4 decoration-1">
-               {ev.title}
-             </h4>
-             <ExternalLink className="w-5 h-5 text-white/50 group-hover/card:text-white" />
-           </div>
-           <p className="font-mono text-xs text-white/70 leading-relaxed font-medium">
-             {ev.description}
-           </p>
-         </a>
-        );
-      })}
-    </div>
-  );
+    // Artifacts UI Removed
 
   return (
     <section 
@@ -129,7 +105,8 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
       aria-expanded={isOpen}
       aria-controls={panelId}
       aria-label={`Toggle ${module.title}`}
-      className={`relative w-full border-b border-black/10 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${themeClass} ${isOpen ? 'py-12 md:py-24' : 'py-8 md:py-12'} cursor-pointer group`}
+      // PRD v1.0.2: scroll-margin-top added for fixed header offset
+      className={`relative w-full border-b border-black/10 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${themeClass} ${isOpen ? 'py-12 md:py-24' : 'py-8 md:py-12'} cursor-pointer group scroll-mt-[100px]`}
       onClick={(e) => {
         const target = e.target as Element;
         if (target.closest('a') || target.closest('button')) return;
@@ -272,12 +249,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                   </div>
                 )}
 
-                 {/* 3. Artifacts (Module 06) */}
-                 {module.id === ModuleType.ARTIFACTS && (
-                    <CollapsibleDrawer title={`BROWSE ARTIFACTS (+${module.evidence?.length || 0})`} defaultOpen={true}>
-                       {renderArtifacts()}
-                    </CollapsibleDrawer>
-                 )}
+                 {/* 3. Artifacts Removed */}
 
                 {/* 4. Implications (Generic) */}
                 {module.implications && (
@@ -316,30 +288,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                   </div>
                 )}
 
-                {/* Evidence Links (Generic sidebar list) */}
-                {module.evidence && module.evidence.length > 0 && module.id !== ModuleType.ARTIFACTS && (
-                  <div>
-                     <h3 className="font-mono text-xs uppercase tracking-widest mb-4 opacity-70">Artifacts</h3>
-                     <div className="space-y-4">
-                        {module.evidence.map((ev, i) => (
-                          <a
-                            key={i}
-                            href={ev.link}
-                            {...( /^https?:\/\//i.test(ev.link) ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-                            className="block group/link"
-                          >
-                            <div className="flex justify-between items-baseline border-b border-current/20 pb-2 mb-1">
-                               <span className="font-sans font-bold group-hover/link:underline">{ev.title}</span>
-                               <ExternalLink className="w-3 h-3 opacity-50" />
-                            </div>
-                            <div className="font-mono text-[10px] opacity-60 leading-tight">
-                              {ev.description}
-                            </div>
-                          </a>
-                        ))}
-                     </div>
-                  </div>
-                )}
+                {/* Evidence Links Removed */}
               </div>
             )}
           </div>

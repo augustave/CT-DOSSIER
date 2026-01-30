@@ -97,7 +97,7 @@ const App: React.FC = () => {
                   onClick={() => handleInquiryRequest("General Inquiry")}
                   className="hidden md:block font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
                >
-                  INITIATE INQUIRY -&gt;
+                  INITIATE CONTACT -&gt;
                </button>
                <button 
                   onClick={() => setIsIndexOpen(true)}
@@ -124,7 +124,20 @@ const App: React.FC = () => {
           />
         ))}
 
-        {/* Footer Removed per PRD v1.0.2 "Fat Trim" rules */}
+
+        {/* Footer Restored per PRD v1.0.2 */}
+        <footer className="w-full py-12 md:py-24 bg-white text-black border-t border-black/10 mt-12">
+           <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-baseline gap-8">
+              <div>
+                <h3 className="font-sans font-bold tracking-tightest text-xl mb-2">FOUNDER DOSSIER</h3>
+                <p className="font-mono text-xs opacity-50">v1.0.2 + NO API</p>
+              </div>
+              <div className="flex gap-8 font-mono text-xs uppercase tracking-widest">
+                 <button onClick={() => setIsIndexOpen(true)} className="hover:underline">Index</button>
+                 <button onClick={() => handleInquiryRequest("Footer Contact")} className="hover:underline">Initiate Contact</button>
+              </div>
+           </div>
+        </footer>
       </main>
 
       {/* Manifest Overlay */}

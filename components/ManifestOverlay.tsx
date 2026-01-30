@@ -53,9 +53,15 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
           <h2 className="font-sans text-9xl font-bold tracking-tighter opacity-10 select-none">INDEX</h2>
         </div>
 
-        {/* Module List */}
+        {/* Module List - Custom Order: 02, 01, 03, 04, 05 (PRD v1.0.2) */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
-          {CONTENT_MODULES.filter(m => m.id !== ModuleType.MANIFEST).map((m) => (
+          {CONTENT_MODULES
+            .filter(m => m.id !== ModuleType.MANIFEST)
+            .sort((a, b) => {
+                const order = ["02", "01", "03", "04", "05"];
+                return order.indexOf(a.index) - order.indexOf(b.index);
+            })
+            .map((m) => (
              <div 
                key={m.index} 
                onClick={() => onNavigate(m.index)}

@@ -2,10 +2,10 @@ import React from 'react';
 import { ModuleData, ModuleType } from './types';
 
 export const COLORS = {
-  blue: 'bg-strata-blue text-white border-white/20',
+  blue: 'bg-strata-blue text-white border-white/20 theme-blue',
   cream: 'bg-strata-cream text-strata-black border-strata-black/20',
-  black: 'bg-strata-black text-white border-white/20',
-  clay: 'bg-strata-clay text-white border-white/20',
+  black: 'bg-strata-black text-white border-white/20 theme-dark',
+  clay: 'bg-strata-clay text-white border-white/20 theme-brown',
 };
 
 export const RECRUIT_CARDS = [
@@ -115,19 +115,7 @@ export const CONTENT_MODULES: ModuleData[] = [
         "I view human psychology as a solvable engineering constraint, not a mystical art.",
         "I believe small, unauthorized teams outperform large, sanctioned ones (Skunk Works model)."
       ]
-    },
-    evidence: [
-      {
-        title: "Previous Team Structure",
-        description: "Post-mortem on how a team of 4 shipped a Series A product.",
-        link: "#"
-      },
-      {
-        title: "Hiring Protocol",
-        description: "My standard operating procedure for vetting technical talent.",
-        link: "#"
-      }
-    ]
+    }
   },
   {
     id: ModuleType.MODEL,
@@ -169,19 +157,7 @@ export const CONTENT_MODULES: ModuleData[] = [
         "Offer: Automated audit preparedness.",
         "First 30 Days: Deploy a 'read-only' probe to demonstrate compliance gaps instantly."
       ]
-    },
-    evidence: [
-      {
-        title: "Market Thesis Deck",
-        description: "Deep dive into the 'Trust Deficit' opportunity.",
-        link: "#"
-      },
-      {
-        title: "Prototype Repo",
-        description: "GitHub link to a basic verifier node.",
-        link: "#"
-      }
-    ]
+    }
   },
   {
     id: ModuleType.SIMULATOR,
@@ -192,37 +168,6 @@ export const CONTENT_MODULES: ModuleData[] = [
     responseText: "Input your constraints to see how my founder model adapts. This is a deterministic mapping of my operating principles against market realities.",
     responseDisplay: "Input your constraints to see how my founder model adapts. This is a deterministic mapping of my operating principles against market realities.",
     // No standard subsections, custom component used
-  },
-  {
-    id: ModuleType.ARTIFACTS,
-    index: "06",
-    title: "EVIDENCE LOCKER",
-    promptText: "PROOF / ARTIFACTS",
-    themeColor: 'black',
-    responseText: "The raw data. Decks, repositories, and writing that substantiate the claims made in previous strata.",
-    responseDisplay: "The raw data. Decks, repositories, and writing that substantiate the claims made in previous strata.",
-    evidence: [
-      {
-        title: "Series A Memo",
-        description: "The original investment memo for my last company.",
-        link: "#"
-      },
-      {
-        title: "System Architecture Diagram",
-        description: "High-level topology of the Truth Infrastructure stack.",
-        link: "#"
-      },
-      {
-        title: "Essay: 'The End of Trust'",
-        description: "3,000 word manifesto on why verification is the next big market.",
-        link: "#"
-      },
-      {
-        title: "Open Source Contributions",
-        description: "Direct links to my core commits in major crypto/security repos.",
-        link: "#"
-      }
-    ]
   }
 ];
 
