@@ -1,0 +1,16 @@
+body {
+  overscroll-behavior-y: none;
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F2EFE4;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #050505;
+  border: 2px solid #F2EFE4;
+}
