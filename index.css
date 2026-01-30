@@ -18,9 +18,9 @@
 }
 
 .bg-strata-cream, .theme-cream { /* Mapping existing classes to theme */
-  --index-fill: rgba(0, 0, 0, 0.10);
-  --index-stroke: rgba(0, 0, 0, 0.55);
-  --index-shadow: rgba(0, 0, 0, 0.20);
+  --index-fill: rgba(0, 0, 0, 0.20);
+  --index-stroke: rgba(0, 0, 0, 0.65);
+  --index-shadow: rgba(0, 0, 0, 0.25);
 }
 
 .theme-brown, .bg-strata-clay {

@@ -86,8 +86,8 @@ const App: React.FC = () => {
     <div className="min-h-screen w-full relative">
       
       {/* Navigation / Brand Overlay */}
-      <div className="fixed top-0 left-0 w-full z-40 pointer-events-none mix-blend-difference text-white px-4 py-4 md:px-8 flex justify-between items-start">
-         <div className="font-sans font-black text-xl tracking-tightest leading-none pointer-events-auto cursor-pointer" onClick={() => window.scrollTo(0,0)}>
+      <div className="fixed top-0 left-0 w-full z-40 pointer-events-none px-4 py-4 md:px-8 flex justify-between items-start">
+         <div className="font-sans font-black text-xl tracking-tightest leading-none pointer-events-auto cursor-pointer text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]" onClick={() => window.scrollTo(0,0)}>
            FOUNDER<br/>DOSSIER
          </div>
          
@@ -95,18 +95,18 @@ const App: React.FC = () => {
              <div className="flex items-center gap-4">
                <button 
                   onClick={() => handleInquiryRequest("General Inquiry")}
-                  className="hidden md:block font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
+                  className="hidden md:block font-mono text-xs uppercase tracking-widest border border-white px-3 py-1 hover:bg-white hover:text-black transition-colors text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                >
                   INITIATE CONTACT -&gt;
                </button>
                <button 
                   onClick={() => setIsIndexOpen(true)}
-                  className="font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
+                  className="font-mono text-xs uppercase tracking-widest border border-white px-3 py-1 hover:bg-white hover:text-black transition-colors text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
                >
                   INDEX (00)
                </button>
              </div>
-             <div className="hidden md:block font-mono text-[10px] text-right opacity-70">
+             <div className="hidden md:block font-mono text-[10px] text-right text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                V1.0.2 <br/> NO API
              </div>
          </div>
