@@ -92,12 +92,20 @@ const App: React.FC = () => {
          </div>
          
          <div className="flex flex-col items-end gap-2 pointer-events-auto">
-             <button 
-                onClick={() => setIsIndexOpen(true)}
-                className="font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
-             >
-                INDEX (00)
-             </button>
+             <div className="flex items-center gap-4">
+               <button 
+                  onClick={() => handleInquiryRequest("General Inquiry")}
+                  className="hidden md:block font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
+               >
+                  INITIATE INQUIRY -&gt;
+               </button>
+               <button 
+                  onClick={() => setIsIndexOpen(true)}
+                  className="font-mono text-xs uppercase tracking-widest border border-white/40 px-3 py-1 hover:bg-white hover:text-black transition-colors"
+               >
+                  INDEX (00)
+               </button>
+             </div>
              <div className="hidden md:block font-mono text-[10px] text-right opacity-70">
                V1.0.2 <br/> NO API
              </div>
@@ -116,23 +124,7 @@ const App: React.FC = () => {
           />
         ))}
 
-        {/* Footer Strata */}
-        <footer className="w-full py-24 bg-white text-black border-t border-black/10">
-          <div className="container mx-auto px-4 md:px-8 max-w-6xl text-center md:text-left">
-            <h2 className="font-sans text-9xl font-bold tracking-tighter opacity-5 mb-8">END</h2>
-            <div className="flex flex-col md:flex-row gap-8 justify-between items-baseline">
-              <p className="font-serif italic text-2xl max-w-md">
-                "The list is the narrative. Data is poetry. Organize the chaos."
-              </p>
-              <button 
-                onClick={() => handleInquiryRequest("General Inquiry")}
-                className="font-mono text-sm uppercase tracking-widest border-b border-black hover:pb-1 transition-all"
-              >
-                Initiate Contact -&gt;
-              </button>
-            </div>
-          </div>
-        </footer>
+        {/* Footer Removed per PRD v1.0.2 "Fat Trim" rules */}
       </main>
 
       {/* Manifest Overlay */}

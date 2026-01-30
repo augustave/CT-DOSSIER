@@ -145,14 +145,7 @@ export const Simulator: React.FC<SimulatorProps> = ({ onInquiryRequest }) => {
               </div>
               
               <div className="pt-6 border-t border-white/10 space-y-4">
-                <div className="flex items-start gap-3">
-                  <AlertTriangle className="w-5 h-5 text-yellow-500 shrink-0" />
-                  <div>
-                    <span className="block font-mono text-[10px] uppercase text-yellow-500 mb-1">Primary Failure Mode</span>
-                    <span className="block font-sans text-sm font-bold">{result.risk}</span>
-                    <span className="block font-mono text-xs opacity-60 mt-1">Mitigation: {result.mitigation}</span>
-                  </div>
-                </div>
+                {/* Risk Block Removed per PRD v1.0.2 */}
 
                 <button 
                   onClick={() => onInquiryRequest(`Simulator Result: ${result.archetype} (${result.risk})`)}

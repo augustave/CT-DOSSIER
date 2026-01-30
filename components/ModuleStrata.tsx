@@ -111,7 +111,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
              </h4>
              <ExternalLink className="w-5 h-5 text-white/50 group-hover/card:text-white" />
            </div>
-           <p className="font-mono text-xs text-white/60 leading-relaxed">
+           <p className="font-mono text-xs text-white/70 leading-relaxed font-medium">
              {ev.description}
            </p>
          </a>
@@ -169,26 +169,45 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
             </span>
           </div>
           
+          
           <div className="hidden md:flex items-center gap-6 font-mono text-xs uppercase tracking-widest opacity-60">
-             {/* Header Inspect Button */}
+             {/* Header Inspect Button - Only visible when open or hovering */}
              <button
                 onClick={(e) => {
                     e.stopPropagation();
                     onInquiryRequest(`${module.title} — ${module.promptText}`);
                 }}
-                className="hover:opacity-100 hover:underline"
+                className={`hover:opacity-100 hover:underline transition-opacity ${isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}
              >
                 + INSPECT
              </button>
             
             <div className="flex items-center gap-2">
-                <span>{isOpen ? 'Close' : 'Open'}</span>
+                <span className={`transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
+                    {isOpen ? 'FOLD' : 'UNFOLD'}
+                </span>
                 <div className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
                 <ChevronDown />
                 </div>
             </div>
           </div>
         </div>
+
+        {/* PRD v1.0.2: Band Preview Mode (Visible when Collapsed) */}
+        {!isOpen && (
+            <div className="hidden md:grid grid-cols-12 gap-8 mt-4 items-baseline opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
+                <div className="col-span-8 border-l border-current/20 pl-4">
+                    <p className="font-mono text-[10px] uppercase tracking-widest opacity-60 truncate">
+                        {module.promptText}
+                    </p>
+                </div>
+                <div className="col-span-4">
+                     <p className="font-serif italic text-lg opacity-80 truncate">
+                        {module.responseText || "View Analysis ->"}
+                    </p>
+                </div>
+            </div>
+        )}
 
         {/* Primary Content (Prompt + Response) - Visible when Open */}
         <div
