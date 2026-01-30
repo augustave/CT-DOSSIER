@@ -18,9 +18,9 @@ interface SimulatorProps {
 const RESULTS: Record<string, SimulationResult> = {
   'SPEED-CHAOS': {
     archetype: "THE WARTIME GENERAL",
-    description: "Optimizes for tempo in low-information environments. Ships imperfect code to buy information.",
+    description: "Optimizes for tempo in low-information environments. Ships imperfect systems to buy signal.",
     risk: "Technical Debt Accumulation",
-    mitigation: "Strict refactoring sprints enforced by CTO."
+    mitigation: "Scheduled refactor sprints enforced as policy."
   },
   'SPEED-ENTERPRISE': {
     archetype: "THE INSURGENT",

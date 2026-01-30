@@ -173,8 +173,8 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
         {/* PRD v1.0.2: Band Preview Mode (Visible when Collapsed) */}
         {!isOpen && (
             <div className="hidden md:grid grid-cols-12 gap-8 mt-4 items-baseline opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                <div className="col-span-8 border-l border-current/20 pl-4">
-                    <p className="font-mono text-[10px] uppercase tracking-widest opacity-60 truncate">
+                <div className="col-span-8 border-l pl-4" style={{ borderColor: 'var(--hairline)' }}>
+                    <p className="font-mono text-[10px] uppercase tracking-widest truncate" style={{ color: 'var(--text-muted)' }}>
                         {module.promptText}
                     </p>
                 </div>
@@ -199,20 +199,20 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
               
               {/* Prompt Block */}
               <div className="mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-widest opacity-60 block mb-2">
+                <span className="font-mono text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
                   Prompt
                 </span>
-                <div className="font-mono text-xs uppercase tracking-widest opacity-80 border-l-2 border-current/20 pl-4 py-1 leading-relaxed">
+                <div className="font-mono text-xs uppercase tracking-widest border-l-2 pl-4 py-1 leading-relaxed" style={{ color: 'var(--text-primary)', borderColor: 'var(--hairline)' }}>
                   {module.promptText}
                 </div>
               </div>
 
               {/* Response Block */}
               <div className="mb-12">
-                 <span className="font-mono text-[10px] uppercase tracking-widest opacity-60 block mb-2">
+                 <span className="font-mono text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
                   Response
                 </span>
-                <div className="font-serif text-xl md:text-3xl leading-relaxed">
+                <div className="font-serif text-xl md:text-3xl leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                   {module.responseDisplay}
                 </div>
               </div>

@@ -87,60 +87,72 @@ export const CONTENT_MODULES: ModuleData[] = [
     id: ModuleType.RECRUITS,
     index: "02",
     title: "THE RECRUITMENT TRIAD",
-    promptText: "SPC PROMPT — Who are three people you would recruit regardless of what you do? What makes them special?",
+    promptText: "SPC PROMPT — WHO ARE THREE PEOPLE YOU WOULD RECRUIT REGARDLESS OF WHAT YOU DO? WHAT MAKES THEM SPECIAL?",
     themeColor: 'cream',
-    responseText: "Michael Levin (Systems), Chase Hughes (Humans), Kelly Johnson (Execution).",
+    responseText: "Michael Levin, Chase Hughes, Kelly Johnson. Together they cover the three universal failure modes.",
     responseDisplay: (
-      <div className="space-y-6">
-        <ul className="space-y-6">
-          <li className="flex flex-col md:flex-row gap-1 md:gap-3">
-            <strong className="font-serif text-2xl md:text-3xl">Michael Levin</strong>
-            <span className="font-sans text-lg md:text-xl opacity-80 leading-relaxed md:pt-1">— programs coherence in living systems; finds control layers for self-organization and repair.</span>
+      <div className="space-y-8">
+        <ul className="space-y-4">
+          <li className="font-sans text-lg md:text-xl leading-relaxed">
+            <strong>Michael Levin</strong> — programs coherence in living systems; finds control layers for self-organization and repair.
           </li>
-          <li className="flex flex-col md:flex-row gap-1 md:gap-3">
-            <strong className="font-serif text-2xl md:text-3xl">Chase Hughes</strong>
-            <span className="font-sans text-lg md:text-xl opacity-80 leading-relaxed md:pt-1">— operationalizes human behavior under uncertainty; turns messy human dynamics into protocols.</span>
+          <li className="font-sans text-lg md:text-xl leading-relaxed">
+            <strong>Chase Hughes</strong> — operationalizes human behavior under uncertainty; turns messy human dynamics into protocols.
           </li>
-          <li className="flex flex-col md:flex-row gap-1 md:gap-3">
-            <strong className="font-serif text-2xl md:text-3xl">Kelly Johnson</strong>
-            <span className="font-sans text-lg md:text-xl opacity-80 leading-relaxed md:pt-1">— ships the impossible under constraint; simplicity, tempo, feedback loops.</span>
+          <li className="font-sans text-lg md:text-xl leading-relaxed">
+            <strong>Kelly Johnson</strong> — ships the impossible under constraint; simplicity, tempo, feedback loops.
           </li>
         </ul>
+        <p className="font-serif text-xl md:text-2xl leading-relaxed opacity-90">
+          I recruit this triad because together they cover the three universal failure modes:
+          systems that won’t cohere, humans that won’t align, projects that won’t ship.
+        </p>
       </div>
     ),
-    implications: {
-      title: "WHAT THIS SAYS ABOUT MY MODEL",
-      content: [
-        "I value biological adaptability over rigid mechanical hierarchy.",
-        "I view human psychology as a solvable engineering constraint, not a mystical art.",
-        "I believe small, unauthorized teams outperform large, sanctioned ones (Skunk Works model)."
-      ]
-    }
+    // Implications removed as they are now integrated into the response
   },
   {
     id: ModuleType.MODEL,
     index: "03",
     title: "FOUNDER MODEL",
-    promptText: "OPERATING PRINCIPLES & FAILURE MODES",
+    promptText: "FOUNDER TYPE — RESULT",
     themeColor: 'black',
-    responseText: "I operate as a benevolent dictator of the spec, but a servant to the data. My role is to maintain the 'clean room' where the team can execute without bureaucratic friction.",
-    responseDisplay: "I operate as a benevolent dictator of the spec, but a servant to the data. My role is to maintain the 'clean room' where the team can execute without bureaucratic friction.",
-    implications: {
-      title: "FAILURE MODES & MITIGATIONS",
-      content: [
-        "Failure: Analysis Paralysis. Mitigation: 'Disagree and Commit' triggers after 24 hours.",
-        "Failure: Feature Creep. Mitigation: Ruthless cutting of any feature that doesn't serve the primary KPI.",
-        "Failure: Burnout. Mitigation: Mandatory disconnect periods after sprint cycles."
-      ]
-    },
-    stressTest: {
-      title: "BLIND SPOTS",
-      content: [
-        "I tend to undervalue 'polish' in favor of raw functionality.",
-        "I may push for automation before manual processes are fully stable.",
-        "I assume high-agency from all employees, which requires rigorous filtering."
-      ]
-    }
+    responseText: "My founder archetype is the Wartime General. I optimize for tempo in low-information environments.",
+    responseDisplay: (
+      <div className="space-y-8">
+        <div>
+           <div className="font-serif text-2xl md:text-4xl leading-relaxed mb-4">
+             My founder archetype is the <strong>Wartime General</strong>.
+           </div>
+           <p className="font-sans text-lg md:text-xl opacity-90 leading-relaxed">
+             I optimize for tempo in low-information environments.<br/>
+             I ship imperfect systems to buy signal, then harden them into something people can trust.
+           </p>
+        </div>
+
+        <div className="space-y-2">
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60">My default operating bias:</h4>
+           <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
+             <li>Systems are control problems (feedback loops, incentives, constraints).</li>
+             <li>Reality is layered (a stack of interacting subsystems).</li>
+             <li>Execution is a design material, not a project-management chore.</li>
+           </ul>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/20">
+           <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">Primary failure mode:</h4>
+              <p className="font-sans font-bold">Technical debt accumulation</p>
+              <p className="font-sans text-sm opacity-70">(tempo outruns cleanup)</p>
+           </div>
+           <div>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">Mitigation:</h4>
+              <p className="font-sans font-bold">Scheduled refactor sprints enforced as policy.</p>
+           </div>
+        </div>
+      </div>
+    ),
+    // Implications/Stress Test removed as they are integrated into response
   },
   {
     id: ModuleType.COMPANIES,
@@ -148,16 +160,48 @@ export const CONTENT_MODULES: ModuleData[] = [
     title: "COMPANIES I'D BUILD",
     promptText: "ARCHETYPES & WEDGES",
     themeColor: 'clay',
-    responseText: "I am interested in 'Truth Infrastructure'—tools that verify reality in low-trust environments. Think supply chain verification, automated compliance, or synthetic media detection.",
-    responseDisplay: "I am interested in 'Truth Infrastructure'—tools that verify reality in low-trust environments. Think supply chain verification, automated compliance, or synthetic media detection.",
-    implications: {
-      title: "THE WEDGE",
-      content: [
-        "Target: Mid-market regulated industries (FinTech, BioTech).",
-        "Offer: Automated audit preparedness.",
-        "First 30 Days: Deploy a 'read-only' probe to demonstrate compliance gaps instantly."
-      ]
-    }
+    responseText: "I’m interested in Truth Infrastructure — tools that verify reality in low-trust environments.",
+    responseDisplay: (
+      <div className="space-y-8">
+        <p className="font-serif text-xl md:text-3xl leading-relaxed">
+          I’m interested in <strong>Truth Infrastructure</strong> — tools that verify reality in low-trust environments.<br/>
+          <span className="text-lg md:text-2xl opacity-80 block mt-2">Think supply chain verification, automated compliance, or synthetic media detection.</span>
+        </p>
+
+        <div className="bg-black/5 p-6 border border-black/10">
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-4">THE WEDGE</h4>
+           <ul className="space-y-2 font-mono text-sm">
+             <li>01 Target: Mid-market regulated industries (FinTech, BioTech).</li>
+             <li>02 Offer: Automated audit preparedness.</li>
+             <li>03 First 30 Days: Deploy a read-only probe that surfaces compliance gaps instantly.</li>
+           </ul>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+           <div>
+             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">The company form:</h4>
+             <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
+               <li>Start with a services wedge to learn the terrain, then productize into SaaS.</li>
+               <li>Field demos over decks.</li>
+               <li>Auditability over hype.</li>
+               <li>Small elite teams with hard opinions about execution.</li>
+             </ul>
+           </div>
+           <div>
+             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">Real-world analogs (signal match):</h4>
+             <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
+               <li>Palantir (decision infrastructure)</li>
+               <li>Anduril (field deployment under constraint)</li>
+               <li>Axon (evidence infrastructure)</li>
+               <li>Samsara (physical operations telemetry)</li>
+               <li>Verkada (sensor + cloud platform)</li>
+               <li>Vanta (trust/compliance automation)</li>
+             </ul>
+           </div>
+        </div>
+      </div>
+    ),
+    // Implications removed
   },
   {
     id: ModuleType.SIMULATOR,
