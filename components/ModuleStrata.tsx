@@ -172,15 +172,10 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
 
         {/* PRD v1.0.2: Band Preview Mode (Visible when Collapsed) */}
         {!isOpen && (
-            <div className="hidden md:grid grid-cols-12 gap-8 mt-4 items-baseline opacity-0 group-hover:opacity-100 transition-opacity duration-500 delay-100">
-                <div className="col-span-8 border-l pl-4" style={{ borderColor: 'var(--hairline)' }}>
-                    <p className="font-mono text-[10px] uppercase tracking-widest truncate" style={{ color: 'var(--text-muted)' }}>
+            <div className="hidden md:grid grid-cols-12 gap-8 mt-6 items-start opacity-100 transition-opacity duration-500">
+                <div className="col-span-12 border-l-2 pl-6" style={{ borderColor: 'var(--hairline)' }}>
+                    <p className="font-mono text-sm md:text-base uppercase tracking-wide leading-relaxed" style={{ color: 'var(--text-primary)' }}>
                         {module.promptText}
-                    </p>
-                </div>
-                <div className="col-span-4">
-                     <p className="font-serif italic text-lg opacity-80 truncate">
-                        {module.responseText || "View Analysis ->"}
                     </p>
                 </div>
             </div>

@@ -48,7 +48,7 @@ export const CONTENT_MODULES: ModuleData[] = [
   },
   {
     id: ModuleType.THESIS,
-    index: "01",
+    index: "02",
     title: COPY.modules["01"].title,
     promptText: COPY.modules["01"].prompt,
     themeColor: 'blue',
@@ -75,7 +75,7 @@ export const CONTENT_MODULES: ModuleData[] = [
   },
   {
     id: ModuleType.RECRUITS,
-    index: "02",
+    index: "01",
     title: COPY.modules["02"].title,
     promptText: COPY.modules["02"].prompt,
     themeColor: 'cream',
