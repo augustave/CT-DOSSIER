@@ -124,7 +124,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
         {/* Header Band */}
         <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 md:gap-12 select-none">
           <div className="flex items-baseline gap-6 relative">
-             <span className="font-mono text-4xl md:text-6xl font-bold tracking-tighter opacity-40 group-hover:opacity-100 transition-opacity">
+             <span className="module-index font-mono text-4xl md:text-6xl font-bold tracking-tighter" aria-hidden="true">
               {module.index}
             </span>
             <h2 className="font-sans text-3xl md:text-5xl font-bold uppercase tracking-tightest leading-none">

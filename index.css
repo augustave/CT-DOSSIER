@@ -2,6 +2,31 @@
   --text-primary: #111111;
   --text-muted: #4B4B4B;
   --hairline: rgba(0,0,0,0.12);
+
+  /* INDEX VISIBILITY FIX */
+  --index-fill: rgba(255, 255, 255, 0.22);
+  --index-stroke: rgba(255, 255, 255, 0.70);
+  --index-shadow: rgba(0, 0, 0, 0.35);
+  --index-stroke-width: 2px;
+}
+
+/* Per-stratum overrides */
+.theme-blue {
+  --index-fill: rgba(255, 255, 255, 0.20);
+  --index-stroke: rgba(255, 255, 255, 0.80);
+  --index-shadow: rgba(0, 0, 0, 0.35);
+}
+
+.bg-strata-cream, .theme-cream { /* Mapping existing classes to theme */
+  --index-fill: rgba(0, 0, 0, 0.10);
+  --index-stroke: rgba(0, 0, 0, 0.55);
+  --index-shadow: rgba(0, 0, 0, 0.20);
+}
+
+.theme-brown, .bg-strata-clay {
+  --index-fill: rgba(255, 255, 255, 0.18);
+  --index-stroke: rgba(255, 255, 255, 0.78);
+  --index-shadow: rgba(0, 0, 0, 0.30);
 }
 
 .theme-dark {
@@ -20,6 +45,35 @@
   --text-primary: #F3F6FF;
   --text-muted: rgba(243,246,255,0.72);
   --hairline: rgba(243,246,255,0.22);
+}
+
+.theme-dark {
+  --index-fill: rgba(255, 255, 255, 0.18);
+  --index-stroke: rgba(255, 255, 255, 0.85);
+  --index-shadow: rgba(0, 0, 0, 0.55);
+}
+
+/* Module Index Class */
+.module-index {
+  color: var(--index-fill);
+  -webkit-text-stroke: var(--index-stroke-width) var(--index-stroke);
+  paint-order: stroke fill;
+  opacity: 1 !important; /* Force visibility per PRD */
+}
+
+@supports not (-webkit-text-stroke: 1px #000) {
+  .module-index {
+    -webkit-text-stroke: 0;
+    text-shadow:
+      1px 0 var(--index-stroke),
+      -1px 0 var(--index-stroke),
+      0 1px var(--index-stroke),
+      0 -1px var(--index-stroke),
+      1px 1px var(--index-shadow),
+      -1px 1px var(--index-shadow),
+      1px -1px var(--index-shadow),
+      -1px -1px var(--index-shadow);
+  }
 }
 
 body {
