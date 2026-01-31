@@ -106,7 +106,7 @@ const App: React.FC = () => {
                   INDEX (00)
                </button>
              </div>
-             <div className="hidden md:block font-mono text-[10px] text-right text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+             <div className="hidden md:block font-mono text-micro text-right text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
                V1.0.2 <br/> NO API
              </div>
          </div>

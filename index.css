@@ -8,6 +8,14 @@
   --index-stroke: rgba(255, 255, 255, 0.70);
   --index-shadow: rgba(0, 0, 0, 0.35);
   --index-stroke-width: 2px;
+
+  /* Spacing semantic tokens */
+  --space-section: 4rem;
+  --space-subsection: 3rem;
+  --space-content: 2rem;
+  --space-element: 1.5rem;
+  --space-tight: 1rem;
+  --space-micro: 0.5rem;
 }
 
 /* Per-stratum overrides */

@@ -18,7 +18,7 @@ const CollapsibleDrawer: React.FC<{ title: string; children: React.ReactNode; de
         <div className="border-b border-current/20 pb-4">
             <button 
                 onClick={(e) => { e.stopPropagation(); setIsOpen(!isOpen); }}
-                className="flex items-center gap-3 w-full text-left font-mono text-xs uppercase tracking-widest font-bold opacity-80 hover:opacity-100 transition-opacitygroup/drawer"
+                className="flex items-center gap-3 w-full text-left font-mono text-xs uppercase tracking-widest font-bold opacity-secondary hover:opacity-primary transition-opacity group/drawer"
             >
                 {icon}
                 <span className="group-hover/drawer:underline underline-offset-4">{title}</span>
@@ -147,7 +147,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
           </div>
           
           
-          <div className="hidden md:flex items-center gap-6 font-mono text-xs uppercase tracking-widest opacity-60">
+          <div className="hidden md:flex items-center gap-6 font-mono text-xs uppercase tracking-widest opacity-muted">
              {/* Header Inspect Button - Only visible when open or hovering */}
              <button
                 onClick={(e) => {
@@ -194,7 +194,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
               
               {/* Prompt Block */}
               <div className="mb-6">
-                <span className="font-mono text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
+                <span className="font-mono text-micro uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
                   Prompt
                 </span>
                 <div className="font-mono text-xs uppercase tracking-widest border-l-2 pl-4 py-1 leading-relaxed" style={{ color: 'var(--text-primary)', borderColor: 'var(--hairline)' }}>
@@ -204,7 +204,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
 
               {/* Response Block */}
               <div className="mb-12">
-                 <span className="font-mono text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
+                 <span className="font-mono text-micro uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>
                   Response
                 </span>
                 <div className="font-serif text-xl md:text-3xl leading-relaxed" style={{ color: 'var(--text-primary)' }}>
@@ -220,14 +220,14 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                    <CollapsibleDrawer title={`UNFOLD CARDS (+${RECRUIT_CARDS.length})`} defaultOpen={false}>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         {RECRUIT_CARDS.map((card, idx) => (
-                          <div key={idx} className={`p-6 border border-current opacity-90 hover:opacity-100 transition-opacity`}>
-                            <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-70">{card.role}</div>
-                            <h4 className="font-serif text-2xl mb-4 italic">{card.name}</h4>
-                            <p className="font-sans text-sm font-bold mb-2">{card.capability}</p>
-                            <p className="font-sans text-xs opacity-80 leading-relaxed mb-4">{card.desc}</p>
+                          <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity`}>
+                            <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-tertiary">{card.role}</div>
+                            <h4 className="font-serif text-xl md:text-2xl mb-4 italic">{card.name}</h4>
+                            <p className="font-sans text-sm md:text-base font-bold mb-2">{card.capability}</p>
+                            <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{card.desc}</p>
                             <div className="pt-4 border-t border-current/20 flex items-center gap-2">
                               <ShieldAlert className="w-4 h-4" />
-                              <span className="font-mono text-[10px] uppercase">Prevents: {card.prevents}</span>
+                              <span className="font-mono text-micro uppercase opacity-tertiary">Prevents: {card.prevents}</span>
                             </div>
                           </div>
                         ))}
@@ -275,7 +275,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                     </h3>
                      <ul className="space-y-3">
                         {module.stressTest.content.map((item, i) => (
-                          <li key={i} className="text-sm font-mono opacity-80 leading-tight">
+                          <li key={i} className="text-sm font-mono opacity-secondary leading-tight">
                             [!] {item}
                           </li>
                         ))}

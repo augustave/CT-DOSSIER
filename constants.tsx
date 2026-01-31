@@ -55,7 +55,7 @@ export const CONTENT_MODULES: ModuleData[] = [
     responseText: COPY.modules["01"].hero,
     responseDisplay: (
       <div className="space-y-8">
-        <div className="font-mono text-sm leading-relaxed opacity-80 border-l-2 border-white/30 pl-4">
+        <div className="font-mono text-sm leading-relaxed opacity-tertiary border-l-2 border-white/30 pl-4">
           FILE: {COPY.meta.version}<br/>
           MODE: {COPY.modules["01"].noteLines[0]} / {COPY.modules["01"].noteLines[1]}<br/>
           NO API. NO PERFORMANCE THEATER.
@@ -63,8 +63,10 @@ export const CONTENT_MODULES: ModuleData[] = [
         <div className="font-serif text-2xl md:text-4xl leading-relaxed">
           {COPY.modules["01"].hero}
         </div>
-        <div className="font-sans text-lg md:text-xl max-w-2xl opacity-90 whitespace-pre-wrap">
-          {COPY.modules["01"].body}
+        <div className="font-sans text-lg md:text-xl max-w-2xl opacity-secondary leading-relaxed">
+          {COPY.modules["01"].body.split('\n\n').map((para, i) => (
+            <p key={i} className={i > 0 ? 'mt-4' : ''}>{para}</p>
+          ))}
         </div>
       </div>
     ),
@@ -82,19 +84,27 @@ export const CONTENT_MODULES: ModuleData[] = [
     responseText: COPY.modules["02"].oneLine,
     responseDisplay: (
       <div className="space-y-8">
-        <div className="font-serif text-xl md:text-2xl leading-relaxed opacity-90 whitespace-pre-wrap mb-6">
-            {COPY.modules["02"].lead}
+        <div className="font-serif text-2xl md:text-4xl leading-relaxed opacity-secondary mb-6">
+            {COPY.modules["02"].lead.split('\n').map((line, i) => (
+              <span key={i}>{line}{i < 1 && <br/>}</span>
+            ))}
         </div>
         <ul className="space-y-6">
           {COPY.modules["02"].people.map((p, i) => (
              <li key={i}>
-                <strong className="font-serif text-lg md:text-xl block mb-1">{p.name}</strong>
-                <p className="font-sans text-base md:text-lg opacity-80 leading-relaxed whitespace-pre-wrap">{p.body}</p>
+                <strong className="font-serif text-xl md:text-2xl block mb-2">{p.name}</strong>
+                <div className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">
+                  {p.body.split('\n\n').map((para, j) => (
+                    <p key={j} className={j > 0 ? 'mt-3' : ''}>{para}</p>
+                  ))}
+                </div>
              </li>
           ))}
         </ul>
-        <p className="font-mono text-sm opacity-60 mt-4 whitespace-pre-wrap border-t border-black/10 pt-4">
-          {COPY.modules["02"].together}
+        <p className="font-mono text-sm opacity-muted mt-4 border-t border-black/10 pt-4 leading-relaxed">
+          {COPY.modules["02"].together.split('\n').map((line, i) => (
+            <span key={i}>{line}{i < COPY.modules["02"].together.split('\n').length - 1 && <br/>}</span>
+          ))}
         </p>
       </div>
     ),
@@ -112,29 +122,36 @@ export const CONTENT_MODULES: ModuleData[] = [
            <div className="font-serif text-2xl md:text-4xl leading-relaxed mb-4">
              {COPY.modules["03"].hero}
            </div>
-           <p className="font-sans text-lg md:text-xl opacity-90 leading-relaxed whitespace-pre-wrap">
-             {COPY.modules["03"].body}
-           </p>
+           <div className="font-sans text-lg md:text-xl opacity-secondary leading-relaxed">
+             {COPY.modules["03"].body.split('\n\n').map((para, i) => (
+               <p key={i} className={i > 0 ? 'mt-4' : ''}>{para}</p>
+             ))}
+           </div>
         </div>
 
-        <div className="space-y-2">
-           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60">{COPY.modules["03"].bulletsTitle}</h4>
-           <ul className="list-disc pl-4 space-y-1 font-sans opacity-90">
-             {COPY.modules["03"].bullets.map((b, i) => <li key={i}>{b}</li>)}
+        <div className="space-y-3">
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted">{COPY.modules["03"].bulletsTitle}</h4>
+           <ul className="space-y-2">
+             {COPY.modules["03"].bullets.map((b, i) => (
+               <li key={i} className="flex gap-3 items-start">
+                 <span className="font-mono text-xs opacity-muted pt-1">&bull;</span>
+                 <span className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">{b}</span>
+               </li>
+             ))}
            </ul>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-white/20">
            <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">{COPY.modules["03"].grid.leftTitle}:</h4>
-              <p className="font-sans font-bold">{COPY.modules["03"].grid.leftBody}</p>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted mb-2">{COPY.modules["03"].grid.leftTitle}:</h4>
+              <p className="font-sans text-base md:text-lg font-bold">{COPY.modules["03"].grid.leftBody}</p>
            </div>
            <div>
-              <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-1">{COPY.modules["03"].grid.rightTitle}:</h4>
-              <p className="font-sans font-bold">{COPY.modules["03"].grid.rightBody}</p>
+              <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted mb-2">{COPY.modules["03"].grid.rightTitle}:</h4>
+              <p className="font-sans text-base md:text-lg font-bold">{COPY.modules["03"].grid.rightBody}</p>
            </div>
         </div>
-        <p className="font-serif italic opacity-70 border-t border-white/10 pt-4 mt-4">{COPY.modules["03"].close}</p>
+        <p className="font-serif text-lg md:text-xl italic opacity-tertiary border-t border-white/10 pt-4 mt-4">{COPY.modules["03"].close}</p>
       </div>
     ),
   },
@@ -147,24 +164,46 @@ export const CONTENT_MODULES: ModuleData[] = [
     responseText: COPY.modules["04"].hero,
     responseDisplay: (
       <div className="space-y-8">
-        <p className="font-serif text-xl md:text-3xl leading-relaxed">
+        <p className="font-serif text-2xl md:text-4xl leading-relaxed">
           {COPY.modules["04"].hero}
         </p>
-        <div className="font-sans text-lg opacity-80 whitespace-pre-wrap">
-           {COPY.modules["04"].body}
+        <div className="font-sans text-lg md:text-xl opacity-secondary leading-relaxed">
+           {COPY.modules["04"].body.split('\n\n').map((para, i) => (
+             <p key={i} className={i > 0 ? 'mt-4' : ''}>{para}</p>
+           ))}
         </div>
 
         <div className="bg-black/5 p-6 border border-black/10">
-           <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-4">{COPY.modules["04"].wedgesTitle}</h4>
-           <ul className="space-y-2 font-mono text-sm list-disc pl-4">
-             {/* Note: Original copy used numbers 01,02,03 in text, but array is Strings in new copy. */}
-             {COPY.modules["04"].wedges.map((w,i) => <li key={i}>{w}</li>)}
+           <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted mb-4">{COPY.modules["04"].wedgesTitle}</h4>
+           <ul className="space-y-3">
+             {COPY.modules["04"].wedges.map((w,i) => (
+               <li key={i} className="flex gap-3 items-start">
+                 <span className="font-mono text-xs opacity-muted pt-0.5">0{i+1}</span>
+                 <span className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">{w}</span>
+               </li>
+             ))}
            </ul>
         </div>
 
         <div>
-             <h4 className="font-mono text-xs uppercase tracking-widest opacity-60 mb-3">{COPY.modules["04"].first30Title}</h4>
-             <p className="font-sans opacity-90 whitespace-pre-wrap">{COPY.modules["04"].first30}</p>
+             <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted mb-4">{COPY.modules["04"].first30Title}</h4>
+             <div className="space-y-4">
+               {COPY.modules["04"].first30.split('\n').map((line, i) => {
+                 const colonIndex = line.indexOf(':');
+                 const week = line.substring(0, colonIndex);
+                 const content = line.substring(colonIndex + 1).trim();
+                 return (
+                   <div key={i} className="flex gap-4 items-start">
+                     <span className="font-mono text-xs uppercase tracking-wider opacity-muted whitespace-nowrap pt-1">
+                       {week}:
+                     </span>
+                     <span className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">
+                       {content}
+                     </span>
+                   </div>
+                 );
+               })}
+             </div>
         </div>
       </div>
     ),

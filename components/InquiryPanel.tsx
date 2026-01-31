@@ -196,7 +196,7 @@ If helpful, I’m open to a short call.
             <p id={dialogDescId} className="sr-only">
               Client-side inquiry composer. Press Escape to close this panel.
             </p>
-            <div className="font-mono text-xs opacity-60 mt-2 space-y-1">
+            <div className="font-mono text-xs opacity-muted mt-2 space-y-1">
               <p>NO API. CLIENT-SIDE GENERATION ONLY.</p>
               <p>THIS DOES NOT SEND. IT COMPOSES.</p>
             </div>

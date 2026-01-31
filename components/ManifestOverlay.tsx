@@ -50,7 +50,7 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
         </div>
 
         <div className="mb-12">
-          <h2 className="font-sans text-9xl font-bold tracking-tighter opacity-10 select-none">INDEX</h2>
+          <h2 className="font-sans text-9xl font-bold tracking-tighter opacity-ghost select-none">INDEX</h2>
         </div>
 
         {/* Module List - Custom Order: 02, 01, 03, 04, 05 (PRD v1.0.2) */}
@@ -67,18 +67,18 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
                onClick={() => onNavigate(m.index)}
                className="group/item flex items-baseline gap-4 cursor-pointer border-b border-black/10 pb-4 hover:pl-4 transition-all duration-300"
              >
-               <span className="font-mono text-3xl md:text-4xl font-bold opacity-30 group-hover/item:opacity-100 group-hover/item:text-strata-blue transition-all">
+               <span className="font-mono text-3xl md:text-4xl font-bold opacity-subtle group-hover/item:opacity-primary group-hover/item:text-strata-blue transition-all">
                  {m.index}
                </span>
                <span className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight">
                  {m.title}
                </span>
-               <ArrowRight className="ml-auto w-5 h-5 opacity-0 group-hover/item:opacity-100 transition-opacity" />
+               <ArrowRight className="ml-auto w-5 h-5 opacity-0 group-hover/item:opacity-primary transition-opacity" />
              </div>
           ))}
         </div>
 
-        <div className="mt-12 font-mono text-xs opacity-50 max-w-md">
+        <div className="mt-12 font-mono text-xs opacity-subtle max-w-md">
             FOUNDER DOSSIER v1.0.2<br/>
             NO API. STATIC GENERATION.<br/>
             OPERATING SIMULATOR: LAZY MOUNTED.

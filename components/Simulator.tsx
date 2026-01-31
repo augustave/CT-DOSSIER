@@ -88,7 +88,7 @@ export const Simulator: React.FC<SimulatorProps> = ({ onInquiryRequest }) => {
         {/* Left Column: Controls */}
         <div className="p-8 space-y-8">
           <div>
-            <h3 className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-4">Input 01: Priority</h3>
+            <h3 className="font-mono text-micro uppercase tracking-widest text-white/60 mb-4">Input 01: Priority</h3>
             <div className="flex flex-col gap-2">
               {(['SPEED', 'CORRECTNESS', 'SCALE'] as Optimization[]).map((val) => (
                 <button
@@ -107,7 +107,7 @@ export const Simulator: React.FC<SimulatorProps> = ({ onInquiryRequest }) => {
           </div>
 
           <div>
-            <h3 className="font-mono text-[10px] uppercase tracking-widest text-white/60 mb-4">Input 02: Environment</h3>
+            <h3 className="font-mono text-micro uppercase tracking-widest text-white/60 mb-4">Input 02: Environment</h3>
             <div className="flex flex-col gap-2">
               {(['CHAOS', 'ENTERPRISE', 'REGULATED'] as Environment[]).map((val) => (
                 <button
@@ -133,22 +133,22 @@ export const Simulator: React.FC<SimulatorProps> = ({ onInquiryRequest }) => {
               <div className="space-y-6">
                 <div className="flex items-center gap-2 pb-4 border-b border-white/10">
                   <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                  <span className="font-mono text-[10px] uppercase tracking-widest text-green-500/80">Analysis Complete</span>
+                  <span className="font-mono text-micro uppercase tracking-widest text-green-500/80">Analysis Complete</span>
                 </div>
                 
                 <div>
                   <h4 className="font-sans text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">{result.archetype}</h4>
-                  <p className="font-serif text-lg md:text-xl italic opacity-90 leading-relaxed">&ldquo;{result.description}&rdquo;</p>
+                  <p className="font-serif text-lg md:text-xl italic opacity-secondary leading-relaxed">&ldquo;{result.description}&rdquo;</p>
                 </div>
 
                 <div className="pt-6 border-t border-white/10 grid grid-cols-1 gap-4">
                   <div>
-                    <h5 className="font-mono text-[10px] uppercase tracking-widest opacity-60 mb-2">Primary Risk</h5>
-                    <p className="font-sans font-bold text-sm">{result.risk}</p>
+                    <h5 className="font-mono text-micro uppercase tracking-widest opacity-muted mb-2">Primary Risk</h5>
+                    <p className="font-sans font-bold text-sm md:text-base">{result.risk}</p>
                   </div>
                   <div>
-                    <h5 className="font-mono text-[10px] uppercase tracking-widest opacity-60 mb-2">Mitigation</h5>
-                    <p className="font-sans text-sm opacity-80">{result.mitigation}</p>
+                    <h5 className="font-mono text-micro uppercase tracking-widest opacity-muted mb-2">Mitigation</h5>
+                    <p className="font-sans text-sm md:text-base opacity-secondary">{result.mitigation}</p>
                   </div>
                 </div>
               </div>
