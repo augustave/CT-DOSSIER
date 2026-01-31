@@ -1,8 +1,9 @@
 import React from 'react';
-import { ModuleData, ModuleType } from './types';
-
-import { FOUNDER_COPY_V110 } from './copy.v1_1';
-const COPY = FOUNDER_COPY_V110;
+import { ModuleData, ModuleType, Optimization, Environment, SimulatorResult } from './types';
+import { FOUNDER_COPY_V110 as COPY } from './copy.v1_1';
+import { ShieldAlert, BookOpen, Target, Box, Lock, Activity, Link as LinkIcon, FolderOpen, AlertCircle } from 'lucide-react';
+import { Simulator } from './components/Simulator';
+import { CollapsibleDrawer } from './components/CollapsibleDrawer';
 
 export const COLORS = {
   blue: 'bg-strata-blue text-white border-white/20 theme-blue',
@@ -204,6 +205,28 @@ export const CONTENT_MODULES: ModuleData[] = [
                  );
                })}
              </div>
+        </div>
+
+        <div className="mt-8">
+             <CollapsibleDrawer title={`COMPANIES I WOULD HAVE BUILT (+${COPY.modules["04"].companies.length})`} defaultOpen={false}>
+                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                   {COPY.modules["04"].companies.map((c, idx) => (
+                     <div key={idx} className="p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity">
+                        <h4 className="font-serif text-xl md:text-2xl mb-2 italic">{c.name}</h4>
+                        <div className="font-mono text-xs uppercase tracking-widest mb-4 opacity-tertiary">{c.tagline}</div>
+                        <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{c.why}</p>
+                        <div className="pt-4 border-t border-current/20 flex items-center gap-2">
+                           <span className="font-mono text-micro uppercase opacity-tertiary">{c.match}</span>
+                        </div>
+                     </div>
+                   ))}
+                 </div>
+                 <div className="mt-6 p-6 border-t border-current/20">
+                    <p className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">
+                       {COPY.modules["04"].companiesSynthesis}
+                    </p>
+                 </div>
+             </CollapsibleDrawer>
         </div>
       </div>
     ),

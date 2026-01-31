@@ -41,3 +41,12 @@ export interface InquiryState {
   challenge: string[];
   note: string;
 }
+
+export type Optimization = 'SPEED' | 'CORRECTNESS' | 'SCALE';
+export type Environment = 'CHAOS' | 'ENTERPRISE' | 'REGULATED';
+
+export interface SimulatorResult {
+  risk: string;
+  mitigation: string;
+  description: string;
+}

@@ -134,6 +134,52 @@ export const FOUNDER_COPY_V110 = {
           "Week 3: run it with one real operator in the wild.",
           "Week 4: tighten: every alert leads to a decision, every decision is logged, every outcome feeds the next iteration."
         ].join("\n"),
+      companiesTitle: "COMPANIES I WOULD HAVE BUILT",
+      companies: [
+        {
+           name: "Palantir",
+           tagline: "Decision OS for chaos",
+           why: "Systems that make chaotic environments navigable with hidden structure",
+           match: "Karp/Thiel (platform + contrarian mission)"
+        },
+        {
+           name: "Anduril",
+           tagline: "Autonomy + field deployment",
+           why: "Skunk Works tempo applied to autonomous systems",
+           match: "Palmer Luckey (rapid prototyping + high-risk tolerance)"
+        },
+        {
+           name: "Axon",
+           tagline: "Evidence infrastructure loop",
+           why: "Accountability loop: incident → capture → evidence → outcome",
+           match: "Rick Smith (mission framing + platform expansion)"
+        },
+        {
+           name: "Samsara",
+           tagline: "Connected Operations Cloud",
+           why: "Turning physical reality into signals and decisions",
+           match: "Biswas/Bicket (infrastructure for operators)"
+        },
+        {
+           name: "Verkada",
+           tagline: "Physical security as cloud platform",
+           why: "Sensors + interface + decisioning for real-world deployment",
+           match: "Filip Kaliszan (platformization of messy physical category)"
+        },
+        {
+           name: "Flock Safety",
+           tagline: "Safety network + evidence",
+           why: "Incident → signal → evidence → resolution in high-stakes domains",
+           match: "Garrett Langley (tangible community impact + deploy fast)"
+        },
+        {
+           name: "Vanta",
+           tagline: "Trust/compliance automation",
+           why: "Auditability and proof, systems that explain themselves",
+           match: "Christina Cacioppo (institutional pain → default tool)"
+        }
+      ],
+      companiesSynthesis: "If I started tomorrow, I'd build a hybrid of Palantir/Samsara (reality → signals → decisions), Axon/Vanta (decisions → proof → audit trail), with Anduril-style tempo (deploy in field, iterate under constraint).\nThe pattern: not a single product, but a control stack: sensing + interpretation + workflow + accountability."
     },
   },
 };
