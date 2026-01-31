@@ -4,6 +4,7 @@ import { FOUNDER_COPY_V110 as COPY } from './copy.v1_1';
 import { ShieldAlert, BookOpen, Target, Box, Lock, Activity, Link as LinkIcon, FolderOpen, AlertCircle } from 'lucide-react';
 import { Simulator } from './components/Simulator';
 import { CollapsibleDrawer } from './components/CollapsibleDrawer';
+import { AnimatedGrid } from './components/AnimatedGrid';
 
 export const COLORS = {
   blue: 'bg-strata-blue text-white border-white/20 theme-blue',
@@ -209,9 +210,10 @@ export const CONTENT_MODULES: ModuleData[] = [
 
         <div className="mt-8">
              <CollapsibleDrawer title="COMPANIES I WOULD HAVE BUILT" defaultOpen={true}>
-                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                   {COPY.modules["04"].companies.map((c, idx) => (
-                     <div key={idx} className="p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity">
+                 <AnimatedGrid>
+                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                       {COPY.modules["04"].companies.map((c, idx) => (
+                     <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity ${c.name === "Vanta" ? "md:col-start-2" : ""}`}>
                         <h4 className="font-serif text-xl md:text-2xl mb-2 italic">{c.name}</h4>
                         <div className="font-mono text-xs uppercase tracking-widest mb-4 opacity-tertiary">{c.tagline}</div>
                         <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{c.why}</p>
@@ -226,6 +228,7 @@ export const CONTENT_MODULES: ModuleData[] = [
                        {COPY.modules["04"].companiesSynthesis}
                     </p>
                  </div>
+                 </AnimatedGrid>
              </CollapsibleDrawer>
         </div>
       </div>

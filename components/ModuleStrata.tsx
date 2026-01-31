@@ -13,6 +13,9 @@ interface ModuleStrataProps {
 }
 
 import { CollapsibleDrawer } from './CollapsibleDrawer';
+import { AnimatedGrid } from './AnimatedGrid';
+import { motion } from 'framer-motion';
+import { useContainerCenter } from '../hooks/useContainerCenter';
 
 export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onToggle, onInquiryRequest }) => {
   const themeClass = COLORS[module.themeColor];
@@ -195,26 +198,27 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 </div>
               </div>
 
-              {/* Collapsible Drawers Stack */}
-              <div className="space-y-6 mb-12">
-                
+
+
                 {/* 1. Recruits Cards (Module 02 Specific) */}
                 {module.id === ModuleType.RECRUITS && (
                    <CollapsibleDrawer title="UNFOLD CARDS" defaultOpen={true}>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-                        {RECRUIT_CARDS.map((card, idx) => (
-                          <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity`}>
-                            <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-tertiary">{card.role}</div>
-                            <h4 className="font-serif text-xl md:text-2xl mb-4 italic">{card.name}</h4>
-                            <p className="font-sans text-sm md:text-base font-bold mb-2">{card.capability}</p>
-                            <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{card.desc}</p>
-                            <div className="pt-4 border-t border-current/20 flex items-center gap-2">
-                              <ShieldAlert className="w-4 h-4" />
-                              <span className="font-mono text-micro uppercase opacity-tertiary">Prevents: {card.prevents}</span>
-                            </div>
+                      <AnimatedGrid>
+                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                            {RECRUIT_CARDS.map((card, idx) => (
+                              <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity`}>
+                                <div className="font-mono text-xs uppercase tracking-widest mb-2 opacity-tertiary">{card.role}</div>
+                                <h4 className="font-serif text-xl md:text-2xl mb-4 italic">{card.name}</h4>
+                                <p className="font-sans text-sm md:text-base font-bold mb-2">{card.capability}</p>
+                                <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{card.desc}</p>
+                                <div className="pt-4 border-t border-current/20 flex items-center gap-2">
+                                  <ShieldAlert className="w-4 h-4" />
+                                  <span className="font-mono text-micro uppercase opacity-tertiary">Prevents: {card.prevents}</span>
+                                </div>
+                              </div>
+                            ))}
                           </div>
-                        ))}
-                      </div>
+                      </AnimatedGrid>
                    </CollapsibleDrawer>
                 )}
 
@@ -244,7 +248,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 )}
 
               </div>
-            </div>
+
 
             {/* Column B: Evidence & Actions (Visible when Details Open OR Manifest Hidden) */}
             {module.id !== ModuleType.MANIFEST && (
