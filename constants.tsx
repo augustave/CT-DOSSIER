@@ -208,7 +208,7 @@ export const CONTENT_MODULES: ModuleData[] = [
         </div>
 
         <div className="mt-8">
-             <CollapsibleDrawer title={`COMPANIES I WOULD HAVE BUILT (+${COPY.modules["04"].companies.length})`} defaultOpen={false}>
+             <CollapsibleDrawer title="COMPANIES I WOULD HAVE BUILT" defaultOpen={true}>
                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                    {COPY.modules["04"].companies.map((c, idx) => (
                      <div key={idx} className="p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity">

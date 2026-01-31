@@ -200,7 +200,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 
                 {/* 1. Recruits Cards (Module 02 Specific) */}
                 {module.id === ModuleType.RECRUITS && (
-                   <CollapsibleDrawer title={`UNFOLD CARDS (+${RECRUIT_CARDS.length})`} defaultOpen={false}>
+                   <CollapsibleDrawer title="UNFOLD CARDS" defaultOpen={true}>
                       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                         {RECRUIT_CARDS.map((card, idx) => (
                           <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity`}>
