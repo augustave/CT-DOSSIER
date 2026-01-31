@@ -87,11 +87,13 @@ export const FOUNDER_COPY_V110 = {
     "03": {
       title: "FOUNDER MODEL",
       prompt: "FOUNDER TYPE — RESULT",
-      hero: "My founder archetype is the Coherence + Tempo Founder.",
+      hero: "I'm what you'd call a Skunkworks Systems Founder.",
       body:
         [
-          "I optimize for speed in low-information environments.",
-          "I ship small, real loops to buy signal — then I harden what works into something people can trust."
+          "I don't see products. I see systems that have to keep working when things go wrong.",
+          "When I recruit, I'm looking for leverage—people who change trajectories, not people who add capacity. The three I'd pick: Michael Levin (makes parts become coherent wholes), Chase Hughes (turns human chaos into signal), Kelly Johnson (ships impossible things fast). Together they solve the three ways projects die: systems fall apart, people don't align, nothing ships.",
+          "I care about control layers. How things self-organize. How decisions get made. How execution actually happens. Not tactics.",
+          "What this looks like: I start with frameworks. I build prototypes to test them. I'm good at naming things and building narrative. I hate busywork and design-by-committee."
         ].join("\n\n"),
       bulletsTitle: "MY DEFAULT OPERATING BIAS",
       bullets: [
@@ -101,12 +103,12 @@ export const FOUNDER_COPY_V110 = {
       ],
       grid: {
         leftTitle: "PRIMARY TENSION",
-        leftBody: "I can outrun cleanup (tempo beats hygiene if I’m not careful).",
+        leftBody: "I can outrun cleanup (tempo beats hygiene if I'm not careful).",
         rightTitle: "COUNTER-BALANCE",
         rightBody: "Scheduled refactor sprints enforced as policy.",
       },
       close:
-        "If you want the short version: I’m trying to build an operating system for outcomes, not a single-feature app.",
+        "The short version: I build operating systems for outcomes, not single-feature apps.",
     },
 
     "04": {
