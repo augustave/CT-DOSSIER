@@ -71,11 +71,7 @@ export const CONTENT_MODULES: ModuleData[] = [
           ))}
         </div>
       </div>
-    ),
-    stressTest: {
-      title: COPY.modules["01"].noteTitle,
-      content: COPY.modules["01"].noteLines
-    }
+    )
   },
   {
     id: ModuleType.RECRUITS,

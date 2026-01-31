@@ -18,14 +18,14 @@ const App: React.FC = () => {
       const index = hash.replace('#module-', '');
       setOpenModuleIndex(index);
     } else {
-        // PRD Requirement: Force default to #02 if no hash
+        // PRD Requirement: Force default to #01 if no hash
         // We override previous logic that checked localStorage first for privacy/mandate reasons
-        // But we can keep localStorage check if desired, but PRD says "On load: if no hash -> set #02."
+        // But we can keep localStorage check if desired, but PRD says "On load: if no hash -> set #01."
         // Let's bias towards the mandate.
-        setOpenModuleIndex("02");
+        setOpenModuleIndex("01");
         // Update URL to match without scrolling (yet)
         try {
-            history.replaceState(null, document.title, '#module-02');
+            history.replaceState(null, document.title, '#module-01');
         } catch(e) {}
     }
 
