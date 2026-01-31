@@ -88,7 +88,7 @@ const App: React.FC = () => {
       {/* Navigation / Brand Overlay */}
       <div className="fixed top-0 left-0 w-full z-40 pointer-events-none px-4 py-4 md:px-8 flex justify-between items-start">
          <div className="font-sans font-black text-xl tracking-tightest leading-none pointer-events-auto cursor-pointer text-black" onClick={() => window.scrollTo(0,0)}>
-           FOUNDER<br/>DOSSIER
+           FOUNDER<br/>DOSSIER<br/><span className="opacity-50">EBENZ AUGUSTAVE</span>
          </div>
          
          <div className="flex flex-col items-end gap-2 pointer-events-auto">
