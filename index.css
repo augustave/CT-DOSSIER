@@ -16,6 +16,14 @@
   --space-element: 1.5rem;
   --space-tight: 1rem;
   --space-micro: 0.5rem;
+
+  /* Opacity semantic tokens */
+  --opacity-primary: 1;
+  --opacity-secondary: 0.85;
+  --opacity-tertiary: 0.70;
+  --opacity-muted: 0.60;
+  --opacity-subtle: 0.40;
+  --opacity-ghost: 0.10;
 }
 
 /* Per-stratum overrides */
