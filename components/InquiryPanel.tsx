@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { INQUIRY_OPTIONS, INQUIRY_QUESTIONS } from '../constants';
 import { InquiryState } from '../types';
-import { X, Copy, Mail, Download, Check, AlertCircle } from 'lucide-react';
+import { X, Copy, Mail, Download, Check, AlertCircle, AlertTriangle } from 'lucide-react';
+import { useClipboard } from '../hooks/useClipboard';
 
 interface InquiryPanelProps {
   isOpen: boolean;
@@ -10,16 +11,18 @@ interface InquiryPanelProps {
   context?: string;
 }
 
+const MAX_QUESTIONS = 5;
+
 export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, context }) => {
   const [state, setState] = useState<InquiryState>({
     assess: [],
     challenge: [],
     note: ''
   });
-  const [copied, setCopied] = useState(false);
+  const { copy, copied } = useClipboard();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const lastFocusedRef = useRef<HTMLElement | null>(null);
+  const lastFocusedRef = useRef<Element | null>(null);
   const copyStatusId = 'inquiry-copy-status';
   const dialogDescId = 'inquiry-dialog-description';
 
@@ -39,38 +42,14 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
 
   useEffect(() => {
     if (!isOpen) return;
-    lastFocusedRef.current = document.activeElement as HTMLElement | null;
+    lastFocusedRef.current = document.activeElement;
     requestAnimationFrame(() => closeButtonRef.current?.focus());
     return () => {
-      lastFocusedRef.current?.focus();
+      if (lastFocusedRef.current instanceof HTMLElement) {
+        lastFocusedRef.current.focus();
+      }
     };
   }, [isOpen]);
-
-  const copyText = async (text: string) => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        return true;
-      }
-    } catch (error) {
-      console.warn('Clipboard copy failed:', error);
-    }
-    try {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.setAttribute('readonly', 'true');
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      const success = document.execCommand('copy');
-      document.body.removeChild(textarea);
-      return success;
-    } catch (error) {
-      console.warn('Clipboard fallback failed:', error);
-      return false;
-    }
-  };
 
   const toggleSelection = (category: 'assess' | 'challenge', item: string) => {
     setState(prev => {
@@ -82,7 +61,7 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
     });
   };
 
-  const getQuestions = () => {
+  const getQuestions = (): { questions: string[]; truncated: number } => {
     let questions: string[] = [];
 
     // Rule: pick 2 questions per "Assess" item
@@ -97,12 +76,13 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
       questions = [...questions, ...pool.slice(0, 2)];
     });
 
-    // Cap at 5 total questions to keep it punchy
-    return questions.slice(0, 5);
+    // Cap at MAX_QUESTIONS total questions to keep it punchy
+    const truncated = Math.max(0, questions.length - MAX_QUESTIONS);
+    return { questions: questions.slice(0, MAX_QUESTIONS), truncated };
   };
 
   const generateMessage = () => {
-    const questions = getQuestions();
+    const { questions } = getQuestions();
     const assessList = state.assess.length > 0 ? state.assess.join(', ') : '(None)';
     const challengeList = state.challenge.length > 0 ? state.challenge.join(', ') : '(None)';
     const contextStr = context || 'FOUNDER DOSSIER';
@@ -120,17 +100,13 @@ ${questions.length > 0 ? questions.map((q, i) => `${i + 1}. ${q}`).join('\n') : 
 
 ${state.note ? `\nContext/Notes:\n${state.note}` : ''}
 
-If helpful, I’m open to a short call.
+If helpful, I'm open to a short call.
 — {NAME}
     `.trim();
   };
 
   const handleCopy = async () => {
-    const success = await copyText(generateMessage());
-    if (success) {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    }
+    await copy(generateMessage());
   };
 
   const handleMailto = () => {
@@ -286,19 +262,34 @@ If helpful, I’m open to a short call.
             </div>
 
             {/* Preview */}
-            <div className="bg-black/5 p-4 border border-black/10 font-mono text-xs text-gray-600">
-               <div className="flex items-center gap-2 mb-2">
-                 <AlertCircle className="w-3 h-3" />
-                 <span className="uppercase tracking-wider">Preview Generated Questions</span>
-               </div>
-               {getQuestions().length > 0 ? (
-                 <ul className="space-y-1 list-disc pl-4">
-                   {getQuestions().map((q, i) => <li key={i}>{q}</li>)}
-                 </ul>
-               ) : (
-                 <span className="italic">Select items above to populate interview questions.</span>
-               )}
-            </div>
+            {(() => {
+              const { questions, truncated } = getQuestions();
+              return (
+                <div className="bg-black/5 p-4 border border-black/10 font-mono text-xs text-gray-600">
+                  <div className="flex items-center gap-2 mb-2">
+                    <AlertCircle className="w-3 h-3" />
+                    <span className="uppercase tracking-wider">Preview Generated Questions</span>
+                  </div>
+                  {questions.length > 0 ? (
+                    <>
+                      <ul className="space-y-1 list-disc pl-4">
+                        {questions.map((q, i) => <li key={i}>{q}</li>)}
+                      </ul>
+                      {truncated > 0 && (
+                        <div className="flex items-center gap-2 mt-3 text-amber-600">
+                          <AlertTriangle className="w-3 h-3" />
+                          <span className="uppercase tracking-wider">
+                            {truncated} question{truncated > 1 ? 's' : ''} omitted (max {MAX_QUESTIONS})
+                          </span>
+                        </div>
+                      )}
+                    </>
+                  ) : (
+                    <span className="italic">Select items above to populate interview questions.</span>
+                  )}
+                </div>
+              );
+            })()}
 
           </div>
 

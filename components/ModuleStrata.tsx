@@ -1,9 +1,13 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { ModuleData, ModuleType } from '../types';
 import { COLORS, RECRUIT_CARDS } from '../constants';
-import { ChevronDown, ExternalLink, ShieldAlert, Fingerprint, Link as LinkIcon, Check } from 'lucide-react';
+import { ChevronDown, ShieldAlert, Fingerprint, Link as LinkIcon, Check } from 'lucide-react';
+import { CollapsibleDrawer } from './CollapsibleDrawer';
+import { AnimatedGrid } from './AnimatedGrid';
+import { ErrorBoundary } from './ErrorBoundary';
+import { useClipboard } from '../hooks/useClipboard';
 
-const Simulator = React.lazy(() => import('./Simulator').then(module => ({ default: module.Simulator }))); // Lazy load
+const Simulator = React.lazy(() => import('./Simulator').then(module => ({ default: module.Simulator })));
 
 interface ModuleStrataProps {
   module: ModuleData;
@@ -12,15 +16,10 @@ interface ModuleStrataProps {
   onInquiryRequest: (context: string) => void;
 }
 
-import { CollapsibleDrawer } from './CollapsibleDrawer';
-import { AnimatedGrid } from './AnimatedGrid';
-import { motion } from 'framer-motion';
-import { useContainerCenter } from '../hooks/useContainerCenter';
-
 export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onToggle, onInquiryRequest }) => {
   const themeClass = COLORS[module.themeColor];
   const containerRef = useRef<HTMLElement>(null);
-  const [linkCopied, setLinkCopied] = useState(false);
+  const { copy, copied: linkCopied } = useClipboard();
   const panelId = `module-panel-${module.index}`;
   const linkStatusId = `module-link-status-${module.index}`;
 
@@ -35,32 +34,6 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     el.scrollIntoView({ behavior, block: 'start' });
   };
 
-  const copyText = async (text: string) => {
-    try {
-      if (navigator.clipboard?.writeText) {
-        await navigator.clipboard.writeText(text);
-        return true;
-      }
-    } catch (error) {
-      console.warn('Clipboard copy failed:', error);
-    }
-    try {
-      const textarea = document.createElement('textarea');
-      textarea.value = text;
-      textarea.setAttribute('readonly', 'true');
-      textarea.style.position = 'fixed';
-      textarea.style.opacity = '0';
-      document.body.appendChild(textarea);
-      textarea.select();
-      const success = document.execCommand('copy');
-      document.body.removeChild(textarea);
-      return success;
-    } catch (error) {
-      console.warn('Clipboard fallback failed:', error);
-      return false;
-    }
-  };
-
   // Snap to view when opened
   useEffect(() => {
     if (isOpen && containerRef.current) {
@@ -73,11 +46,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
   const handleCopyLink = async (e: React.MouseEvent) => {
     e.stopPropagation();
     const url = `${window.location.origin}${window.location.pathname}#module-${module.index}`;
-    const success = await copyText(url);
-    if (success) {
-      setLinkCopied(true);
-      setTimeout(() => setLinkCopied(false), 2000);
-    }
+    await copy(url);
   };
 
     // Artifacts UI Removed
@@ -225,9 +194,11 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 {/* 2. Simulator (Module 05) */}
                 {module.id === ModuleType.SIMULATOR && (
                   <div className="mt-4 mb-2" onClick={(e) => e.stopPropagation()}>
-                    <React.Suspense fallback={<div className="font-mono text-xs animate-pulse">LOADING SIMULATOR...</div>}>
-                         <Simulator onInquiryRequest={onInquiryRequest} />
-                    </React.Suspense>
+                    <ErrorBoundary fallbackMessage="Simulator failed to load">
+                      <React.Suspense fallback={<div className="font-mono text-xs animate-pulse">LOADING SIMULATOR...</div>}>
+                        <Simulator onInquiryRequest={onInquiryRequest} />
+                      </React.Suspense>
+                    </ErrorBoundary>
                   </div>
                 )}
 

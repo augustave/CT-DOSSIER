@@ -11,15 +11,17 @@ export enum ModuleType {
   INQUIRY = 'INQUIRY'
 }
 
+/** Evidence link item for module sidebar. Reserved for future use. */
 export interface EvidenceItem {
   title: string;
   description: string;
   link: string;
 }
 
+/** Subsection for implications and stress tests. Reserved for future use. */
 export interface SubSection {
   title: string;
-  content: string[]; // Array of bullet points or paragraphs
+  content: string[];
 }
 
 export interface ModuleData {

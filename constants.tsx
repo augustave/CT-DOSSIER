@@ -37,6 +37,11 @@ export const RECRUIT_CARDS = [
   }
 ];
 
+/**
+ * Content modules for the Founder Dossier.
+ * Note: Display indices (01, 02, etc.) intentionally differ from copy file keys
+ * per PRD v1.0.2 for custom sort order: RECRUITS shows first (01), THESIS second (02).
+ */
 export const CONTENT_MODULES: ModuleData[] = [
   {
     id: ModuleType.MANIFEST,
@@ -46,9 +51,9 @@ export const CONTENT_MODULES: ModuleData[] = [
     themeColor: 'cream',
     responseText: "Select a stratum to jump to its coordinates.",
     responseDisplay: "Select a stratum to jump to its coordinates.",
-    // Custom component handles the list
   },
   {
+    // Display index "02" uses copy file key "01" (FOUNDER/THESIS)
     id: ModuleType.THESIS,
     index: "02",
     title: COPY.modules["01"].title,
@@ -74,6 +79,7 @@ export const CONTENT_MODULES: ModuleData[] = [
     )
   },
   {
+    // Display index "01" uses copy file key "02" (RECRUITS) - shows first per PRD
     id: ModuleType.RECRUITS,
     index: "01",
     title: COPY.modules["02"].title,
