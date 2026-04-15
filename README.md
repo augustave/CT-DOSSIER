@@ -129,7 +129,14 @@ The Inquiry Panel must output:
 
 * Clipboard API for copy
 * Blob download for `.txt`
-* `localStorage` optional (remember checkbox selections)
+* `VITE_CONTACT_EMAIL` for enabling the mailto draft action
+
+### Local setup
+
+1. Copy `.env.example` to `.env`
+2. Set `VITE_CONTACT_EMAIL` to the destination address for inquiry drafts
+3. Run `npm install`
+4. Run `npm run build`, `npm run typecheck`, and `npm test -- --run`
 
 ## Accessibility requirements
 

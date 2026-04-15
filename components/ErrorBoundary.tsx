@@ -1,5 +1,5 @@
 import React, { Component, ReactNode } from 'react';
-import { AlertCircle, RefreshCw } from 'lucide-react';
+import { AlertCircleIcon, RefreshCwIcon } from './icons';
 
 interface Props {
   children: ReactNode;
@@ -34,7 +34,7 @@ export class ErrorBoundary extends Component<Props, State> {
       return (
         <div className="p-6 border border-red-500/30 bg-red-50/50">
           <div className="flex items-center gap-2 text-red-600 mb-3">
-            <AlertCircle className="w-5 h-5" />
+            <AlertCircleIcon className="w-5 h-5" />
             <span className="font-mono text-sm uppercase tracking-widest font-bold">
               {this.props.fallbackMessage || 'Component failed to load'}
             </span>
@@ -46,7 +46,7 @@ export class ErrorBoundary extends Component<Props, State> {
             onClick={this.handleRetry}
             className="flex items-center gap-2 px-4 py-2 border border-red-500/50 text-red-600 font-mono text-xs uppercase tracking-widest hover:bg-red-100 transition-colors"
           >
-            <RefreshCw className="w-4 h-4" />
+            <RefreshCwIcon className="w-4 h-4" />
             Retry
           </button>
         </div>

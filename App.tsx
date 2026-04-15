@@ -5,6 +5,8 @@ import { InquiryPanel } from './components/InquiryPanel';
 import { ManifestOverlay } from './components/ManifestOverlay';
 import { ModuleType } from './types';
 
+const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL?.trim() ?? '';
+
 const App: React.FC = () => {
   const [openModuleIndex, setOpenModuleIndex] = useState<string | null>(null);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
@@ -39,17 +41,6 @@ const App: React.FC = () => {
     window.addEventListener('hashchange', handleHashChange);
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
-
-  // Persistence (Optional, kept for state recovery if user navigates back)
-  useEffect(() => {
-    if (openModuleIndex) {
-      try {
-        localStorage.setItem('founder:lastModuleId', openModuleIndex);
-      } catch (e) {
-        // Ignore localStorage errors
-      }
-    }
-  }, [openModuleIndex]);
 
   const handleToggle = (index: string) => {
     if (openModuleIndex === index) {
@@ -155,6 +146,7 @@ const App: React.FC = () => {
         isOpen={isInquiryOpen} 
         onClose={() => setIsInquiryOpen(false)}
         context={inquiryContext}
+        contactEmail={CONTACT_EMAIL}
       />
     </div>
   );

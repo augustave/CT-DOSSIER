@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { CONTENT_MODULES } from '../constants';
 import { ModuleType } from '../types';
-import { ArrowRight, X } from 'lucide-react';
+import { ArrowRightIcon, XIcon } from './icons';
 
 interface ManifestOverlayProps {
   isOpen: boolean;
@@ -45,7 +45,7 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
              className="group flex items-center gap-2 font-mono text-xs uppercase tracking-widest bg-black text-white px-4 py-2 hover:bg-black/80 transition-colors"
            >
              <span>Close Index</span>
-             <X className="w-4 h-4 group-hover:rotate-90 transition-transform" />
+             <XIcon className="w-4 h-4 group-hover:rotate-90 transition-transform" />
            </button>
         </div>
 
@@ -73,7 +73,7 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
                <span className="font-sans text-xl md:text-2xl font-bold uppercase tracking-tight">
                  {m.title}
                </span>
-               <ArrowRight className="ml-auto w-5 h-5 opacity-0 group-hover/item:opacity-primary transition-opacity" />
+               <ArrowRightIcon className="ml-auto w-5 h-5 opacity-0 group-hover/item:opacity-primary transition-opacity" />
              </div>
           ))}
         </div>

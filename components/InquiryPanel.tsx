@@ -2,23 +2,32 @@ import React, { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { INQUIRY_OPTIONS, INQUIRY_QUESTIONS } from '../constants';
 import { InquiryState } from '../types';
-import { X, Copy, Mail, Download, Check, AlertCircle, AlertTriangle } from 'lucide-react';
 import { useClipboard } from '../hooks/useClipboard';
+import { XIcon, CopyIcon, MailIcon, DownloadIcon, CheckIcon, AlertCircleIcon, AlertTriangleIcon } from './icons';
 
 interface InquiryPanelProps {
   isOpen: boolean;
   onClose: () => void;
   context?: string;
+  contactEmail?: string;
 }
 
 const MAX_QUESTIONS = 5;
 
-export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, context }) => {
-  const [state, setState] = useState<InquiryState>({
-    assess: [],
-    challenge: [],
-    note: ''
-  });
+const getInitialState = (context?: string): InquiryState => ({
+  assess: [],
+  challenge: [],
+  note: context ? `Regarding: ${context}\n` : ''
+});
+
+export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, context, contactEmail = '' }) => {
+  const [state, setState] = useState<InquiryState>(() => getInitialState(context));
+  const normalizedContactEmail = contactEmail.trim();
+  const hasContactEmail = normalizedContactEmail.length > 0;
+  const mailtoDisabledReason = 'Set VITE_CONTACT_EMAIL to enable email drafts.';
+  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'done'>('idle');
+  const downloadResetTimerRef = useRef<number | null>(null);
+  const downloadStatusId = 'inquiry-download-status';
   const { copy, copied } = useClipboard();
   const panelRef = useRef<HTMLDivElement>(null);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
@@ -26,30 +35,32 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
   const copyStatusId = 'inquiry-copy-status';
   const dialogDescId = 'inquiry-dialog-description';
 
-  // Add context to note if provided
   useEffect(() => {
-    if (context) {
-      const contextLine = `Regarding: ${context}`;
-      setState(prev => {
-        if (prev.note.includes(contextLine)) return prev;
-        return {
-          ...prev,
-          note: prev.note ? `${contextLine}\n${prev.note}` : `${contextLine}\n`
-        };
-      });
-    }
-  }, [context]);
+    if (!isOpen) return;
+    setState(getInitialState(context));
+  }, [context, isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
     lastFocusedRef.current = document.activeElement;
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     requestAnimationFrame(() => closeButtonRef.current?.focus());
     return () => {
+      document.body.style.overflow = previousOverflow;
       if (lastFocusedRef.current instanceof HTMLElement) {
         lastFocusedRef.current.focus();
       }
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    return () => {
+      if (downloadResetTimerRef.current !== null) {
+        window.clearTimeout(downloadResetTimerRef.current);
+      }
+    };
+  }, []);
 
   const toggleSelection = (category: 'assess' | 'challenge', item: string) => {
     setState(prev => {
@@ -110,21 +121,29 @@ If helpful, I'm open to a short call.
   };
 
   const handleMailto = () => {
+    if (!hasContactEmail) return;
     const assessList = state.assess.length > 0 ? state.assess.join(', ') : 'None';
     const challengeList = state.challenge.length > 0 ? state.challenge.join(', ') : 'None';
     const subject = encodeURIComponent(`INQUIRY — ${assessList} / ${challengeList}`);
     const body = encodeURIComponent(generateMessage());
-    window.location.href = `mailto:founder@example.com?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${normalizedContactEmail}?subject=${subject}&body=${body}`;
   };
 
   const handleDownload = () => {
     const element = document.createElement("a");
     const file = new Blob([generateMessage()], {type: 'text/plain'});
-    element.href = URL.createObjectURL(file);
+    const objectUrl = URL.createObjectURL(file);
+    element.href = objectUrl;
     element.download = "founder_inquiry.txt";
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
+    URL.revokeObjectURL(objectUrl);
+    setDownloadStatus('done');
+    if (downloadResetTimerRef.current !== null) {
+      window.clearTimeout(downloadResetTimerRef.current);
+    }
+    downloadResetTimerRef.current = window.setTimeout(() => setDownloadStatus('idle'), 2000);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -140,7 +159,7 @@ If helpful, I'm open to a short call.
       panel.querySelectorAll<HTMLElement>(
         'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
       )
-    ).filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+    ).filter(el => !el.hasAttribute('disabled') && !el.hasAttribute('hidden') && el.tabIndex !== -1);
     if (focusable.length === 0) return;
     const first = focusable[0];
     const last = focusable[focusable.length - 1];
@@ -170,12 +189,14 @@ If helpful, I'm open to a short call.
 
         {/* Panel Content */}
         <div 
+            ref={panelRef}
             className="relative w-full max-w-4xl max-h-[90vh] overflow-hidden bg-white border border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] flex flex-col"
             role="dialog"
             aria-modal="true"
             aria-labelledby="inquiry-title"
             aria-describedby={dialogDescId}
             onClick={(e) => e.stopPropagation()}
+            onKeyDown={handleKeyDown}
         >
           {/* Header */}
           <div className="p-8 border-b border-black/10 flex justify-between items-start bg-strata-cream">
@@ -195,7 +216,7 @@ If helpful, I'm open to a short call.
               aria-label="Close inquiry panel"
               className="p-2 hover:bg-black text-black hover:text-white transition-colors border border-transparent hover:border-black"
             >
-              <X className="w-6 h-6" />
+              <XIcon className="w-6 h-6" />
             </button>
           </div>
 
@@ -211,7 +232,7 @@ If helpful, I'm open to a short call.
                  {INQUIRY_OPTIONS.assess.map(opt => (
                    <label key={opt} className="flex items-center gap-3 cursor-pointer group">
                      <div className={`w-5 h-5 border border-black flex items-center justify-center transition-colors ${state.assess.includes(opt) ? 'bg-black text-white' : 'bg-transparent'}`}>
-                       {state.assess.includes(opt) && <Check className="w-3 h-3" />}
+                       {state.assess.includes(opt) && <CheckIcon className="w-3 h-3" />}
                      </div>
                      <input 
                        type="checkbox" 
@@ -234,7 +255,7 @@ If helpful, I'm open to a short call.
                  {INQUIRY_OPTIONS.challenge.map(opt => (
                    <label key={opt} className="flex items-center gap-3 cursor-pointer group">
                      <div className={`w-5 h-5 border border-black flex items-center justify-center transition-colors ${state.challenge.includes(opt) ? 'bg-black text-white' : 'bg-transparent'}`}>
-                       {state.challenge.includes(opt) && <Check className="w-3 h-3" />}
+                       {state.challenge.includes(opt) && <CheckIcon className="w-3 h-3" />}
                      </div>
                      <input 
                        type="checkbox" 
@@ -267,7 +288,7 @@ If helpful, I'm open to a short call.
               return (
                 <div className="bg-black/5 p-4 border border-black/10 font-mono text-xs text-gray-600">
                   <div className="flex items-center gap-2 mb-2">
-                    <AlertCircle className="w-3 h-3" />
+                    <AlertCircleIcon className="w-3 h-3" />
                     <span className="uppercase tracking-wider">Preview Generated Questions</span>
                   </div>
                   {questions.length > 0 ? (
@@ -277,7 +298,7 @@ If helpful, I'm open to a short call.
                       </ul>
                       {truncated > 0 && (
                         <div className="flex items-center gap-2 mt-3 text-amber-600">
-                          <AlertTriangle className="w-3 h-3" />
+                          <AlertTriangleIcon className="w-3 h-3" />
                           <span className="uppercase tracking-wider">
                             {truncated} question{truncated > 1 ? 's' : ''} omitted (max {MAX_QUESTIONS})
                           </span>
@@ -301,7 +322,7 @@ If helpful, I'm open to a short call.
                 aria-describedby={copyStatusId}
                 className="w-full flex items-center justify-center gap-2 bg-black text-white p-4 font-mono text-sm uppercase tracking-widest hover:bg-gray-800 transition-colors"
               >
-                {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+                {copied ? <CheckIcon className="w-4 h-4" /> : <CopyIcon className="w-4 h-4" />}
                 {copied ? 'COPIED TO CLIPBOARD' : 'COPY MESSAGE'}
               </button>
               <span id={copyStatusId} className="sr-only" role="status" aria-live="polite">
@@ -310,17 +331,28 @@ If helpful, I'm open to a short call.
               <div className="grid grid-cols-2 gap-3">
                  <button 
                   onClick={handleMailto}
-                  className="flex items-center justify-center gap-2 border border-black p-3 font-mono text-xs uppercase hover:bg-black/5 transition-colors"
+                  disabled={!hasContactEmail}
+                  title={hasContactEmail ? undefined : mailtoDisabledReason}
+                  className="flex items-center justify-center gap-2 border border-black p-3 font-mono text-xs uppercase hover:bg-black/5 transition-colors disabled:cursor-not-allowed disabled:opacity-40"
                  >
-                   <Mail className="w-3 h-3" /> EMAIL DRAFT
+                   <MailIcon className="w-3 h-3" /> {hasContactEmail ? 'EMAIL DRAFT' : 'EMAIL DISABLED'}
                  </button>
                  <button 
                   onClick={handleDownload}
+                  aria-describedby={downloadStatusId}
                   className="flex items-center justify-center gap-2 border border-black p-3 font-mono text-xs uppercase hover:bg-black/5 transition-colors"
                  >
-                   <Download className="w-3 h-3" /> .TXT FILE
+                   <DownloadIcon className="w-3 h-3" /> .TXT FILE
                  </button>
               </div>
+              <span id={downloadStatusId} className="sr-only" role="status" aria-live="polite">
+                {downloadStatus === 'done' ? 'Inquiry text file downloaded.' : ''}
+              </span>
+              {!hasContactEmail && (
+                <p className="font-mono text-xs uppercase tracking-wider text-amber-700">
+                  {mailtoDisabledReason}
+                </p>
+              )}
             </div>
           </div>
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertTriangle, MessageSquarePlus } from 'lucide-react';
+import { MessageSquarePlusIcon } from './icons';
 
 type Optimization = 'SPEED' | 'CORRECTNESS' | 'SCALE';
 type Environment = 'CHAOS' | 'ENTERPRISE' | 'REGULATED';
@@ -157,7 +157,7 @@ export const Simulator: React.FC<SimulatorProps> = ({ onInquiryRequest }) => {
                 onClick={() => onInquiryRequest(`Simulator Result: ${result.archetype} (${result.risk})`)}
                 className="w-full mt-6 flex items-center justify-center gap-2 bg-white text-black p-3 font-mono text-xs uppercase tracking-widest hover:bg-white/90 transition-colors border border-white"
               >
-                <MessageSquarePlus className="w-3 h-3" /> Discuss this outcome
+                <MessageSquarePlusIcon className="w-3 h-3" /> Discuss this outcome
               </button>
             </>
           )}

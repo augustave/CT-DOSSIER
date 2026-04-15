@@ -1,11 +1,11 @@
 import React, { useRef, useEffect } from 'react';
 import { ModuleData, ModuleType } from '../types';
 import { COLORS, RECRUIT_CARDS } from '../constants';
-import { ChevronDown, ShieldAlert, Fingerprint, Link as LinkIcon, Check } from 'lucide-react';
 import { CollapsibleDrawer } from './CollapsibleDrawer';
 import { AnimatedGrid } from './AnimatedGrid';
 import { ErrorBoundary } from './ErrorBoundary';
 import { useClipboard } from '../hooks/useClipboard';
+import { ChevronDownIcon, ShieldAlertIcon, FingerprintIcon, LinkIcon, CheckIcon } from './icons';
 
 const Simulator = React.lazy(() => import('./Simulator').then(module => ({ default: module.Simulator })));
 
@@ -94,7 +94,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
               className={`absolute -right-12 top-2 p-2 opacity-0 group-hover:opacity-50 hover:!opacity-100 transition-opacity hidden md:block`}
               title="Copy link to module"
             >
-              {linkCopied ? <Check className="w-5 h-5" /> : <LinkIcon className="w-5 h-5" />}
+              {linkCopied ? <CheckIcon className="w-5 h-5" /> : <LinkIcon className="w-5 h-5" />}
             </button>
             <span id={linkStatusId} className="sr-only" role="status" aria-live="polite">
               {linkCopied ? 'Link copied to clipboard.' : ''}
@@ -119,7 +119,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                     {isOpen ? 'FOLD' : 'UNFOLD'}
                 </span>
                 <div className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
-                <ChevronDown />
+                <ChevronDownIcon />
                 </div>
             </div>
           </div>
@@ -181,7 +181,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                                 <p className="font-sans text-sm md:text-base font-bold mb-2">{card.capability}</p>
                                 <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{card.desc}</p>
                                 <div className="pt-4 border-t border-current/20 flex items-center gap-2">
-                                  <ShieldAlert className="w-4 h-4" />
+                                  <ShieldAlertIcon className="w-4 h-4" />
                                   <span className="font-mono text-micro uppercase opacity-tertiary">Prevents: {card.prevents}</span>
                                 </div>
                               </div>
@@ -206,7 +206,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
 
                 {/* 4. Implications (Generic) */}
                 {module.implications && (
-                   <CollapsibleDrawer title={`${module.implications.title}`} icon={<Fingerprint className="w-4 h-4"/>}>
+                   <CollapsibleDrawer title={`${module.implications.title}`} icon={<FingerprintIcon className="w-4 h-4"/>}>
                        <ul className="space-y-4 mt-4">
                         {module.implications.content.map((item, i) => (
                           <li key={i} className="flex gap-4 items-start pl-4 border-l-2 border-current/30">

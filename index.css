@@ -1,3 +1,30 @@
+@import '@fontsource/inter/latin-400.css';
+@import '@fontsource/inter/latin-500.css';
+@import '@fontsource/inter/latin-700.css';
+@import '@fontsource/inter/latin-900.css';
+@import '@fontsource/jetbrains-mono/latin-400.css';
+@import '@fontsource/jetbrains-mono/latin-500.css';
+@import '@fontsource/playfair-display/latin-400.css';
+@import '@fontsource/playfair-display/latin-400-italic.css';
+@import '@fontsource/playfair-display/latin-600.css';
+@import '@fontsource/playfair-display/latin-700.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes grid-enter {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 :root {
   --text-primary: #111111;
   --text-muted: #4B4B4B;
@@ -75,6 +102,11 @@
   -webkit-text-stroke: var(--index-stroke-width) var(--index-stroke);
   paint-order: stroke fill;
   opacity: 1 !important; /* Force visibility per PRD */
+}
+
+.animate-grid-enter {
+  animation: grid-enter 360ms cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: center top;
 }
 
 @supports not (-webkit-text-stroke: 1px #000) {

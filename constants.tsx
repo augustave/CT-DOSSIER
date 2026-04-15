@@ -1,8 +1,6 @@
 import React from 'react';
-import { ModuleData, ModuleType, Optimization, Environment, SimulatorResult } from './types';
+import { ModuleData, ModuleType } from './types';
 import { FOUNDER_COPY_V110 as COPY } from './copy.v1_1';
-import { ShieldAlert, BookOpen, Target, Box, Lock, Activity, Link as LinkIcon, FolderOpen, AlertCircle } from 'lucide-react';
-import { Simulator } from './components/Simulator';
 import { CollapsibleDrawer } from './components/CollapsibleDrawer';
 import { AnimatedGrid } from './components/AnimatedGrid';
 
