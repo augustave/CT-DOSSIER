@@ -2,7 +2,7 @@ import { render, screen, fireEvent, waitFor, within } from '@testing-library/rea
 import { describe, it, expect, beforeEach } from 'vitest';
 import App from './App';
 
-describe('PRD v1.0.2: Layout & IA Corrections', () => {
+describe('CT Dossier: recruiter-facing layout and IA', () => {
   beforeEach(() => {
     Element.prototype.scrollIntoView = () => {};
     window.location.hash = '';
@@ -16,16 +16,16 @@ describe('PRD v1.0.2: Layout & IA Corrections', () => {
     });
   });
 
-  it('shows Header/Footer CTA as INITIATE CONTACT', () => {
+  it('shows Header/Footer CTA as REQUEST CONVERSATION', () => {
     render(<App />);
-    const ctas = screen.getAllByText(/INITIATE CONTACT/i);
+    const ctas = screen.getAllByText(/REQUEST CONVERSATION/i);
     expect(ctas.length).toBeGreaterThanOrEqual(1);
   });
 
   it('shows Footer with correct text', () => {
     render(<App />);
-    expect(screen.getAllByText(/FOUNDER DOSSIER/i).length).toBeGreaterThanOrEqual(1);
-    expect(screen.getByText(/v1\.0\.2 \+ NO API/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/CT DOSSIER/i).length).toBeGreaterThanOrEqual(1);
+    expect(screen.getByText(/v1\.2\.0 \+ NO API/i)).toBeInTheDocument();
   });
 
   it('does NOT show Module 06 / Evidence Locker', () => {
@@ -43,12 +43,12 @@ describe('PRD v1.0.2: Layout & IA Corrections', () => {
     expect(overlayContainer).not.toBeNull();
 
     const manifestText = overlayContainer.textContent ?? '';
-    expect(manifestText.indexOf('FOUNDER')).toBeLessThan(manifestText.indexOf('THE RECRUITMENT TRIAD'));
+    expect(manifestText.indexOf('CREATIVE TECHNOLOGIST')).toBeLessThan(manifestText.indexOf('ROLE FIT'));
   });
 
   it('opens the inquiry dialog, focuses the close button, and closes on Escape', async () => {
     render(<App />);
-    fireEvent.click(screen.getAllByText(/INITIATE CONTACT/i)[0]);
+    fireEvent.click(screen.getAllByText(/REQUEST CONVERSATION/i)[0]);
 
     const dialog = await screen.findByRole('dialog', { name: /Inquiry/i });
     const closeButton = within(dialog).getByRole('button', { name: /Close inquiry panel/i });

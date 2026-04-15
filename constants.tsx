@@ -1,6 +1,6 @@
 import React from 'react';
 import { ModuleData, ModuleType } from './types';
-import { FOUNDER_COPY_V110 as COPY } from './copy.v1_1';
+import { CT_DOSSIER_COPY_V120 as COPY } from './copy.v1_1';
 import { CollapsibleDrawer } from './components/CollapsibleDrawer';
 import { AnimatedGrid } from './components/AnimatedGrid';
 
@@ -13,32 +13,31 @@ export const COLORS = {
 
 export const RECRUIT_CARDS = [
   {
-    name: "Michael Levin",
-    role: "Tufts / Bioelectricity",
-    capability: "Treats living systems as programmable collectives.",
-    prevents: "Systems that won’t cohere.",
-    desc: "Finds control layers (bioelectricity, pattern memory) that let complex systems self-organize toward a target outcome."
+    name: "Visual Systems",
+    role: "Design Language",
+    capability: "Builds coherence across interface, brand, and documentation.",
+    signal: "Strong design-system thinking for technical products.",
+    desc: "Turns scattered artifacts into one readable operating language instead of a collection of disconnected deliverables."
   },
   {
-    name: "Chase Hughes",
-    role: "Behavioral Engineering",
-    capability: "Operationalizes human behavior under uncertainty.",
-    prevents: "Humans that won’t align.",
-    desc: "Turns trust, resistance, incentives, and negotiation into observable signals and repeatable protocols."
+    name: "Interactive Prototypes",
+    role: "Product Proof",
+    capability: "Makes product concepts believable through working behavior.",
+    signal: "Can move from concept frame to functional prototype quickly.",
+    desc: "Uses front-end implementation and interaction studies to test flow, hierarchy, and trust before the team commits too much polish."
   },
   {
-    name: "Kelly Johnson",
-    role: "Skunk Works",
-    capability: "Ruthless execution under constraint.",
-    prevents: "Projects that won’t ship.",
-    desc: "Simplicity as a weapon, small elite teams, tight feedback loops, shipping the “impossible”."
+    name: "Technical Narratives",
+    role: "Systems Translation",
+    capability: "Explains dense systems without flattening their complexity.",
+    signal: "Useful where engineering, product, and recruiting all need the same story.",
+    desc: "Translates autonomy, geospatial, sensing, and mission-software concepts into artifacts people can evaluate and remember."
   }
 ];
 
 /**
- * Content modules for the Founder Dossier.
- * Note: Display indices (01, 02, etc.) intentionally differ from copy file keys
- * per PRD v1.0.2 for custom sort order: RECRUITS shows first (01), THESIS second (02).
+ * Content modules for the CT Dossier.
+ * Display indices intentionally differ from copy keys to preserve the current shell.
  */
 export const CONTENT_MODULES: ModuleData[] = [
   {
@@ -51,7 +50,6 @@ export const CONTENT_MODULES: ModuleData[] = [
     responseDisplay: "Select a stratum to jump to its coordinates.",
   },
   {
-    // Display index "02" uses copy file key "01" (FOUNDER/THESIS)
     id: ModuleType.THESIS,
     index: "02",
     title: COPY.modules["01"].title,
@@ -63,7 +61,7 @@ export const CONTENT_MODULES: ModuleData[] = [
         <div className="font-mono text-sm leading-relaxed opacity-tertiary border-l-2 border-white/30 pl-4">
           FILE: {COPY.meta.version}<br/>
           MODE: {COPY.modules["01"].noteLines[0]} / {COPY.modules["01"].noteLines[1]}<br/>
-          NO API. NO PERFORMANCE THEATER.
+          NO API. NO PORTFOLIO THEATER.
         </div>
         <div className="font-serif text-2xl md:text-4xl leading-relaxed">
           {COPY.modules["01"].hero}
@@ -77,7 +75,6 @@ export const CONTENT_MODULES: ModuleData[] = [
     )
   },
   {
-    // Display index "01" uses copy file key "02" (RECRUITS) - shows first per PRD
     id: ModuleType.RECRUITS,
     index: "01",
     title: COPY.modules["02"].title,
@@ -178,9 +175,9 @@ export const CONTENT_MODULES: ModuleData[] = [
         <div className="bg-black/5 p-6 border border-black/10">
            <h4 className="font-mono text-xs uppercase tracking-widest opacity-muted mb-4">{COPY.modules["04"].wedgesTitle}</h4>
            <ul className="space-y-3">
-             {COPY.modules["04"].wedges.map((w,i) => (
+             {COPY.modules["04"].wedges.map((w, i) => (
                <li key={i} className="flex gap-3 items-start">
-                 <span className="font-mono text-xs opacity-muted pt-0.5">0{i+1}</span>
+                 <span className="font-mono text-xs opacity-muted pt-0.5">0{i + 1}</span>
                  <span className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">{w}</span>
                </li>
              ))}
@@ -192,12 +189,12 @@ export const CONTENT_MODULES: ModuleData[] = [
              <div className="space-y-4">
                {COPY.modules["04"].first30.split('\n').map((line, i) => {
                  const colonIndex = line.indexOf(':');
-                 const week = line.substring(0, colonIndex);
+                 const label = line.substring(0, colonIndex);
                  const content = line.substring(colonIndex + 1).trim();
                  return (
                    <div key={i} className="flex gap-4 items-start">
                      <span className="font-mono text-xs uppercase tracking-wider opacity-muted whitespace-nowrap pt-1">
-                       {week}:
+                       {label}:
                      </span>
                      <span className="font-sans text-base md:text-lg opacity-secondary leading-relaxed">
                        {content}
@@ -209,11 +206,11 @@ export const CONTENT_MODULES: ModuleData[] = [
         </div>
 
         <div className="mt-8">
-             <CollapsibleDrawer title="COMPANIES I WOULD HAVE BUILT" defaultOpen={true}>
+             <CollapsibleDrawer title={COPY.modules["04"].companiesTitle} defaultOpen={true}>
                  <AnimatedGrid>
                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                        {COPY.modules["04"].companies.map((c, idx) => (
-                     <div key={idx} className={`p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity ${c.name === "Vanta" ? "md:col-start-2" : ""}`}>
+                     <div key={idx} className="p-6 border border-current opacity-secondary hover:opacity-primary transition-opacity">
                         <h4 className="font-serif text-xl md:text-2xl mb-2 italic">{c.name}</h4>
                         <div className="font-mono text-xs uppercase tracking-widest mb-4 opacity-tertiary">{c.tagline}</div>
                         <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{c.why}</p>
@@ -237,87 +234,85 @@ export const CONTENT_MODULES: ModuleData[] = [
   {
     id: ModuleType.SIMULATOR,
     index: "05",
-    title: "OPERATING SIMULATOR",
-    promptText: "INTERACTIVE SCENARIO PLANNING",
+    title: "ROLE MATRIX",
+    promptText: "INTERACTIVE FIT LENS",
     themeColor: 'blue',
-    responseText: "Input your constraints to see how my founder model adapts. This is a deterministic mapping of my operating principles against market realities.",
-    responseDisplay: "Input your constraints to see how my founder model adapts. This is a deterministic mapping of my operating principles against market realities.",
-    // No standard subsections, custom component used
+    responseText: "Map the kind of work and environment against the role I am most likely to play well.",
+    responseDisplay: "Map the kind of work and environment against the role I am most likely to play well.",
   }
 ];
 
 export const INQUIRY_OPTIONS = {
   assess: [
-    "Product Velocity",
-    "Technical Depth",
-    "Go-to-Market Instincts",
-    "Leadership Style",
-    "Coachability"
+    "Role Fit",
+    "Systems Thinking",
+    "Prototype Process",
+    "Visual Design Range",
+    "Mission / Domain Context"
   ],
   challenge: [
-    "Market Sizing",
-    "Hiring Strategy",
-    "Burn Rate Hypotheses",
-    "Competitive Moat",
-    "Exit Strategy"
+    "Project Scope",
+    "Technical Fluency",
+    "Collaboration Style",
+    "Hiring Need",
+    "Portfolio Walkthrough"
   ]
 };
 
 export const INQUIRY_QUESTIONS: Record<string, string[]> = {
-  // ASSESS
-  "Product Velocity": [
-    "What can you ship in 14 days that closes a full loop (detect → decide → act → log)?",
-    "What do you deliberately not build in the first month?",
-    "What is your demo cadence (weekly artifact) and what’s the acceptance bar?",
-    "Where do you prototype fastest: UI, workflow, or field instrumentation—why?"
+  "Role Fit": [
+    "What kinds of roles are you targeting most directly right now?",
+    "Where do you create the most leverage: product concepting, interface systems, or technical storytelling?",
+    "What sort of team would use your range best instead of flattening it into one lane?",
+    "What is the strongest signal recruiters should take from this dossier?"
   ],
-  "Technical Depth": [
-    "Which parts do you understand at the systems level vs. 'delegated to specialists'?",
-    "What are your hard constraints: latency, reliability, privacy, auditability?",
-    "Where is the model vs. where is the workflow doing the heavy lifting?",
-    "What would you instrument on day 1 to make the system testable?"
+  "Systems Thinking": [
+    "How do you move from a complex system to a legible interface without oversimplifying it?",
+    "What constraints usually shape your design decisions first: operator cognition, technical reality, or stakeholder communication?",
+    "How do you decide what must stay visible versus what can remain implicit?",
+    "What makes a system feel trustworthy to you?"
   ],
-  "Go-to-Market Instincts": [
-    "Who is the first operator you’re selling to, and what do they already pay for today?",
-    "What’s the single wedge that earns permission for expansion?",
-    "What channel wins first: founder-led outbound, partnerships, or embedded distribution?",
-    "What is the 'I can’t go back' moment for the user?"
+  "Prototype Process": [
+    "When do you stay in static design versus move into a working prototype?",
+    "What do you prototype first: flow, hierarchy, motion, or proof of technical credibility?",
+    "How do you use front-end implementation to de-risk product ideas?",
+    "What makes a prototype successful for you?"
   ],
-  "Leadership Style": [
-    "How do decisions get made when the team disagrees—what’s the escalation rule?",
-    "How do you run execution: daily cadence, weekly truth review, or sprint gates?",
-    "What behavior do you reward early: speed, correctness, or initiative?",
-    "How do you protect small-team tempo as complexity increases?"
+  "Visual Design Range": [
+    "How do you keep a strong point of view without making every project look the same?",
+    "What parts of the visual system are fixed and what parts shift per domain?",
+    "How do brand, interface, and motion stay coherent in your work?",
+    "Where do you deliberately reject generic tech aesthetics?"
   ],
-  "Coachability": [
-    "What’s a recent belief you changed after new evidence?",
-    "How do you prefer feedback: blunt / written / live debate / asynchronous?",
-    "What’s your rule for deciding whose advice to ignore?",
-    "What do you track weekly to prevent self-deception?"
+  "Mission / Domain Context": [
+    "Why do defense, autonomy, geospatial, or high-assurance systems hold your attention?",
+    "How do you avoid turning consequential domains into empty spectacle?",
+    "What have these mission-oriented projects taught you about trust and legibility?",
+    "How do you adapt your output for procurement, stakeholders, and operators at the same time?"
   ],
-  // CHALLENGE
-  "Market Sizing": [
-    "What market are you actually in today, not eventually?",
-    "What is the smallest segment that still returns venture-scale outcomes?",
-    "What substitutes exist that make this market 'look solved'?"
+  "Project Scope": [
+    "What do you own end to end on a typical project, and where do you want deeper collaboration?",
+    "Which parts of the workflow do you prefer to keep in-house rather than hand off early?",
+    "What project shapes are the best fit for your skill mix?"
   ],
-  "Hiring Strategy": [
-    "Who is hire #1 and what capability is absolutely missing without them?",
-    "What work do you refuse to outsource early?",
-    "What kind of person fails on this team even if they’re talented?"
+  "Technical Fluency": [
+    "How deep into implementation do you usually go when building prototypes?",
+    "What tools or stacks are central to the way you work today?",
+    "How do you collaborate with engineering without losing the quality of the concept?"
   ],
-  "Burn Rate Hypotheses": [
-    "What’s your default cheap mode and what costs are non-negotiable?",
-    "What runway do you assume before meaningful revenue—and why?",
-    "What do you measure weekly to prevent 'quiet burn' (tools, contractors, churn)?"
+  "Collaboration Style": [
+    "How do you work with product, engineering, and marketing when the brief is still ambiguous?",
+    "What kind of feedback helps you sharpen the work fastest?",
+    "What conditions produce your best work on a team?"
   ],
-  "Competitive Moat": [
-    "What becomes defensible after 3–6 deployments that a copycat can’t replicate fast?",
-    "Where is the moat: data flywheel, workflow lock-in, distribution, or trust?",
-    "What is the unfair advantage you can compound weekly?"
+  "Hiring Need": [
+    "What kind of team problem are you best suited to solve in the first 90 days?",
+    "Where can you accelerate a team immediately without a long onboarding runway?",
+    "What signals tell you a role is actually designed for someone with your range?"
   ],
-  "Exit Strategy": [
-    "Who are the natural acquirers and what do they buy: tech, distribution, or data?",
-    "What does an 'independent outcome' look like if no one buys you?"
+  "Portfolio Walkthrough": [
+    "Which two projects should someone review first to understand the full range?",
+    "How do the projects connect instead of reading like separate experiments?",
+    "If you had 10 minutes with a recruiter, which artifacts would you walk them through and why?"
   ]
 };

@@ -169,9 +169,9 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
 
 
 
-                {/* 1. Recruits Cards (Module 02 Specific) */}
+                {/* 1. Role-fit cards (Module 01 specific) */}
                 {module.id === ModuleType.RECRUITS && (
-                   <CollapsibleDrawer title="UNFOLD CARDS" defaultOpen={true}>
+                   <CollapsibleDrawer title="UNFOLD FIT SIGNALS" defaultOpen={true}>
                       <AnimatedGrid>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
                             {RECRUIT_CARDS.map((card, idx) => (
@@ -182,7 +182,7 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                                 <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{card.desc}</p>
                                 <div className="pt-4 border-t border-current/20 flex items-center gap-2">
                                   <ShieldAlertIcon className="w-4 h-4" />
-                                  <span className="font-mono text-micro uppercase opacity-tertiary">Prevents: {card.prevents}</span>
+                                  <span className="font-mono text-micro uppercase opacity-tertiary">Signals: {card.signal}</span>
                                 </div>
                               </div>
                             ))}

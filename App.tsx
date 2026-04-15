@@ -13,19 +13,14 @@ const App: React.FC = () => {
   const [isIndexOpen, setIsIndexOpen] = useState(false);
   const [inquiryContext, setInquiryContext] = useState<string>("");
 
-  // Handle initialization (Deep Link > LocalStorage > Default Module 02)
+  // Handle initialization (Deep Link > Default Module 01)
   useEffect(() => {
     const hash = window.location.hash;
     if (hash.startsWith('#module-')) {
       const index = hash.replace('#module-', '');
       setOpenModuleIndex(index);
     } else {
-        // PRD Requirement: Force default to #01 if no hash
-        // We override previous logic that checked localStorage first for privacy/mandate reasons
-        // But we can keep localStorage check if desired, but PRD says "On load: if no hash -> set #01."
-        // Let's bias towards the mandate.
         setOpenModuleIndex("01");
-        // Update URL to match without scrolling (yet)
         try {
             history.replaceState(null, document.title, '#module-01');
         } catch(e) {}
@@ -79,7 +74,7 @@ const App: React.FC = () => {
       {/* Navigation / Brand Overlay */}
       <div className="fixed top-0 left-0 w-full z-40 pointer-events-none px-4 py-4 md:px-8 flex justify-between items-start">
          <div className="font-sans font-black text-xl tracking-tightest leading-none pointer-events-auto cursor-pointer text-black" onClick={() => window.scrollTo(0,0)}>
-           FOUNDER<br/>DOSSIER<br/><span className="opacity-50">EBENZ AUGUSTAVE</span>
+           CT<br/>DOSSIER<br/><span className="opacity-50">EBENZ AUGUSTAVE</span>
          </div>
          
          <div className="flex flex-col items-end gap-2 pointer-events-auto">
@@ -88,7 +83,7 @@ const App: React.FC = () => {
                   onClick={() => handleInquiryRequest("General Inquiry")}
                   className="hidden md:block font-mono text-xs uppercase tracking-widest border border-black px-3 py-1 hover:bg-black hover:text-white transition-colors text-black"
                >
-                  INITIATE CONTACT -&gt;
+                  REQUEST CONVERSATION -&gt;
                </button>
                <button 
                   onClick={() => setIsIndexOpen(true)}
@@ -98,7 +93,7 @@ const App: React.FC = () => {
                </button>
              </div>
              <div className="hidden md:block font-mono text-micro text-right text-black">
-               V1.0.2 <br/> NO API
+               V1.2.0 <br/> NO API
              </div>
          </div>
       </div>
@@ -123,12 +118,12 @@ const App: React.FC = () => {
         <footer className="w-full py-12 md:py-24 bg-white text-black border-t border-black/10 mt-12">
            <div className="container mx-auto px-4 md:px-8 max-w-6xl flex flex-col md:flex-row justify-between items-baseline gap-8">
               <div>
-                <h3 className="font-sans font-bold tracking-tightest text-xl mb-2">FOUNDER DOSSIER</h3>
-                <p className="font-mono text-xs opacity-50">v1.0.2 + NO API</p>
+                <h3 className="font-sans font-bold tracking-tightest text-xl mb-2">CT DOSSIER</h3>
+                <p className="font-mono text-xs opacity-50">v1.2.0 + NO API</p>
               </div>
               <div className="flex gap-8 font-mono text-xs uppercase tracking-widest">
                  <button onClick={() => setIsIndexOpen(true)} className="hover:underline">Index</button>
-                 <button onClick={() => handleInquiryRequest("Footer Contact")} className="hover:underline">Initiate Contact</button>
+                 <button onClick={() => handleInquiryRequest("Footer Contact")} className="hover:underline">Request Conversation</button>
               </div>
            </div>
         </footer>

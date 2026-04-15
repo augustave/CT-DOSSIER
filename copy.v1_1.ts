@@ -1,185 +1,176 @@
 /* copy.v1_1.ts
-   Founder Dossier Copy v1.1 — personal + technical, deterministic.
-   Source: truth notes + README IA. */
+   CT Dossier copy — recruiter-facing, systems-led, deterministic.
+   Source: portfolio strategy, brand brief, and current app IA. */
 
-export const FOUNDER_COPY_V110 = {
+export const CT_DOSSIER_COPY_V120 = {
   meta: {
-    version: "1.1.0",
+    version: "1.2.0",
     voice: "personal-technical",
     rule: "first-person, no hype, no mysticism",
   },
 
   modules: {
     "01": {
-      title: "FOUNDER",
-      prompt: "CORE THESIS",
+      title: "CREATIVE TECHNOLOGIST",
+      prompt: "PRACTICE THESIS",
       hero:
-        "I build systems that keep working when reality is messy.",
+        "I design systems that make complex technical work legible.",
       body:
         [
-          "I’m interested in control stacks: sensing → interpretation → decision → action → proof.",
-          "Most projects fail because one layer breaks: the system doesn’t cohere, the humans don’t align, or nothing ships.",
-          "My default move is to pick one environment, close one loop, then harden it until it can be trusted."
+          "My work sits between engineering truth and operator confidence.",
+          "I build visual operating languages, interactive prototypes, and technical narratives for products that have to be understood before they can be trusted.",
+          "The through-line is consistent: turn difficult systems into clear interfaces, proof artifacts, and stories that hold up under pressure."
         ].join("\n\n"),
       noteTitle: "NOTE",
       noteLines: [
-        "[!] Deterministic output. No vibes.",
-        "[!] Interpretation is rules-based.",
-        "[!] If it can’t be tested, it’s not finished.",
+        "[!] Multidisciplinary by default.",
+        "[!] Interface, narrative, and system logic stay connected.",
+        "[!] If it cannot be explained clearly, it is not ready.",
       ],
     },
 
     "02": {
-      title: "THE RECRUITMENT TRIAD",
+      title: "ROLE FIT",
       prompt:
-        "SPC PROMPT — Who are three people you would recruit regardless of what you do? What makes them special?",
+        "WHAT I DO BEST",
       lead:
         [
-          "When I’m building something new, I don’t start with features.",
-          "I start with failure modes — and I recruit for the control layer underneath them."
+          "I am strongest in roles that sit between concept, product, and technical communication.",
+          "The value is not one medium. The value is making the whole system readable."
         ].join("\n"),
       people: [
         {
-          name: "Michael Levin (Tufts) — the Morphology Programmer",
+          name: "Visual Operating Languages",
           body:
             [
-              "He treats biology like an information system with memory and goals, not just chemistry plus DNA.",
-              "What I steal from him is the idea that coherence can be engineered: parts can self-organize into wholes — and recover after damage.",
-              "That’s foundational for building adaptive systems that don’t collapse the first time conditions change."
+              "I build coherent visual systems for products that need to feel credible, disciplined, and operational rather than speculative.",
+              "That includes interface grammar, typography, hierarchy, diagrams, and documentation patterns that can scale across screens, decks, and artifacts."
             ].join("\n\n"),
-          tags: ["coherence", "self-organization", "repair", "control layers"],
-          prevents: "Systems that won’t cohere."
+          tags: ["design systems", "brand systems", "interface grammar"],
+          prevents: "Work that looks polished but does not cohere."
         },
         {
-          name: "Chase Hughes — the Human Interface Hacker",
+          name: "Interactive Prototypes",
           body:
             [
-              "He operationalizes human behavior under uncertainty: trust, resistance, incentives, attention.",
-              "What I steal from him is turning social chaos into signal — so systems can be adopted and followed in real situations, not just demos.",
-              "Great tech fails when humans don’t align. He’s the antidote."
+              "I do not stop at static comps when the idea needs behavior to be believed.",
+              "I build high-fidelity prototypes in React, Vite, WebGL-adjacent front-end stacks, and motion systems so teams can evaluate flow, not just appearance."
             ].join("\n\n"),
-          tags: ["alignment", "negotiation", "protocols", "real-time outcomes"],
-          prevents: "Humans that won’t align."
+          tags: ["rapid prototyping", "front-end", "interaction architecture"],
+          prevents: "Concepts that sound strong but cannot survive contact with use."
         },
         {
-          name: "Kelly Johnson (Skunk Works) — the Speed + Truth Engineer",
+          name: "Technical Storytelling",
           body:
             [
-              "He shipped impossible machines fast by treating simplicity and constraints like tools, not enemies.",
-              "What I steal from him is the organizational physics: small teams, direct comms, tight feedback loops, test early, ship.",
-              "Tempo is a competitive advantage because it buys truth sooner."
+              "I translate dense engineering, autonomy, geospatial, and mission-oriented ideas into recruiter-ready, stakeholder-ready, and operator-legible artifacts.",
+              "The goal is not spectacle. It is clarity, trust, and a stronger decision surface."
             ].join("\n\n"),
-          tags: ["tempo", "constraints", "execution", "feedback loops"],
-          prevents: "Projects that won’t ship."
+          tags: ["visual storytelling", "systems explanation", "product narrative"],
+          prevents: "Important work that stays trapped inside engineering context."
         },
       ],
       together:
         [
-          "Together they cover the three universal failure modes:",
-          "1) The system won’t cohere (Levin).",
-          "2) The humans won’t align (Hughes).",
-          "3) The thing won’t ship (Johnson)."
+          "Together these form the core hiring signal:",
+          "1) coherent systems thinking,",
+          "2) working prototypes,",
+          "3) clear communication for technical audiences."
         ].join("\n"),
       oneLine:
-        "Coherence → Alignment → Shipping. That’s the stack I try to build in every environment.",
+        "I bridge system logic, interface behavior, and technical narrative in one practice.",
     },
 
     "03": {
-      title: "FOUNDER MODEL",
-      prompt: "FOUNDER TYPE — RESULT",
-      hero: "I'm what you'd call a Skunkworks Systems Founder.",
+      title: "OPERATING METHOD",
+      prompt: "HOW I WORK",
+      hero: "I move from concept to proof quickly, but I still need the work to hold together.",
       body:
         [
-          "I don't see products. I see systems that have to keep working when things go wrong.",
-          "When I recruit, I'm looking for leverage—people who change trajectories, not people who add capacity. The three I'd pick: Michael Levin (makes parts become coherent wholes), Chase Hughes (turns human chaos into signal), Kelly Johnson (ships impossible things fast). Together they solve the three ways projects die: systems fall apart, people don't align, nothing ships.",
-          "I care about control layers. How things self-organize. How decisions get made. How execution actually happens. Not tactics.",
-          "What this looks like: I start with frameworks. I build prototypes to test them. I'm good at naming things and building narrative. I hate busywork and design-by-committee."
+          "I work well on teams that need someone to define the visual language, prototype the interaction, and tighten the story around why the product matters.",
+          "My default move is to find the governing structure first: what the operator needs to know, what the stakeholder needs to believe, and what the system needs to show.",
+          "From there I turn ambiguity into artifacts: interface studies, motion tests, mockups, diagrams, deck systems, or live prototypes."
         ].join("\n\n"),
-      bulletsTitle: "MY DEFAULT OPERATING BIAS",
+      bulletsTitle: "DEFAULT BIAS",
       bullets: [
-        "Systems are control problems (feedback loops, incentives, constraints).",
-        "Reality is layered (a stack of interacting subsystems).",
-        "Execution is a design material, not a project-management chore.",
+        "Treat complex products as communication systems, not just feature sets.",
+        "Use prototypes to test credibility and flow before polish becomes expensive.",
+        "Make design serve trust, legibility, and decision quality under constraint.",
       ],
       grid: {
         leftTitle: "PRIMARY TENSION",
-        leftBody: "I can outrun cleanup (tempo beats hygiene if I'm not careful).",
+        leftBody: "I can sprint ahead of formalization when the concept is still unfolding.",
         rightTitle: "COUNTER-BALANCE",
-        rightBody: "Scheduled refactor sprints enforced as policy.",
+        rightBody: "Codify the grammar once the signal is real so the system stays reusable.",
       },
       close:
-        "The short version: I build operating systems for outcomes, not single-feature apps.",
+        "The short version: I am most useful where design, product sense, and technical articulation need to meet in one person.",
     },
 
     "04": {
-      title: "COMPANY I’D BUILD",
-      prompt: "WHAT WOULD YOU BUILD NEXT?",
-      hero: "A control-stack company for messy reality.",
+      title: "SELECTED SYSTEMS",
+      prompt: "WHERE THE WORK SHOWS UP",
+      hero: "The portfolio is a set of proof artifacts, not a gallery of disconnected images.",
       body:
         [
-          "A company that sits between chaotic environments and clean decisions.",
-          "Sensors, workflows, and audit-grade logs that turn: incident → signal → decision → action → proof.",
-          "I care more about coherence under pressure than glossy intelligence."
+          "Each project is doing a different job: visual governance, live workstation design, tactical interface prototyping, autonomy simulation, or technical evidence translation.",
+          "The common thread is the same one described in the docs: make consequential systems legible without collapsing into generic 'defense sci-fi' or generic SaaS polish."
         ].join("\n\n"),
-      wedgesTitle: "FIRST WEDGES I’D BET ON",
+      wedgesTitle: "FOUR PILLARS",
       wedges: [
-        "Field ops intelligence: one environment, one loop, one metric.",
-        "Audit-grade agent infrastructure: permissions, provenance, test harnesses, accountability.",
-        "Human-system interface: tools where trust and adoption are part of the UI.",
+        "Tactical OS: visual governance, component grammar, and interface rules for high-assurance environments.",
+        "Spatial Intelligence: terrain, sensor, and geospatial products that make evidence readable across surfaces.",
+        "Autonomous Command: swarm, simulation, and operational prototypes that show system behavior under load.",
+        "High-Assurance Safety: human-factors, bias mitigation, and trust-building interfaces for consequential decisions.",
       ],
-      first30Title: "FIRST 30 DAYS TEST",
+      first30Title: "WHAT EACH PROJECT PROVES",
       first30:
         [
-          "Week 1–2: build a brutal prototype that closes one loop end-to-end.",
-          "Week 3: run it with one real operator in the wild.",
-          "Week 4: tighten: every alert leads to a decision, every decision is logged, every outcome feeds the next iteration."
+          "DEADLIGHT: I can codify a visual operating language instead of styling page by page.",
+          "GREY-EARTH: I can ship a live workstation that joins terrain analysis, interface design, and real technical constraints.",
+          "TACTICAL CANVAS: I can prototype a mission workflow so the operator understands what happens next.",
+          "WAR-F / MINI-D / SENTINEL: I can turn dense autonomy or sensing concepts into clear evaluation artifacts."
         ].join("\n"),
-      companiesTitle: "COMPANIES I WOULD HAVE BUILT",
+      companiesTitle: "SELECTED CASEWORK",
       companies: [
         {
-           name: "Palantir",
-           tagline: "Decision OS for chaos",
-           why: "Systems that make chaotic environments navigable with hidden structure",
-           match: "Karp/Thiel (platform + contrarian mission)"
+           name: "DEADLIGHT",
+           tagline: "Visual governance for high-assurance systems",
+           why: "A deterministic brand and interface language for mission-critical software and technical storytelling.",
+           match: "Design system + strategic narrative"
         },
         {
-           name: "Anduril",
-           tagline: "Autonomy + field deployment",
-           why: "Skunk Works tempo applied to autonomous systems",
-           match: "Palmer Luckey (rapid prototyping + high-risk tolerance)"
+           name: "DOSSIER VOL",
+           tagline: "Component grammar for intelligence-style products",
+           why: "A visual operating specification that turns geospatial and intelligence interfaces into a coherent system.",
+           match: "Interface grammar + documentation"
         },
         {
-           name: "Axon",
-           tagline: "Evidence infrastructure loop",
-           why: "Accountability loop: incident → capture → evidence → outcome",
-           match: "Rick Smith (mission framing + platform expansion)"
+           name: "GREY-EARTH",
+           tagline: "Live tactical terrain workstation",
+           why: "A production-minded terrain analysis surface with real interaction logic, map workflows, and operator-facing clarity.",
+           match: "Product design + front-end implementation"
         },
         {
-           name: "Samsara",
-           tagline: "Connected Operations Cloud",
-           why: "Turning physical reality into signals and decisions",
-           match: "Biswas/Bicket (infrastructure for operators)"
+           name: "TACTICAL CANVAS",
+           tagline: "Mission workflow prototype",
+           why: "An interface study focused on visible task flow, command confidence, and stronger mission-state communication.",
+           match: "Rapid prototyping + systems UI"
         },
         {
-           name: "Verkada",
-           tagline: "Physical security as cloud platform",
-           why: "Sensors + interface + decisioning for real-world deployment",
-           match: "Filip Kaliszan (platformization of messy physical category)"
+           name: "WAR-F",
+           tagline: "Swarm operations layer",
+           why: "A digital-twin style framework that connects engineering truth, simulation behavior, and sustainment artifacts.",
+           match: "Operational storytelling + systems translation"
         },
         {
-           name: "Flock Safety",
-           tagline: "Safety network + evidence",
-           why: "Incident → signal → evidence → resolution in high-stakes domains",
-           match: "Garrett Langley (tangible community impact + deploy fast)"
-        },
-        {
-           name: "Vanta",
-           tagline: "Trust/compliance automation",
-           why: "Auditability and proof, systems that explain themselves",
-           match: "Christina Cacioppo (institutional pain → default tool)"
+           name: "SENTINEL / MINI-D",
+           tagline: "Verification and sensor credibility",
+           why: "Projects that make autonomy claims, sensor behavior, and evaluation conditions legible enough to inspect.",
+           match: "Evidence artifacts + technical communication"
         }
       ],
-      companiesSynthesis: "If I started tomorrow, I'd build a hybrid of Palantir/Samsara (reality → signals → decisions), Axon/Vanta (decisions → proof → audit trail), with Anduril-style tempo (deploy in field, iterate under constraint).\nThe pattern: not a single product, but a control stack: sensing + interpretation + workflow + accountability."
+      companiesSynthesis: "Taken together, the work signals a specific profile: a creative technologist who can define the visual language, prototype the product behavior, and articulate the system clearly enough for design, product, engineering, recruiting, and stakeholder review."
     },
   },
 };

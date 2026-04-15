@@ -53,7 +53,7 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
           <h2 className="font-sans text-9xl font-bold tracking-tighter opacity-ghost select-none">INDEX</h2>
         </div>
 
-        {/* Module List - Custom Order: 02, 01, 03, 04, 05 (PRD v1.0.2) */}
+        {/* Module List - Current custom order: 02, 01, 03, 04, 05 */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
           {CONTENT_MODULES
             .filter(m => m.id !== ModuleType.MANIFEST)
@@ -79,9 +79,9 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
         </div>
 
         <div className="mt-12 font-mono text-xs opacity-subtle max-w-md">
-            FOUNDER DOSSIER v1.0.2<br/>
+            CT DOSSIER v1.2.0<br/>
             NO API. STATIC GENERATION.<br/>
-            OPERATING SIMULATOR: LAZY MOUNTED.
+            ROLE MATRIX: LAZY MOUNTED.
         </div>
 
       </div>

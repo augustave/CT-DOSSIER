@@ -96,22 +96,22 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
     const { questions } = getQuestions();
     const assessList = state.assess.length > 0 ? state.assess.join(', ') : '(None)';
     const challengeList = state.challenge.length > 0 ? state.challenge.join(', ') : '(None)';
-    const contextStr = context || 'FOUNDER DOSSIER';
+    const contextStr = context || 'CT DOSSIER';
 
     return `
-INQUIRY — ${assessList} / ${challengeList}
+RECRUITER INQUIRY — ${assessList} / ${challengeList}
 
-Hi Ebenz — I reviewed your ${contextStr} module.
+Hi Ebenz — I reviewed your ${contextStr}.
 
-I want to assess: ${assessList}
-I want to challenge: ${challengeList}
+I want to discuss: ${assessList}
+I want to evaluate: ${challengeList}
 
 Questions:
 ${questions.length > 0 ? questions.map((q, i) => `${i + 1}. ${q}`).join('\n') : '(Select areas to generate questions)'}
 
 ${state.note ? `\nContext/Notes:\n${state.note}` : ''}
 
-If helpful, I'm open to a short call.
+If helpful, I would be open to a short conversation.
 — {NAME}
     `.trim();
   };
@@ -124,7 +124,7 @@ If helpful, I'm open to a short call.
     if (!hasContactEmail) return;
     const assessList = state.assess.length > 0 ? state.assess.join(', ') : 'None';
     const challengeList = state.challenge.length > 0 ? state.challenge.join(', ') : 'None';
-    const subject = encodeURIComponent(`INQUIRY — ${assessList} / ${challengeList}`);
+    const subject = encodeURIComponent(`RECRUITER INQUIRY — ${assessList} / ${challengeList}`);
     const body = encodeURIComponent(generateMessage());
     window.location.href = `mailto:${normalizedContactEmail}?subject=${subject}&body=${body}`;
   };
@@ -134,7 +134,7 @@ If helpful, I'm open to a short call.
     const file = new Blob([generateMessage()], {type: 'text/plain'});
     const objectUrl = URL.createObjectURL(file);
     element.href = objectUrl;
-    element.download = "founder_inquiry.txt";
+    element.download = "ct_dossier_inquiry.txt";
     document.body.appendChild(element);
     element.click();
     document.body.removeChild(element);
@@ -207,7 +207,7 @@ If helpful, I'm open to a short call.
               </p>
               <div className="font-mono text-xs opacity-muted mt-2 space-y-1">
                 <p>NO API. CLIENT-SIDE GENERATION ONLY.</p>
-                <p>THIS DOES NOT SEND. IT COMPOSES.</p>
+                <p>THIS DOES NOT SEND. IT PREPARES OUTREACH.</p>
               </div>
             </div>
             <button
@@ -226,7 +226,7 @@ If helpful, I'm open to a short call.
             {/* Section 1: Assess */}
             <div>
                <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-4 border-b border-black pb-2">
-                01. I want to Assess
+                01. I want to Discuss
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                  {INQUIRY_OPTIONS.assess.map(opt => (
@@ -249,7 +249,7 @@ If helpful, I'm open to a short call.
             {/* Section 2: Challenge */}
             <div>
                <h3 className="font-mono text-xs uppercase tracking-widest font-bold mb-4 border-b border-black pb-2">
-                02. I want to Challenge
+                02. I want to Evaluate
                </h3>
                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                  {INQUIRY_OPTIONS.challenge.map(opt => (
@@ -306,7 +306,7 @@ If helpful, I'm open to a short call.
                       )}
                     </>
                   ) : (
-                    <span className="italic">Select items above to populate interview questions.</span>
+                    <span className="italic">Select items above to populate outreach questions.</span>
                   )}
                 </div>
               );
