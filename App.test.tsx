@@ -28,6 +28,15 @@ describe('CT Dossier: recruiter-facing layout and IA', () => {
     expect(screen.getByText(/v1\.2\.0 \+ NO API/i)).toBeInTheDocument();
   });
 
+  it('shows a target roles block near the top of the page', () => {
+    render(<App />);
+    const rolesHeading = screen.getByText(/Target Roles/i);
+    const rolesSection = rolesHeading.closest('section') as HTMLElement;
+    expect(rolesSection).not.toBeNull();
+    expect(within(rolesSection).getByText(/^Creative Technologist$/i)).toBeInTheDocument();
+    expect(within(rolesSection).getByText(/^Visual Designer, Defense$/i)).toBeInTheDocument();
+  });
+
   it('does NOT show Module 06 / Evidence Locker', () => {
     render(<App />);
     const evidenceLink = screen.queryByText(/EVIDENCE LOCKER/i);

@@ -6,6 +6,13 @@ import { ManifestOverlay } from './components/ManifestOverlay';
 import { ModuleType } from './types';
 
 const CONTACT_EMAIL = import.meta.env.VITE_CONTACT_EMAIL?.trim() ?? '';
+const TARGET_ROLES = [
+  'Creative Technologist',
+  'Visual Designer, Defense',
+  'Design Technologist',
+  'Product Designer, Mission Systems',
+  'Brand Designer, Technical Products'
+];
 
 const App: React.FC = () => {
   const [openModuleIndex, setOpenModuleIndex] = useState<string | null>(null);
@@ -99,6 +106,31 @@ const App: React.FC = () => {
       </div>
 
       <main className="w-full">
+        <section className="pt-28 md:pt-36 pb-6 md:pb-10 bg-strata-cream text-strata-black border-b border-black/10">
+          <div className="container mx-auto px-4 md:px-8 max-w-6xl">
+            <div className="border border-black/15 bg-white/70 backdrop-blur-sm p-5 md:p-6">
+              <div className="flex flex-col md:flex-row md:items-start gap-4 md:gap-8">
+                <div className="md:w-56 shrink-0">
+                  <div className="font-mono text-xs uppercase tracking-widest opacity-50 mb-2">Target Roles</div>
+                  <p className="font-sans text-sm md:text-base leading-relaxed">
+                    Best fit for multidisciplinary roles spanning interface, narrative, prototyping, and technical communication.
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2 md:gap-3">
+                  {TARGET_ROLES.map((role) => (
+                    <span
+                      key={role}
+                      className="font-mono text-xs uppercase tracking-widest border border-black px-3 py-2 bg-strata-cream"
+                    >
+                      {role}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Render all modules EXCEPT Manifest (Module 00) */}
         {CONTENT_MODULES
           .filter(m => m.id !== ModuleType.MANIFEST)
