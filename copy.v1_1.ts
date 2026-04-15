@@ -137,40 +137,58 @@ export const CT_DOSSIER_COPY_V120 = {
            name: "DEADLIGHT",
            tagline: "Visual governance for high-assurance systems",
            why: "A deterministic brand and interface language for mission-critical software and technical storytelling.",
-           match: "Design system + strategic narrative"
+           match: "Design system + strategic narrative",
+           proof: "Proves I can codify a full visual operating system rather than style artifacts one by one.",
+           artifact: "Decision matrix, trust/proof/consequence framing, and a reusable grammar for high-assurance presentations.",
+           link: "https://github.com/augustave/deadlight"
         },
         {
-           name: "DOSSIER VOL",
+           name: "DOSSIER VOL / DOSSIERMAP",
            tagline: "Component grammar for intelligence-style products",
            why: "A visual operating specification that turns geospatial and intelligence interfaces into a coherent system.",
-           match: "Interface grammar + documentation"
+           match: "Interface grammar + documentation",
+           proof: "Proves I can define tokens, layout rules, and map-facing interface language at the system level.",
+           artifact: "A public-facing design-system repo aligned to the dossier-style geospatial product direction.",
+           link: "https://github.com/augustave/DossierMap"
         },
         {
            name: "GREY-EARTH",
            tagline: "Live tactical terrain workstation",
            why: "A production-minded terrain analysis surface with real interaction logic, map workflows, and operator-facing clarity.",
-           match: "Product design + front-end implementation"
+           match: "Product design + front-end implementation",
+           proof: "Proves I can ship a live workstation, not just a visual concept.",
+           artifact: "Terrain analysis workflows, 2D/3D map modes, Earth Engine integration, and a manifest-first render model.",
+           link: "https://grey-earth.vercel.app"
         },
         {
            name: "TACTICAL CANVAS",
            tagline: "Mission workflow prototype",
            why: "An interface study focused on visible task flow, command confidence, and stronger mission-state communication.",
-           match: "Rapid prototyping + systems UI"
+           match: "Rapid prototyping + systems UI",
+           proof: "Proves I can prototype mission logic so users see the full thread from observation to tasking.",
+           artifact: "Shared mission state, radar surface work, dossier layers, and an end-to-end interaction story.",
+           link: "https://github.com/augustave/TACTICAL-CANVAS"
         },
         {
-           name: "WAR-F",
-           tagline: "Swarm operations layer",
-           why: "A digital-twin style framework that connects engineering truth, simulation behavior, and sustainment artifacts.",
-           match: "Operational storytelling + systems translation"
+           name: "MINI-D",
+           tagline: "Autonomy verification lab",
+           why: "A research-grade sandbox for making autonomy claims testable, bounded, and easier to inspect.",
+           match: "Simulation design + falsifiable proof",
+           proof: "Proves I can design evaluation environments, not just hero demos.",
+           artifact: "A verification-oriented lab framing autonomy behavior through limits, thresholds, and inspectable outputs.",
+           link: "https://github.com/augustave/MINI-D"
         },
         {
-           name: "SENTINEL / MINI-D",
-           tagline: "Verification and sensor credibility",
-           why: "Projects that make autonomy claims, sensor behavior, and evaluation conditions legible enough to inspect.",
-           match: "Evidence artifacts + technical communication"
+           name: "CCRT",
+           tagline: "Human-factors and bias mitigation study",
+           why: "An evidence-led interface direction for warfighter-centered command environments and safer decision-making.",
+           match: "Human factors + high-assurance UI",
+           proof: "Proves I can use interface design to reduce misread risk instead of simply making complex systems look advanced.",
+           artifact: "Bias-mitigation framing, safety-critical readability, and operator-centered command surface design.",
+           link: "https://github.com/augustave/CCRT"
         }
       ],
-      companiesSynthesis: "Taken together, the work signals a specific profile: a creative technologist who can define the visual language, prototype the product behavior, and articulate the system clearly enough for design, product, engineering, recruiting, and stakeholder review."
+      companiesSynthesis: "Taken together, the work signals a specific profile: a creative technologist who can define the visual language, prototype the product behavior, and articulate the system clearly enough for design, product, engineering, recruiting, and stakeholder review. The links below are public proof, not just narrative summaries."
     },
   },
 };

@@ -35,6 +35,45 @@ export const RECRUIT_CARDS = [
   }
 ];
 
+const SELECTED_SYSTEMS_EVIDENCE = [
+  {
+    title: "GREY-EARTH / Live Deployment",
+    description: "Deployed tactical terrain workstation showing real product execution, not just concept framing.",
+    link: "https://grey-earth.vercel.app",
+    linkLabel: "Open Live System"
+  },
+  {
+    title: "GREY-EARTH / Source",
+    description: "Next.js terrain workstation repo with manifest-first rendering, 2D/3D map logic, and Earth Engine integration.",
+    link: "https://github.com/augustave/GREY-EARTH",
+    linkLabel: "Open GitHub Repo"
+  },
+  {
+    title: "DEADLIGHT / Source",
+    description: "Public brand-system repo representing the visual governance layer behind the portfolio.",
+    link: "https://github.com/augustave/deadlight",
+    linkLabel: "Open GitHub Repo"
+  },
+  {
+    title: "TACTICAL CANVAS / Source",
+    description: "Mission-thread interface prototype focused on tactical workflow clarity and systems UI.",
+    link: "https://github.com/augustave/TACTICAL-CANVAS",
+    linkLabel: "Open GitHub Repo"
+  },
+  {
+    title: "MINI-D / Source",
+    description: "Autonomy-lab proof artifact oriented around evaluation, limits, and inspectable behavior.",
+    link: "https://github.com/augustave/MINI-D",
+    linkLabel: "Open GitHub Repo"
+  },
+  {
+    title: "CCRT / Source",
+    description: "Human-factors and high-assurance interface direction for warfighter-centered command environments.",
+    link: "https://github.com/augustave/CCRT",
+    linkLabel: "Open GitHub Repo"
+  }
+];
+
 /**
  * Content modules for the CT Dossier.
  * Display indices intentionally differ from copy keys to preserve the current shell.
@@ -161,6 +200,7 @@ export const CONTENT_MODULES: ModuleData[] = [
     promptText: COPY.modules["04"].prompt,
     themeColor: 'clay',
     responseText: COPY.modules["04"].hero,
+    evidence: SELECTED_SYSTEMS_EVIDENCE,
     responseDisplay: (
       <div className="space-y-8">
         <p className="font-serif text-2xl md:text-4xl leading-relaxed">
@@ -214,9 +254,24 @@ export const CONTENT_MODULES: ModuleData[] = [
                         <h4 className="font-serif text-xl md:text-2xl mb-2 italic">{c.name}</h4>
                         <div className="font-mono text-xs uppercase tracking-widest mb-4 opacity-tertiary">{c.tagline}</div>
                         <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">{c.why}</p>
+                        <p className="font-mono text-xs uppercase tracking-wide opacity-muted mb-3">
+                          PROVES: {c.proof}
+                        </p>
+                        <p className="font-sans text-sm opacity-secondary leading-relaxed mb-4">
+                          {c.artifact}
+                        </p>
                         <div className="pt-4 border-t border-current/20 flex items-center gap-2">
                            <span className="font-mono text-micro uppercase opacity-tertiary">{c.match}</span>
                         </div>
+                        <a
+                          href={c.link}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="inline-flex items-center gap-2 mt-4 font-mono text-xs uppercase tracking-widest border border-current px-3 py-2 hover:bg-black hover:text-white transition-colors"
+                          onClick={(event) => event.stopPropagation()}
+                        >
+                          Review Artifact
+                        </a>
                      </div>
                    ))}
                  </div>

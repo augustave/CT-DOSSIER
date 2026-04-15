@@ -241,7 +241,35 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                   </div>
                 )}
 
-                {/* Evidence Links Removed */}
+                {module.evidence && module.evidence.length > 0 && (
+                  <div className="p-6 border border-current/20 bg-black/5">
+                    <h3 className="font-mono text-xs uppercase tracking-widest mb-4 font-bold">
+                      PUBLIC EVIDENCE
+                    </h3>
+                    <ul className="space-y-4">
+                      {module.evidence.map((item) => (
+                        <li key={item.title} className="border-t border-current/10 pt-4 first:border-t-0 first:pt-0">
+                          <div className="font-mono text-xs uppercase tracking-widest opacity-muted mb-2">
+                            {item.title}
+                          </div>
+                          <p className="text-sm font-sans opacity-secondary leading-relaxed mb-3">
+                            {item.description}
+                          </p>
+                          <a
+                            href={item.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={(event) => event.stopPropagation()}
+                            className="inline-flex items-center gap-2 font-mono text-xs uppercase tracking-widest hover:underline"
+                          >
+                            <LinkIcon className="w-3 h-3" />
+                            {item.linkLabel ?? 'Open Artifact'}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             )}
           </div>

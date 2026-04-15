@@ -16,6 +16,7 @@ export interface EvidenceItem {
   title: string;
   description: string;
   link: string;
+  linkLabel?: string;
 }
 
 /** Subsection for implications and stress tests. Reserved for future use. */
