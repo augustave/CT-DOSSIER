@@ -28,19 +28,47 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     typeof window.matchMedia === 'function' &&
     window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const safeScrollIntoView = (el: HTMLElement | null) => {
-    if (!el) return;
-    const behavior: ScrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
-    el.scrollIntoView({ behavior, block: 'start' });
-  };
-
-  // Snap to view when opened
+  // Snap to view when opened.
+  // We wait for the section's open transition to settle before scrolling so
+  // the scroll target is computed against the FINAL geometry, not the
+  // mid-animation geometry. Otherwise the band overshoots: scrollIntoView
+  // captures offsetTop while the section is still expanding, and the
+  // smooth-scroll lands above the actual band header.
   useEffect(() => {
-    if (isOpen && containerRef.current) {
-      setTimeout(() => {
-        safeScrollIntoView(containerRef.current);
-      }, 100);
-    }
+    if (!isOpen || !containerRef.current) return;
+    const el = containerRef.current;
+    const HEADER_OFFSET = 100; // matches scroll-mt-[100px] / fixed header height
+    let cancelled = false;
+    let fallbackId: number | undefined;
+
+    const doScroll = () => {
+      if (cancelled || !containerRef.current) return;
+      const behavior: ScrollBehavior = prefersReducedMotion() ? 'auto' : 'smooth';
+      const top = el.getBoundingClientRect().top + window.scrollY - HEADER_OFFSET;
+      window.scrollTo({ top, behavior });
+    };
+
+    const onEnd = (e: TransitionEvent) => {
+      // Section transitions multiple props; latch onto padding-top so we fire once.
+      if (e.target !== el) return;
+      if (e.propertyName !== 'padding-top') return;
+      el.removeEventListener('transitionend', onEnd);
+      if (fallbackId) window.clearTimeout(fallbackId);
+      doScroll();
+    };
+
+    el.addEventListener('transitionend', onEnd);
+    // Fallback: if no transitionend fires (reduced motion, instant layout, etc.).
+    fallbackId = window.setTimeout(() => {
+      el.removeEventListener('transitionend', onEnd);
+      doScroll();
+    }, 750);
+
+    return () => {
+      cancelled = true;
+      el.removeEventListener('transitionend', onEnd);
+      if (fallbackId) window.clearTimeout(fallbackId);
+    };
   }, [isOpen]);
 
   const handleCopyLink = async (e: React.MouseEvent) => {
