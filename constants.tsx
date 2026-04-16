@@ -17,21 +17,21 @@ export const RECRUIT_CARDS = [
     role: "Design Language",
     capability: "Builds coherence across interface, brand, and documentation.",
     signal: "Strong design-system thinking for technical products.",
-    desc: "Turns scattered artifacts into one readable operating language instead of a collection of disconnected deliverables."
+    desc: "Turns scattered artifacts into one readable operating language. DEADLIGHT codifies trust/proof/consequence framing; CYPHER generates deterministic tactical marks with fabrication-grade governance."
   },
   {
     name: "Interactive Prototypes",
     role: "Product Proof",
     capability: "Makes product concepts believable through working behavior.",
     signal: "Can move from concept frame to functional prototype quickly.",
-    desc: "Uses front-end implementation and interaction studies to test flow, hierarchy, and trust before the team commits too much polish."
+    desc: "Uses front-end implementation to test flow and trust before the team commits polish. TAK-G renders 1,500+ tracks with real swarm kinematics. GREY-EARTH is a live terrain workstation with Earth Engine integration."
   },
   {
     name: "Technical Narratives",
     role: "Systems Translation",
     capability: "Explains dense systems without flattening their complexity.",
     signal: "Useful where engineering, product, and recruiting all need the same story.",
-    desc: "Translates autonomy, geospatial, sensing, and mission-software concepts into artifacts people can evaluate and remember."
+    desc: "Translates autonomy, geospatial, sensing, and mission-software concepts into artifacts people can evaluate. The Tactical Brutalism framework bridges operators, stakeholders, and engineers within a single visual vocabulary."
   }
 ];
 
@@ -70,6 +70,12 @@ const SELECTED_SYSTEMS_EVIDENCE = [
     title: "CCRT / Source",
     description: "Human-factors and high-assurance interface direction for warfighter-centered command environments.",
     link: "https://github.com/augustave/CCRT",
+    linkLabel: "Open GitHub Repo"
+  },
+  {
+    title: "TAK-G / Source",
+    description: "Theater-level C2 simulator with 1,500+ track rendering, swarm kinematics, EMCON decay, and zero-trust SIGINT ghost tracks.",
+    link: "https://github.com/augustave/TAK-FLOW",
     linkLabel: "Open GitHub Repo"
   }
 ];
@@ -353,12 +359,14 @@ export const INQUIRY_QUESTIONS: Record<string, string[]> = {
   "Technical Fluency": [
     "How deep into implementation do you usually go when building prototypes?",
     "What tools or stacks are central to the way you work today?",
-    "How do you collaborate with engineering without losing the quality of the concept?"
+    "How do you collaborate with engineering without losing the quality of the concept?",
+    "What does your defense-readiness artifact contract look like, and how did you arrive at that structure?"
   ],
   "Collaboration Style": [
     "How do you work with product, engineering, and marketing when the brief is still ambiguous?",
     "What kind of feedback helps you sharpen the work fastest?",
-    "What conditions produce your best work on a team?"
+    "What conditions produce your best work on a team?",
+    "How do you bridge the rhetoric gap between what operators need to hear and what compliance reviewers need to see?"
   ],
   "Hiring Need": [
     "What kind of team problem are you best suited to solve in the first 90 days?",

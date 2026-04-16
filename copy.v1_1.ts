@@ -17,9 +17,9 @@ export const CT_DOSSIER_COPY_V120 = {
         "I design systems that make complex technical work legible.",
       body:
         [
-          "My work sits between engineering truth and operator confidence.",
-          "I build visual operating languages, interactive prototypes, and technical narratives for products that have to be understood before they can be trusted.",
-          "The through-line is consistent: turn difficult systems into clear interfaces, proof artifacts, and stories that hold up under pressure."
+          "My work sits between engineering truth and operator confidence. I have done this across C2 theater simulators managing 1,500+ simultaneous tracks, autonomous drone swarm visualizations, and deterministic brand systems for defense-software products.",
+          "I build visual operating languages, interactive prototypes, and technical narratives for products that have to be understood before they can be trusted. The method is consistent: evidence over claims, working artifacts over slide decks, and design that holds up under technical scrutiny.",
+          "The through-line: turn difficult systems into clear interfaces, proof artifacts, and stories that survive contact with engineers, operators, and procurement."
         ].join("\n\n"),
       noteTitle: "NOTE",
       noteLines: [
@@ -43,8 +43,8 @@ export const CT_DOSSIER_COPY_V120 = {
           name: "Visual Operating Languages",
           body:
             [
-              "I build coherent visual systems for products that need to feel credible, disciplined, and operational rather than speculative.",
-              "That includes interface grammar, typography, hierarchy, diagrams, and documentation patterns that can scale across screens, decks, and artifacts."
+              "I build coherent visual systems for products that need to feel credible, disciplined, and operational rather than speculative. DEADLIGHT codifies trust/proof/consequence framing into a reusable grammar. CYPHER generates deterministic tactical marks from cryptographic seeds with fabrication-grade governance.",
+              "That includes interface grammar, typography, hierarchy, diagrams, and documentation patterns that scale across screens, decks, and classified-style artifacts."
             ].join("\n\n"),
           tags: ["design systems", "brand systems", "interface grammar"],
           prevents: "Work that looks polished but does not cohere."
@@ -53,8 +53,8 @@ export const CT_DOSSIER_COPY_V120 = {
           name: "Interactive Prototypes",
           body:
             [
-              "I do not stop at static comps when the idea needs behavior to be believed.",
-              "I build high-fidelity prototypes in React, Vite, WebGL-adjacent front-end stacks, and motion systems so teams can evaluate flow, not just appearance."
+              "I do not stop at static comps when the idea needs behavior to be believed. TAK-G is a theater-level C2 simulator rendering 1,500+ entities with swarm kinematics, EMCON confidence decay, and zero-trust SIGINT ghost tracks. GREY-EARTH is a live tactical terrain workstation with Earth Engine integration.",
+              "I build in React, Vite, Three.js, and vanilla WebGL stacks so teams can evaluate flow, not just appearance."
             ].join("\n\n"),
           tags: ["rapid prototyping", "front-end", "interaction architecture"],
           prevents: "Concepts that sound strong but cannot survive contact with use."
@@ -63,8 +63,8 @@ export const CT_DOSSIER_COPY_V120 = {
           name: "Technical Storytelling",
           body:
             [
-              "I translate dense engineering, autonomy, geospatial, and mission-oriented ideas into recruiter-ready, stakeholder-ready, and operator-legible artifacts.",
-              "The goal is not spectacle. It is clarity, trust, and a stronger decision surface."
+              "I translate dense engineering, autonomy, geospatial, and mission-oriented ideas into recruiter-ready, stakeholder-ready, and operator-legible artifacts. The Tactical Brutalism framework I developed bridges three audiences simultaneously: operators who need lethality clarity, stakeholders who need compliance confidence, and engineers who need architectural honesty.",
+              "The goal is not spectacle. It is a stronger decision surface backed by evidence."
             ].join("\n\n"),
           tags: ["visual storytelling", "systems explanation", "product narrative"],
           prevents: "Important work that stays trapped inside engineering context."
@@ -89,13 +89,15 @@ export const CT_DOSSIER_COPY_V120 = {
         [
           "I work well on teams that need someone to define the visual language, prototype the interaction, and tighten the story around why the product matters.",
           "My default move is to find the governing structure first: what the operator needs to know, what the stakeholder needs to believe, and what the system needs to show.",
-          "From there I turn ambiguity into artifacts: interface studies, motion tests, mockups, diagrams, deck systems, or live prototypes."
+          "From there I turn ambiguity into artifacts: interface studies, motion tests, mockups, diagrams, deck systems, or live prototypes.",
+          "The operating principle that runs through the portfolio is evidence over claims. Each project carries a validated claims sheet, a test plan, and a case study designed to survive a 30-minute technical walkthrough."
         ].join("\n\n"),
       bulletsTitle: "DEFAULT BIAS",
       bullets: [
         "Treat complex products as communication systems, not just feature sets.",
+        "Every external claim maps to test or report evidence. No assertion without artifact.",
         "Use prototypes to test credibility and flow before polish becomes expensive.",
-        "Make design serve trust, legibility, and decision quality under constraint.",
+        "Codify the grammar into a reusable system: 10 defense-adjacent projects now share a common artifact contract covering architecture, threat model, validation, and case study.",
       ],
       grid: {
         leftTitle: "PRIMARY TENSION",
@@ -128,6 +130,7 @@ export const CT_DOSSIER_COPY_V120 = {
         [
           "DEADLIGHT: I can codify a visual operating language instead of styling page by page.",
           "GREY-EARTH: I can ship a live workstation that joins terrain analysis, interface design, and real technical constraints.",
+          "TAK-G: I can build a theater-level C2 simulator managing 1,500+ tracks with real swarm physics, not scripted demos.",
           "TACTICAL CANVAS: I can prototype a mission workflow so the operator understands what happens next.",
           "WAR-F / MINI-D / SENTINEL: I can turn dense autonomy or sensing concepts into clear evaluation artifacts."
         ].join("\n"),
@@ -139,7 +142,7 @@ export const CT_DOSSIER_COPY_V120 = {
            why: "A deterministic brand and interface language for mission-critical software and technical storytelling.",
            match: "Design system + strategic narrative",
            proof: "Proves I can codify a full visual operating system rather than style artifacts one by one.",
-           artifact: "Decision matrix, trust/proof/consequence framing, and a reusable grammar for high-assurance presentations.",
+           artifact: "Three-layer brand architecture (Trust + Proof + Consequence), four visual modes, and a Tactical Brutalism doctrine used across 10 defense-adjacent projects.",
            link: "https://github.com/augustave/deadlight"
         },
         {
@@ -165,7 +168,7 @@ export const CT_DOSSIER_COPY_V120 = {
            tagline: "Mission workflow prototype",
            why: "An interface study focused on visible task flow, command confidence, and stronger mission-state communication.",
            match: "Rapid prototyping + systems UI",
-           proof: "Proves I can prototype mission logic so users see the full thread from observation to tasking.",
+           proof: "Proves I can prototype mission logic so users see the full thread from observation to tasking. Validated through a 30-minute technical walkthrough dry run.",
            artifact: "Shared mission state, radar surface work, dossier layers, and an end-to-end interaction story.",
            link: "https://github.com/augustave/TACTICAL-CANVAS"
         },
@@ -175,7 +178,7 @@ export const CT_DOSSIER_COPY_V120 = {
            why: "A research-grade sandbox for making autonomy claims testable, bounded, and easier to inspect.",
            match: "Simulation design + falsifiable proof",
            proof: "Proves I can design evaluation environments, not just hero demos.",
-           artifact: "A verification-oriented lab framing autonomy behavior through limits, thresholds, and inspectable outputs.",
+           artifact: "Chain-of-verification, comms-degradation scenarios, and comparative baseline testing through limits, thresholds, and inspectable outputs.",
            link: "https://github.com/augustave/MINI-D"
         },
         {
@@ -186,9 +189,18 @@ export const CT_DOSSIER_COPY_V120 = {
            proof: "Proves I can use interface design to reduce misread risk instead of simply making complex systems look advanced.",
            artifact: "Bias-mitigation framing, safety-critical readability, and operator-centered command surface design.",
            link: "https://github.com/augustave/CCRT"
+        },
+        {
+           name: "TAK-G",
+           tagline: "Theater-level C2 simulator",
+           why: "A high-fidelity command-and-control visualization managing 1,500+ multi-domain tracks with swarm kinematics and zero-trust guardrails.",
+           match: "Simulation design + systems UI + front-end engineering",
+           proof: "Proves I can build production-grade interaction systems for high-density operational environments, not just concepts.",
+           artifact: "Three.js WebGL renderer, topological swarm cohesion, EMCON confidence decay, uncertain pointer framework, and full telemetry HUD.",
+           link: "https://github.com/augustave/TAK-FLOW"
         }
       ],
-      companiesSynthesis: "Taken together, the work signals a specific profile: a creative technologist who can define the visual language, prototype the product behavior, and articulate the system clearly enough for design, product, engineering, recruiting, and stakeholder review. The links below are public proof, not just narrative summaries."
+      companiesSynthesis: "Taken together, the work signals a specific profile: a creative technologist who can define the visual language, prototype the product behavior, and articulate the system clearly enough for design, product, engineering, recruiting, and stakeholder review. All 10 defense-adjacent projects have passed a four-gate validation program: artifact completeness, maturity review, evidence-linked claims, and repo readiness. The links below are public proof, not just narrative summaries."
     },
   },
 };
