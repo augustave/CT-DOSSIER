@@ -25,7 +25,7 @@ export const InquiryPanel: React.FC<InquiryPanelProps> = ({ isOpen, onClose, con
   const normalizedContactEmail = contactEmail.trim();
   const hasContactEmail = normalizedContactEmail.length > 0;
   const mailtoDisabledReason = 'Set VITE_CONTACT_EMAIL to enable email drafts.';
-  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'done'>('idle');
+  const [downloadStatus, setDownloadStatus] = useState<'idle' | 'done' | 'error'>('idle');
   const downloadResetTimerRef = useRef<number | null>(null);
   const downloadStatusId = 'inquiry-download-status';
   const { copy, copied } = useClipboard();
@@ -130,20 +130,32 @@ If helpful, I would be open to a short conversation.
   };
 
   const handleDownload = () => {
-    const element = document.createElement("a");
-    const file = new Blob([generateMessage()], {type: 'text/plain'});
-    const objectUrl = URL.createObjectURL(file);
-    element.href = objectUrl;
-    element.download = "ct_dossier_inquiry.txt";
-    document.body.appendChild(element);
-    element.click();
-    document.body.removeChild(element);
-    URL.revokeObjectURL(objectUrl);
-    setDownloadStatus('done');
-    if (downloadResetTimerRef.current !== null) {
-      window.clearTimeout(downloadResetTimerRef.current);
+    let objectUrl: string | null = null;
+    let element: HTMLAnchorElement | null = null;
+    try {
+      element = document.createElement("a");
+      const file = new Blob([generateMessage()], {type: 'text/plain'});
+      objectUrl = URL.createObjectURL(file);
+      element.href = objectUrl;
+      element.download = "ct_dossier_inquiry.txt";
+      document.body.appendChild(element);
+      element.click();
+      setDownloadStatus('done');
+    } catch (err) {
+      console.error('Inquiry download failed', err);
+      setDownloadStatus('error');
+    } finally {
+      if (element && element.parentNode === document.body) {
+        document.body.removeChild(element);
+      }
+      if (objectUrl !== null) {
+        URL.revokeObjectURL(objectUrl);
+      }
+      if (downloadResetTimerRef.current !== null) {
+        window.clearTimeout(downloadResetTimerRef.current);
+      }
+      downloadResetTimerRef.current = window.setTimeout(() => setDownloadStatus('idle'), 3000);
     }
-    downloadResetTimerRef.current = window.setTimeout(() => setDownloadStatus('idle'), 2000);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLDivElement>) => {
@@ -347,7 +359,14 @@ If helpful, I would be open to a short conversation.
               </div>
               <span id={downloadStatusId} className="sr-only" role="status" aria-live="polite">
                 {downloadStatus === 'done' ? 'Inquiry text file downloaded.' : ''}
+                {downloadStatus === 'error' ? 'Download failed. Copy the message instead.' : ''}
               </span>
+              {downloadStatus === 'error' && (
+                <p className="font-mono text-xs uppercase tracking-wider text-red-700 flex items-center gap-2">
+                  <AlertTriangleIcon className="w-3 h-3" />
+                  Download failed. Copy the message instead.
+                </p>
+              )}
               {!hasContactEmail && (
                 <p className="font-mono text-xs uppercase tracking-wider text-amber-700">
                   {mailtoDisabledReason}

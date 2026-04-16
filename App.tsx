@@ -14,6 +14,12 @@ const TARGET_ROLES = [
   'Brand Designer, Technical Products'
 ];
 
+// Modules rendered on the main page (Manifest is handled via the overlay),
+// sorted once at module-load time since CONTENT_MODULES is static.
+const RENDERED_MODULES = CONTENT_MODULES
+  .filter(m => m.id !== ModuleType.MANIFEST)
+  .sort((a, b) => a.index.localeCompare(b.index));
+
 const App: React.FC = () => {
   const [openModuleIndex, setOpenModuleIndex] = useState<string | null>(null);
   const [isInquiryOpen, setIsInquiryOpen] = useState(false);
@@ -132,13 +138,10 @@ const App: React.FC = () => {
         </section>
 
         {/* Render all modules EXCEPT Manifest (Module 00) */}
-        {CONTENT_MODULES
-          .filter(m => m.id !== ModuleType.MANIFEST)
-          .sort((a, b) => a.index.localeCompare(b.index))
-          .map((module) => (
-          <ModuleStrata 
-            key={module.id} 
-            module={module} 
+        {RENDERED_MODULES.map((module) => (
+          <ModuleStrata
+            key={module.id}
+            module={module}
             isOpen={openModuleIndex === module.index}
             onToggle={() => handleToggle(module.index)}
             onInquiryRequest={handleInquiryRequest}

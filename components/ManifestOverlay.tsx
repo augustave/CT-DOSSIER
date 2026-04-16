@@ -62,8 +62,10 @@ export const ManifestOverlay: React.FC<ManifestOverlayProps> = ({ isOpen, onClos
                 return order.indexOf(a.index) - order.indexOf(b.index);
             })
             .map((m) => (
-             <div 
-               key={m.index} 
+             <div
+               key={m.index}
+               data-testid="manifest-item"
+               data-index={m.index}
                onClick={() => onNavigate(m.index)}
                className="group/item flex items-baseline gap-4 cursor-pointer border-b border-black/10 pb-4 hover:pl-4 transition-all duration-300"
              >

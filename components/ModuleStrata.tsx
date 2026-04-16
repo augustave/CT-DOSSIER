@@ -52,14 +52,10 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
     // Artifacts UI Removed
 
   return (
-    <section 
+    <section
       ref={containerRef}
-      id={`module-${module.index}`} 
-      role="button"
-      tabIndex={0}
-      aria-expanded={isOpen}
-      aria-controls={panelId}
-      aria-label={`Toggle ${module.title}`}
+      id={`module-${module.index}`}
+      aria-label={`Module ${module.index}: ${module.title}`}
       // PRD v1.0.2: scroll-margin-top added for fixed header offset
       className={`relative w-full border-b border-black/10 transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] ${themeClass} ${isOpen ? 'py-12 md:py-24' : 'py-8 md:py-12'} cursor-pointer group scroll-mt-[100px]`}
       onClick={(e) => {
@@ -67,14 +63,18 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
         if (target.closest('a') || target.closest('button')) return;
         onToggle();
       }}
-      onKeyDown={(e) => {
-        if (e.target !== e.currentTarget) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          onToggle();
-        }
-      }}
     >
+      {/* Accessible toggle for keyboard / screen-reader users.
+          Visible only on focus so sighted keyboard users can discover it.
+          Resolves ARIA violation: no interactive descendants inside role="button". */}
+      <button
+        aria-expanded={isOpen}
+        aria-controls={panelId}
+        onClick={(e) => { e.stopPropagation(); onToggle(); }}
+        className="sr-only focus:not-sr-only focus:absolute focus:z-10 focus:top-2 focus:left-4 focus:p-2 focus:bg-white focus:text-black focus:border focus:border-black focus:font-mono focus:text-xs focus:uppercase focus:tracking-widest"
+      >
+        {isOpen ? 'Collapse' : 'Expand'} {module.title}
+      </button>
       <div className="container mx-auto px-4 md:px-8 max-w-6xl">
         {/* Header Band */}
         <div className="flex flex-col md:flex-row md:items-baseline justify-between gap-4 md:gap-12 select-none">
@@ -114,14 +114,19 @@ export const ModuleStrata: React.FC<ModuleStrataProps> = ({ module, isOpen, onTo
                 + INSPECT
              </button>
             
-            <div className="flex items-center gap-2">
+            <button
+                aria-hidden="true"
+                tabIndex={-1}
+                onClick={(e) => { e.stopPropagation(); onToggle(); }}
+                className="flex items-center gap-2"
+            >
                 <span className={`transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'}`}>
                     {isOpen ? 'FOLD' : 'UNFOLD'}
                 </span>
                 <div className={`transform transition-transform duration-500 ${isOpen ? 'rotate-180' : 'rotate-0'}`}>
                 <ChevronDownIcon />
                 </div>
-            </div>
+            </button>
           </div>
         </div>
 

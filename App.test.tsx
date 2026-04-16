@@ -1,6 +1,14 @@
 import { render, screen, fireEvent, waitFor, within } from '@testing-library/react';
-import { describe, it, expect, beforeEach } from 'vitest';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import App from './App';
+import { InquiryPanel } from './components/InquiryPanel';
+import { Simulator } from './components/Simulator';
+
+/** Helper: find the accessible toggle button inside a module section. */
+const getModuleToggle = (sectionId: string) => {
+  const section = document.getElementById(sectionId);
+  return section?.querySelector<HTMLButtonElement>('button[aria-expanded]') ?? null;
+};
 
 describe('CT Dossier: recruiter-facing layout and IA', () => {
   beforeEach(() => {
@@ -14,6 +22,21 @@ describe('CT Dossier: recruiter-facing layout and IA', () => {
     await waitFor(() => {
       expect(window.location.hash).toBe('#module-01');
     });
+  });
+
+  it('honors an initial #module-03 hash on mount', async () => {
+    window.location.hash = '#module-03';
+    render(<App />);
+
+    await waitFor(() => {
+      const toggle = getModuleToggle('module-03');
+      expect(toggle).not.toBeNull();
+      expect(toggle?.getAttribute('aria-expanded')).toBe('true');
+    });
+
+    // Other modules should remain collapsed
+    expect(getModuleToggle('module-01')?.getAttribute('aria-expanded')).toBe('false');
+    expect(getModuleToggle('module-02')?.getAttribute('aria-expanded')).toBe('false');
   });
 
   it('shows Header/Footer CTA as REQUEST CONVERSATION', () => {
@@ -42,17 +65,44 @@ describe('CT Dossier: recruiter-facing layout and IA', () => {
     const evidenceLink = screen.queryByText(/EVIDENCE LOCKER/i);
     expect(evidenceLink).not.toBeInTheDocument();
   });
+});
 
-  it('keeps manifest ordering with module 02 before 01', async () => {
+describe('Manifest overlay', () => {
+  beforeEach(() => {
+    Element.prototype.scrollIntoView = () => {};
+    window.location.hash = '';
+  });
+
+  it('opens from the INDEX button and renders the expected module order (02, 01, 03, 04, 05)', async () => {
     render(<App />);
     fireEvent.click(screen.getByText(/INDEX \(00\)/i));
 
-    const overlayHeading = await screen.findByRole('heading', { name: /^INDEX$/i });
-    const overlayContainer = overlayHeading.closest('.fixed') as HTMLElement;
-    expect(overlayContainer).not.toBeNull();
+    const items = await screen.findAllByTestId('manifest-item');
+    const order = items.map(el => el.getAttribute('data-index'));
+    expect(order).toEqual(['02', '01', '03', '04', '05']);
+  });
 
-    const manifestText = overlayContainer.textContent ?? '';
-    expect(manifestText.indexOf('CREATIVE TECHNOLOGIST')).toBeLessThan(manifestText.indexOf('ROLE FIT'));
+  it('closes when the Close Index button is clicked', async () => {
+    render(<App />);
+    fireEvent.click(screen.getByText(/INDEX \(00\)/i));
+
+    const closeBtn = await screen.findByRole('button', { name: /Close Index/i });
+    fireEvent.click(closeBtn);
+
+    // ManifestOverlay keeps isVisible true for 500ms before unmounting; wait it out.
+    await waitFor(
+      () => {
+        expect(screen.queryAllByTestId('manifest-item').length).toBe(0);
+      },
+      { timeout: 1500 }
+    );
+  });
+});
+
+describe('Inquiry dialog (via App)', () => {
+  beforeEach(() => {
+    Element.prototype.scrollIntoView = () => {};
+    window.location.hash = '';
   });
 
   it('opens the inquiry dialog, focuses the close button, and closes on Escape', async () => {
@@ -73,5 +123,120 @@ describe('CT Dossier: recruiter-facing layout and IA', () => {
     await waitFor(() => {
       expect(screen.queryByRole('dialog', { name: /Inquiry/i })).not.toBeInTheDocument();
     });
+  });
+});
+
+describe('Inquiry dialog (component, contactEmail branches)', () => {
+  it('enables the EMAIL DRAFT button when contactEmail is provided', async () => {
+    const noop = () => {};
+    render(
+      <InquiryPanel
+        isOpen={true}
+        onClose={noop}
+        context="Test Context"
+        contactEmail="team@example.com"
+      />
+    );
+
+    const dialog = await screen.findByRole('dialog', { name: /Inquiry/i });
+    const emailButton = within(dialog).getByRole('button', { name: /EMAIL DRAFT/i });
+    expect(emailButton).toBeEnabled();
+    expect(within(dialog).queryByText(/Set VITE_CONTACT_EMAIL/i)).not.toBeInTheDocument();
+  });
+
+  it('traps Tab focus inside the dialog (shift+Tab from first element cycles to last)', async () => {
+    const noop = () => {};
+    render(
+      <InquiryPanel
+        isOpen={true}
+        onClose={noop}
+        context="Trap Test"
+        contactEmail="team@example.com"
+      />
+    );
+
+    const dialog = await screen.findByRole('dialog', { name: /Inquiry/i });
+
+    const focusable = Array.from(
+      dialog.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter(el => !el.hasAttribute('disabled') && !el.hasAttribute('hidden') && el.tabIndex !== -1);
+
+    expect(focusable.length).toBeGreaterThan(1);
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+
+    first.focus();
+    expect(first).toHaveFocus();
+
+    fireEvent.keyDown(dialog, { key: 'Tab', shiftKey: true });
+    expect(last).toHaveFocus();
+  });
+
+  it('sets window.location.href to a mailto URL when EMAIL DRAFT is clicked', async () => {
+    const noop = () => {};
+    const origLocation = window.location;
+
+    // Replace window.location so we can capture the href assignment in jsdom.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const w = window as any;
+    delete w.location;
+    w.location = { ...origLocation, href: '' };
+
+    render(
+      <InquiryPanel
+        isOpen={true}
+        onClose={noop}
+        context="Test Context"
+        contactEmail="team@example.com"
+      />
+    );
+
+    const dialog = await screen.findByRole('dialog', { name: /Inquiry/i });
+    const emailBtn = within(dialog).getByRole('button', { name: /EMAIL DRAFT/i });
+    fireEvent.click(emailBtn);
+
+    expect(window.location.href).toMatch(/^mailto:team@example\.com\?subject=.+&body=.+/);
+
+    // Restore
+    w.location = origLocation;
+  });
+});
+
+describe('Simulator component', () => {
+  it('renders with default selections (SYSTEMS + PRODUCT) showing CREATIVE TECHNOLOGIST', () => {
+    const onInquiry = vi.fn();
+    render(<Simulator onInquiryRequest={onInquiry} />);
+
+    expect(screen.getByText('CREATIVE TECHNOLOGIST')).toBeInTheDocument();
+    expect(screen.getByText('Analysis Complete')).toBeInTheDocument();
+
+    // Verify input controls rendered
+    expect(screen.getByText('NARRATIVE')).toBeInTheDocument();
+    expect(screen.getByText('SYSTEMS')).toBeInTheDocument();
+    expect(screen.getByText('EXECUTION')).toBeInTheDocument();
+    expect(screen.getByText('CONCEPT')).toBeInTheDocument();
+    expect(screen.getByText('PRODUCT')).toBeInTheDocument();
+    expect(screen.getByText('MISSION')).toBeInTheDocument();
+  });
+
+  it('updates archetype when selections change', () => {
+    const onInquiry = vi.fn();
+    render(<Simulator onInquiryRequest={onInquiry} />);
+
+    // Switch to NARRATIVE + MISSION → OPERATIONAL STORYTELLER
+    fireEvent.click(screen.getByText('NARRATIVE'));
+    fireEvent.click(screen.getByText('MISSION'));
+
+    expect(screen.getByText('OPERATIONAL STORYTELLER')).toBeInTheDocument();
+  });
+
+  it('fires onInquiryRequest when Discuss this fit is clicked', () => {
+    const onInquiry = vi.fn();
+    render(<Simulator onInquiryRequest={onInquiry} />);
+
+    fireEvent.click(screen.getByText(/Discuss this fit/i));
+    expect(onInquiry).toHaveBeenCalledWith('Role Matrix: CREATIVE TECHNOLOGIST');
   });
 });
